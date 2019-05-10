@@ -1,4 +1,4 @@
-package LettersSoupModel;
+package model;
 
 public class LettersSoup {
 

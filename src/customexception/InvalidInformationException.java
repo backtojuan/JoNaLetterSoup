@@ -1,4 +1,4 @@
-package CustomException;
+package customexception;
 
 public class InvalidInformationException {
 
