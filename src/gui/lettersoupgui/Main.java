@@ -1,7 +1,6 @@
 //___________________________________________PACKAGE OF THIS CLASS_________________________________________________________________________
 
 	package gui.lettersoupgui;
-
 //___________________________________________USED PACKAGES FOR THIS CLASS__________________________________________________________________
 	
 	import javafx.application.Application;
@@ -23,12 +22,16 @@
 		
 		@Override
 		public void start(Stage stage) throws Exception{
-			Parent root =
-					FXMLLoader.load(getClass().getResource("LetterSoup.fxml"));
-	
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("lettersoup.fxml"));
+			
+			Parent root = loader.load();
+			
+			LetterSoupController lsc = loader.getController();
+			lsc.setStage(stage);
+			
 			Scene scene = new Scene(root);
 			stage.setTitle("Letters Soup Game");
-			stage.resizableProperty().setValue(Boolean.TRUE);
 			stage.setScene(scene);
 		}
 	//___________________________________________________________________________________________________________________________________
