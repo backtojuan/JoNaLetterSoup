@@ -7,6 +7,8 @@
 	import java.io.IOException;
 	import java.util.ArrayList;
 	import java.util.Random;
+	import model.gamemodel.Difficulty;
+	import model.gamemodel.Game;
 //___________________________________________ATTRIBUTES____________________________________________________________________________________
 	/**
 	 * This class manages the nedeed methods and attributes to create letters soup.
@@ -15,10 +17,9 @@
 	 * @version V_01 May_2019
 	 * 
 	 */
-	public class LettersSoup {
+	public class LettersSoup extends Game{
 	
 	private String[][] lettersoup;
-	private Difficulty difficultylevel;
 	private Topic topic;
 	private int size;
 	
@@ -36,6 +37,7 @@
 		 * @throws IOException 
 		 */
 		public LettersSoup(Topic topic,Difficulty difficultylevel) throws IOException {
+			super(difficultylevel);
 			this.topic = topic;
 			this.difficultylevel = difficultylevel;
 			init(this.difficultylevel);
