@@ -1,0 +1,6 @@
+.background{
+	-fx-background-color: PINK;
+}
+.button{
+	-fx-background-color: darkslateblue; -fx-text-fill: white;
+}
