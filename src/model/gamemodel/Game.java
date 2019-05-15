@@ -2,16 +2,21 @@
 	package model.gamemodel;
 //___________________________________________USED PACKAGES FOR THIS CLASS__________________________________________________________________
 	
+	import java.util.ArrayList;
 //___________________________________________ATTRIBUTES____________________________________________________________________________________
-	public abstract class Game {
+	public class Game {
 		
-		public Difficulty difficultylevel;
+		private Difficulty difficultylevel;
+		private ArrayList<Player> players;
 
 //_________________________________________METHODS FOR THIS CLASS__________________________________________________________________________
 		
 		public Game(Difficulty difficultylevel) {
 			this.difficultylevel = difficultylevel;
 		}
+	//_____________________________________________________________________________________________________________________________________
+		
+		
 	//_____________________________________________________________________________________________________________________________________
 		
 		public Difficulty getDifficultylevel(){

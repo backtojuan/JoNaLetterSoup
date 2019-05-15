@@ -33,7 +33,8 @@
 			Scene scene = new Scene(root);
 			stage.setTitle("Letters Soup Game");
 			stage.setScene(scene);
-		}
+			stage.show();
+;		}
 	//___________________________________________________________________________________________________________________________________
 	
 		public static void main(String[]args){

@@ -39,8 +39,7 @@
 		public LettersSoup(Topic topic,Difficulty difficultylevel) throws IOException {
 			super(difficultylevel);
 			this.topic = topic;
-			this.difficultylevel = difficultylevel;
-			init(this.difficultylevel);
+			init(difficultylevel);
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
