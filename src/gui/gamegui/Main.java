@@ -11,6 +11,8 @@
 	import javafx.scene.image.Image;
 	import javafx.scene.media.Media;
 	import javafx.scene.media.MediaPlayer;
+	
+	import java.io.File;
 //___________________________________________ATTRIBUTES____________________________________________________________________________________
 	/**
 	 * This class manage the necessary attributes and methods to manage and launch the User Interface.
@@ -38,9 +40,11 @@
 			Image image = new Image("gui/gamegui/images/icon.png");
 			stage.getIcons().add(image);
 			
-			Media media = new Media("file://gui/gamegui/music/backgroundmusic.mp3");
+			
+			/**File file = new File("gui/gamegui/music/backgroundmusic.mp3");
+			Media media = new Media(file.toURI().toString());
 			MediaPlayer player = new MediaPlayer(media);
-			player.play();
+			player.play();*/
 			
 			stage.setScene(scene);
 			stage.show();

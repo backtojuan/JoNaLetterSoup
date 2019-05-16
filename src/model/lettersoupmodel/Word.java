@@ -26,7 +26,7 @@
 	//_____________________________________________________________________________________________________________________________________
 		
 		public void generateRandomDirection() {
-			random = new Random();
+			/**random = new Random();
 			int indicator = random.nextInt(8);
 			switch(indicator) {
 			case 0:
@@ -36,19 +36,25 @@
 				direction = Direction.LEFT;
 				break;
 			case 2:
-				direction = Direction.SOUTHEAST;
+				direction = Direction.NORTHEAST;
 				break;
 			case 3:
-				direction = Direction.SOUTHEAST;
+				direction = Direction.NORTHWEST;
 				break;
 			case 4:
-				direction = Direction.SOUTHEAST;
+				direction = Direction.SOUTHWEST;
 				break;
 			case 5:
 				direction = Direction.SOUTHEAST;
 				break;
-			
-			}
+			case 6:
+				direction = Direction.UP;
+				break;
+			case 7:
+				direction = Direction.RIGHT;
+				break;
+			}*/
+			direction = Direction.UP;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		public String getName() {
@@ -92,4 +98,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________	
 	
+		@Override
+		public String toString() {
+			return "Name "+name +" Row "+row +" Column "+column+" Length "+length+" Direction "+direction;
+		}
+	//_____________________________________________________________________________________________________________________________________
 }

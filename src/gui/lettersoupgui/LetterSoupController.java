@@ -3,10 +3,16 @@
 //___________________________________________USED PACKAGES FOR THIS CLASS__________________________________________________________________
 	import javafx.fxml.FXML;
 	import javafx.scene.control.ComboBox;
-	import javafx.event.ActionEvent;
+
+import java.io.IOException;
+
+import javafx.event.ActionEvent;
 	import javafx.scene.layout.BorderPane;
 	import javafx.scene.layout.GridPane;
-	import javafx.stage.Stage;	
+	import javafx.stage.Stage;
+import model.gamemodel.Difficulty;
+import model.lettersoupmodel.LettersSoup;
+import model.lettersoupmodel.Topic;
 //___________________________________________ATTRIBUTES____________________________________________________________________________________
 	public class LetterSoupController {
 		
@@ -23,12 +29,18 @@
 	    private GridPane gridpane;
 	    
 	    private Stage stage;
-		
 	    
+	    private LettersSoup letterssoup;
+		
 //_________________________________________METHODS FOR THIS CLASS__________________________________________________________________________
 		@FXML
 		public void initialize() {	
-			
+			try {
+				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.BASIC);
+				prueba();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	//_____________________________________________________________________________________________________________________________________
 	   
@@ -47,6 +59,19 @@
 
 	    }
 	//_____________________________________________________________________________________________________________________________________
+	    
+	    public void prueba() {
+	    	String mssg = "";
+	    	for(int i=0;i<letterssoup.getLetterSoup().length;i++) {
+	    		for(int j=0;j<letterssoup.getLetterSoup()[i].length;j++) {
+	    			mssg += letterssoup.getLetterSoup()[i][j];
+	    			if(j==letterssoup.getLetterSoup().length-1) {
+	    				mssg += "\n";
+	    			}
+	    		}
+	    	}
+	    	System.out.println(mssg);
+	    }
 	    
 //_________________________________________________________________________________________________________________________________________
 }

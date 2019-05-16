@@ -39,6 +39,10 @@
 		public LettersSoup(Topic topic,Difficulty difficultylevel) throws IOException {
 			super(difficultylevel);
 			this.topic = topic;
+			animals = new ArrayList<>();
+			cities = new ArrayList<>();
+			numbers = new ArrayList<>();
+			random = new Random();
 			init(difficultylevel);
 		}
 	//_____________________________________________________________________________________________________________________________________
@@ -119,25 +123,31 @@
 				loadAnimals();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = animals.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
 				}
+				fillSoupWithLetters();
 			}
 			else if(topic == Topic.CITIES) {
 				loadCities();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = cities.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
 				}
+				fillSoupWithLetters();
 			}
 			else if(topic == Topic.NUMBERS) {
 				loadCities();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = numbers.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
 				}
+				fillSoupWithNumbers();
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________
@@ -153,25 +163,31 @@
 				loadAnimals();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = animals.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
 				}
+				fillSoupWithLetters();
 			}
 			else if(topic == Topic.CITIES) {
 				loadCities();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = cities.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
 				}
+				fillSoupWithLetters();
 			}
 			else if(topic == Topic.NUMBERS) {
 				loadCities();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = numbers.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
 				}
+				fillSoupWithNumbers();
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________
@@ -187,24 +203,85 @@
 				loadAnimals();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = animals.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
 				}
+				fillSoupWithLetters();
 			}
 			else if(topic == Topic.CITIES) {
 				loadCities();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = cities.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
 				}
+				fillSoupWithLetters();
 			}
 			else if(topic == Topic.NUMBERS) {
 				loadCities();
 				for(int i=0;i<solution.length;i++) {
 					String wordfromfiletext = numbers.get(random.nextInt(animals.size()));
-					solution[i] = new Word(wordfromfiletext,random.nextInt(size),random.nextInt(size),wordfromfiletext.length());
+					solution[i] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					checkForNonRepitedElements(solution[i], i);
 					determinateAddOfWord(solution[i]);
+				}
+				fillSoupWithNumbers();
+			}
+		}
+	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 */
+		public void fillSoupWithLetters() {
+			for(int i=0;i<lettersoup.length;i++) {
+				for(int j=0;j<lettersoup[i].length;j++) {
+					if(lettersoup[i][j] == null) {
+						if(topic == Topic.ANIMALS) {
+							lettersoup[i][j] = Character.toString(animals.get(random.nextInt(animals.size())).charAt(0));
+						}
+						else if(topic == Topic.CITIES) {
+							lettersoup[i][j] = Character.toString(cities.get(random.nextInt(cities.size())).charAt(0));
+						}
+					}
+				}
+			}
+		}
+	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 */
+		public void fillSoupWithNumbers() {
+			for(int i=0;i<lettersoup.length;i++) {
+				for(int j=0;j<lettersoup[i].length;j++) {
+					if(lettersoup[i][j] == null) {
+						lettersoup[i][j] = Character.toString(numbers.get(random.nextInt(animals.size())).charAt(0));
+					}
+				}
+			}
+		}
+	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 */
+		public void checkForNonRepitedElements(Word word, int pos) {
+			String wordfromfiletext = "";
+			if(solution.length!=0) {
+				for(int i=0;i<solution.length;i++) {
+					//System.out.println(solution[i]);
+					if(solution[i].getName()==word.getName()) {
+						if(topic == Topic.ANIMALS) {
+							wordfromfiletext = animals.get(random.nextInt(animals.size()));
+						}
+						else if(topic == Topic.CITIES) {
+							wordfromfiletext = cities.get(random.nextInt(cities.size()));
+						}
+						else if(topic == Topic.NUMBERS) {
+							wordfromfiletext = numbers.get(random.nextInt(numbers.size()));
+						}
+						solution[pos] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					}
 				}
 			}
 		}
@@ -248,7 +325,7 @@
 		public boolean verifyColumn(int column) {
 			boolean empty = true;
 			for(int i=0;i<lettersoup.length&&empty;i++) {
-				if(lettersoup[i][column] == null) {
+				if(lettersoup[i][column] != null) {
 					empty = false;
 				}
 			}
@@ -261,7 +338,7 @@
 		public boolean verifyRow(int row) {
 			boolean empty = true;
 			for(int i=0;i<lettersoup.length&&empty;i++) {
-				if(lettersoup[row][i] == null){
+				if(lettersoup[row][i] != null){
 					empty = false;
 				}
 			}
@@ -276,7 +353,7 @@
 			int row = word.getRow();
 			int column = word.getColumn();
 			for(int i=0;i<word.getLength()&&empty;i++) {
-				if(lettersoup[row][column] == null) {
+				if(lettersoup[row][column] != null) {
 					empty = false;
 				}
 				row--;
@@ -293,7 +370,7 @@
 			int row = word.getRow();
 			int column = word.getColumn();
 			for(int i=0;i<word.getLength()&&empty;i++) {
-				if(lettersoup[row][column] == null) {
+				if(lettersoup[row][column] != null) {
 					empty = false;
 				}
 				row--;
@@ -310,7 +387,7 @@
 			int row = word.getRow();
 			int column = word.getColumn();
 			for(int i=0;i<word.getLength()&&empty;i++){
-				if(lettersoup[row][column] == null) {
+				if(lettersoup[row][column] != null) {
 					empty = false;
 				}
 				row++;
@@ -327,7 +404,7 @@
 			int row = word.getRow();
 			int column = word.getColumn();
 			for(int i=0;i<word.getLength()&&empty;i++) {
-				if(lettersoup[row][column] == null) {
+				if(lettersoup[row][column] != null) {
 					empty = false;
 				}
 				row++;
@@ -335,6 +412,7 @@
 			}
 			return empty;
 		}
+	//_____________________________________________________________________________________________________________________________________
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
@@ -345,12 +423,14 @@
 			int column = word.getColumn();
 			int length = word.getLength();
 			int i = 0;
-	
+			
 			while(verifyColumn(word.getColumn())==false) {
-				word.setColumn(random.nextInt(lettersoup.length));
+				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(length>=0) {
+			
+			
+			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
@@ -370,10 +450,10 @@
 			int i = 0;
 			
 			while(verifyColumn(word.getColumn())==false) {
-				word.setColumn(random.nextInt(lettersoup.length));
+				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(length>=0) {
+			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
@@ -394,10 +474,10 @@
 			int i = 0;
 			
 			while(verifyColumn(word.getRow())==false) {
-				word.setRow(random.nextInt(lettersoup.length));
+				word.setRow(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(length>=0) {
+			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
@@ -417,10 +497,10 @@
 			int i = 0;
 			
 			while(verifyColumn(word.getRow())==false) {
-				word.setRow(random.nextInt(lettersoup.length));
+				word.setRow(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(length>=0) {
+			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
@@ -440,11 +520,11 @@
 			int i = 0;
 			
 			while(verifyNorthWestDiagonal(word)==false) {
-				word.setRow(random.nextInt(lettersoup.length));
-				word.setColumn(random.nextInt(lettersoup.length));
+				word.setRow(random.nextInt(lettersoup.length-1));
+				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(length>=0) {
+			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
@@ -465,11 +545,11 @@
 			int i = 0;
 			
 			while(verifyNorthEastDiagonal(word)==false) {
-				word.setRow(random.nextInt(lettersoup.length));
-				word.setColumn(random.nextInt(lettersoup.length));
+				word.setRow(random.nextInt(lettersoup.length-1));
+				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(length>=0) {
+			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
@@ -490,11 +570,11 @@
 			int i = 0;
 			
 			while(verifySouthWestDiagonal(word)==false) {
-				word.setRow(random.nextInt(lettersoup.length));
-				word.setColumn(random.nextInt(lettersoup.length));
+				word.setRow(random.nextInt(lettersoup.length-1));
+				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(length>=0) {
+			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
@@ -515,11 +595,11 @@
 			int i = 0;
 			
 			while(verifySouthEastDiagonal(word)==false) {
-				word.setRow(random.nextInt(lettersoup.length));
-				word.setColumn(random.nextInt(lettersoup.length));
+				word.setRow(random.nextInt(lettersoup.length-1));
+				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(length>=0) {
+			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
@@ -540,6 +620,12 @@
 				}
 			}
 			return correct;
+		}
+		
+	//_____________________________________________________________________________________________________________________________________
+		
+		public String[][] getLetterSoup() {
+			return lettersoup;
 		}
 //_________________________________________________________________________________________________________________________________________
 	
