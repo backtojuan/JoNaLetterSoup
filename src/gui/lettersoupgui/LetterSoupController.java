@@ -64,7 +64,7 @@ import model.lettersoupmodel.Topic;
 	    	String mssg = "";
 	    	for(int i=0;i<letterssoup.getLetterSoup().length;i++) {
 	    		for(int j=0;j<letterssoup.getLetterSoup()[i].length;j++) {
-	    			mssg += letterssoup.getLetterSoup()[i][j];
+	    			mssg += letterssoup.getLetterSoup()[i][j] +" ";
 	    			if(j==letterssoup.getLetterSoup().length-1) {
 	    				mssg += "\n";
 	    			}

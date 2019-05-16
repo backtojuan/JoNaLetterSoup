@@ -267,10 +267,10 @@
 		 */
 		public void checkForNonRepitedElements(Word word, int pos) {
 			String wordfromfiletext = "";
-			if(solution.length!=0) {
-				for(int i=0;i<solution.length;i++) {
-					//System.out.println(solution[i]);
-					if(solution[i].getName()==word.getName()) {
+			boolean nonrepited = false;
+			if(countSolutions()>1) {
+				for(int i=0;i<solution.length && nonrepited==false;i++) {					
+					if(solution[i].getName().equals(word.getName())) {
 						if(topic == Topic.ANIMALS) {
 							wordfromfiletext = animals.get(random.nextInt(animals.size()));
 						}
@@ -281,6 +281,9 @@
 							wordfromfiletext = numbers.get(random.nextInt(numbers.size()));
 						}
 						solution[pos] = new Word(wordfromfiletext,random.nextInt(size-1),random.nextInt(size-1),wordfromfiletext.length());
+					}
+					else {
+						nonrepited = true;
 					}
 				}
 			}
@@ -413,7 +416,6 @@
 			return empty;
 		}
 	//_____________________________________________________________________________________________________________________________________
-	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
 		 */
@@ -428,10 +430,18 @@
 				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
-			
+			if(row!=(length-1)) {
+				word.setRow(length);
+				row = word.getRow();
+				System.out.println(word.getRow());
+			}
 			
 			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
+				System.out.println(word);
+				System.out.println(i);
+				System.out.println(row);
+				System.out.println(column);
 				lettersoup[row][column] = c;
 				i++;
 				row--;
@@ -453,6 +463,13 @@
 				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
+			while(row<=lettersoup.length-1) {
+				row++;
+			}
+			if(row!=length) {
+				word.setRow((length-row));
+			}
+			
 			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
@@ -461,7 +478,6 @@
 				length--;
 			}
 		}
-		
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
@@ -621,12 +637,31 @@
 			}
 			return correct;
 		}
-		
+	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
+		public int countSolutions() {
+			int size=0;
+			for(int i=0;i<solution.length;i++) {
+				if(solution[i]!=null) {
+					size++;
+				}
+			}
+			return size;
+		}
 	//_____________________________________________________________________________________________________________________________________
 		
 		public String[][] getLetterSoup() {
 			return lettersoup;
 		}
 //_________________________________________________________________________________________________________________________________________
-	
+		
+		
+		public void prueba() {
+			for(int i=0;i<solution.length;i++) {
+				System.out.println(solution[i]);
+			}
+		}
 	}
