@@ -37,6 +37,7 @@ import model.lettersoupmodel.Topic;
 		public void initialize() {	
 			try {
 				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.BASIC);
+				letterssoup.generateBasicLetterSoup(Topic.ANIMALS);
 				prueba();
 			} catch (IOException e) {
 				e.printStackTrace();

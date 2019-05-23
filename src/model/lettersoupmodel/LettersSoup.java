@@ -43,23 +43,6 @@
 			cities = new ArrayList<>();
 			numbers = new ArrayList<>();
 			random = new Random();
-			init(difficultylevel);
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * @throws IOException 
-		 * 
-		 */
-		public void init(Difficulty difficultylevel) throws IOException {
-			if(difficultylevel == Difficulty.BASIC) {
-				generateBasicLetterSoup();
-			}
-			else if(difficultylevel == Difficulty.INTERMEDIUM) {
-				generateIntermediumLetterSoup();
-			}
-			else if(difficultylevel == Difficulty.HARD) {
-				generateHardLetterSoup();
-			}
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
@@ -115,7 +98,7 @@
 		 * @throws IOException 
 		 * 
 		 */
-		public void generateBasicLetterSoup() throws IOException {
+		public void generateBasicLetterSoup(Topic topic) throws IOException {
 			size = 15;
 			lettersoup = new String[size][size]; 
 			solution = new Word[5];
@@ -155,7 +138,7 @@
 		 * 
 		 * @throws IOException
 		 */
-		public void generateIntermediumLetterSoup() throws IOException {
+		public void generateIntermediumLetterSoup(Topic topic) throws IOException {
 			size = 30;
 			lettersoup = new String[size][size]; 
 			solution = new Word[12];
@@ -195,7 +178,7 @@
 		 * 
 		 * @throws IOException
 		 */
-		public void generateHardLetterSoup() throws IOException {
+		public void generateHardLetterSoup(Topic topic) throws IOException {
 			size = 50;
 			lettersoup = new String[size][size]; 
 			solution = new Word[20];
@@ -359,8 +342,6 @@
 				if(lettersoup[row][column] != null) {
 					empty = false;
 				}
-				row--;
-				column--;
 			}
 			return empty;
 		}
@@ -456,22 +437,29 @@
 			String c;
 			int row = word.getRow();
 			int column = word.getColumn();
-			int length = word.getLength();
+			int length = word.getLength()-1;
 			int i = 0;
-			
+		
 			while(verifyColumn(word.getColumn())==false) {
 				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
-			while(row<=lettersoup.length-1) {
-				row++;
-			}
-			if(row!=length) {
-				word.setRow((length-row));
+			//determina si la palabra calza en la columna asignada
+			while((lettersoup.length-1)-row!=length) {
+				row--;
+				if((lettersoup.length-1)-row==length){
+					word.setRow(row);
+					row = word.getRow();
+					System.out.println(word.getRow());
+				}
 			}
 			
 			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
+				System.out.println(word);
+				System.out.println(i);
+				System.out.println(row);
+				System.out.println(column);
 				lettersoup[row][column] = c;
 				i++;
 				row++;
@@ -486,15 +474,25 @@
 			String c;
 			int row = word.getRow();
 			int column = word.getColumn();
-			int length = word.getLength();
+			int length = word.getLength()-1;
 			int i = 0;
 			
 			while(verifyColumn(word.getRow())==false) {
 				word.setRow(random.nextInt(lettersoup.length-1));
 			}
 			
+			if(column!=length) {
+				word.setColumn(length);
+				column = word.getColumn();
+				System.out.println(word.getRow());
+			}
+			
 			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
+				System.out.println(word);
+				System.out.println(i);
+				System.out.println(row);
+				System.out.println(column);
 				lettersoup[row][column] = c;
 				i++;
 				column--;
@@ -509,15 +507,30 @@
 			String c;
 			int row = word.getRow();
 			int column = word.getColumn();
-			int length = word.getLength();
+			int length = word.getLength()-1;
 			int i = 0;
+			
+			System.out.println(word.getName());
+			System.out.println(column);
+			
 			
 			while(verifyColumn(word.getRow())==false) {
 				word.setRow(random.nextInt(lettersoup.length-1));
 			}
+		
+			while(column+length>lettersoup.length-1) {
+				column--;
+				if(column+length==lettersoup.length-1) {
+					word.setColumn(column);
+				}
+			}
 			
 			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
+				System.out.println(word);
+				System.out.println(i);
+				System.out.println(row);
+				System.out.println(column);
 				lettersoup[row][column] = c;
 				i++;
 				column++;
@@ -532,16 +545,29 @@
 			String c;
 			int row = word.getRow();
 			int column = word.getColumn();
-			int length = word.getLength();
+			int length = word.getLength()-1;
 			int i = 0;
+			
+			
+			System.out.println(word.getName());
+			System.out.println(column);
 			
 			while(verifyNorthWestDiagonal(word)==false) {
 				word.setRow(random.nextInt(lettersoup.length-1));
 				word.setColumn(random.nextInt(lettersoup.length-1));
 			}
 			
+			if(column<length) {
+				word.setColumn(column);
+				word.setRow(row);
+			}
+		
 			while(length>=0 && i<word.getLength()) {
 				c = Character.toString(word.getName().charAt(i));
+				System.out.println(word);
+				System.out.println(i);
+				System.out.println(row);
+				System.out.println(column);
 				lettersoup[row][column] = c;
 				i++;
 				row--;

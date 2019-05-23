@@ -22,6 +22,7 @@
 			this.column = column;
 			this.length = length;
 			generateRandomDirection();
+			diagonalPositions();
 		}
 	//_____________________________________________________________________________________________________________________________________
 		
@@ -54,7 +55,7 @@
 				direction = Direction.RIGHT;
 				break;
 			}*/
-			direction = Direction.UP;
+			direction = Direction.NORTHWEST;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		public String getName() {
@@ -97,7 +98,13 @@
 			this.direction = direction;
 		}
 	//_____________________________________________________________________________________________________________________________________	
-	
+		public void diagonalPositions() {
+			if(direction==Direction.NORTHEAST||direction==Direction.NORTHWEST||direction==Direction.SOUTHEAST||direction==Direction.SOUTHWEST){
+				column = row;
+				row = column;
+			}
+		}
+	//____________________________________________________________________________________________________________________________________
 		@Override
 		public String toString() {
 			return "Name "+name +" Row "+row +" Column "+column+" Length "+length+" Direction "+direction;
