@@ -36,8 +36,8 @@ import model.lettersoupmodel.Topic;
 		@FXML
 		public void initialize() {	
 			try {
-				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.BASIC);
-				letterssoup.generateBasicLetterSoup(Topic.ANIMALS);
+				letterssoup = new LettersSoup(Topic.CITIES, Difficulty.HARD);
+				letterssoup.generateBasicLetterSoup(Topic.CITIES);
 				prueba();
 			} catch (IOException e) {
 				e.printStackTrace();

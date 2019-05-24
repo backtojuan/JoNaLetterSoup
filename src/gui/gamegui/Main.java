@@ -9,6 +9,7 @@
 	import javafx.scene.Scene;
 	import javafx.stage.Stage;
 	import javafx.scene.image.Image;
+	import javafx.scene.media.AudioClip;
 	import javafx.scene.media.Media;
 	import javafx.scene.media.MediaPlayer;
 	
@@ -41,10 +42,8 @@
 			stage.getIcons().add(image);
 			
 			
-			/**File file = new File("gui/gamegui/music/backgroundmusic.mp3");
-			Media media = new Media(file.toURI().toString());
-			MediaPlayer player = new MediaPlayer(media);
-			player.play();*/
+			AudioClip audio = new AudioClip(this.getClass().getResource("backgroundmusic.mp3").toString());
+			audio.play();
 			
 			stage.setScene(scene);
 			stage.show();
