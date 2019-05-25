@@ -1,7 +1,7 @@
-//___________________________________________PACKAGE OF THIS CLASS_________________________________________________________________________
+//_________________________________________________________________________________________________________________________________________
 
 	package gui.lettersoupgui;
-//___________________________________________USED PACKAGES FOR THIS CLASS__________________________________________________________________
+//_________________________________________________________________________________________________________________________________________
 	
 	import javafx.application.Application;
 	import javafx.fxml.FXMLLoader;
@@ -9,7 +9,7 @@
 	import javafx.scene.Scene;
 	import javafx.stage.Stage;
 	import javafx.scene.image.Image;
-//___________________________________________ATTRIBUTES____________________________________________________________________________________
+//_________________________________________________________________________________________________________________________________________
 	/**
 	 * This class manage the necessary attributes and methods to manage and launch the User Interface.
 	 * @author Lina Johanna Salinas Delgado
@@ -17,8 +17,7 @@
 	 * @version V_01_May-2019
 	 */
 	public class Main extends Application{
-		
-//_________________________________________METHODS FOR THIS CLASS__________________________________________________________________________
+//_________________________________________________________________________________________________________________________________________
 		
 		@Override
 		public void start(Stage stage) throws Exception{
@@ -30,13 +29,15 @@
 			LetterSoupController lsc = loader.getController();
 			lsc.setStage(stage);
 			
+			Image image = new Image("gui/gamegui/images/icon.png");
+			stage.getIcons().add(image);
+			
 			Scene scene = new Scene(root);
 			stage.setTitle("Letters Soup Game");
 			stage.setScene(scene);
 			stage.show();
 ;		}
 	//___________________________________________________________________________________________________________________________________
-	
 		public static void main(String[]args){
 			launch(args);
 		}	

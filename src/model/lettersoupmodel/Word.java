@@ -4,7 +4,13 @@
 	import java.util.Random;
 	import model.lettersoupmodel.Direction;
 //___________________________________________ATTRIBUTES____________________________________________________________________________________
-	
+	/**
+	 * This class manages the nedeed methods and attributes to create letters soup.
+	 * @author Lina Johanna Salinas Delgado
+	 * @author Juan José Valencia Jaramillo
+	 * @version V_01 May_2019
+	 * 
+	 */
 	public class Word {
 		
 		private String name;

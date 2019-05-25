@@ -1,6 +1,6 @@
 .background{
-	-fx-background-color: PINK;
+	-fx-background-color: BURLYWOOD;
 }
 .button{
-	-fx-background-color: darkslateblue; -fx-text-fill: white;
+	-fx-background-color: CADETBLUE; -fx-text-fill: white;
 }

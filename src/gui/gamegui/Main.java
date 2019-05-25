@@ -1,8 +1,6 @@
-//___________________________________________PACKAGE OF THIS CLASS_________________________________________________________________________
-
+//_________________________________________________________________________________________________________________________________________
 	package gui.gamegui;
-//___________________________________________USED PACKAGES FOR THIS CLASS__________________________________________________________________
-	
+//_________________________________________________________________________________________________________________________________________
 	import javafx.application.Application;
 	import javafx.fxml.FXMLLoader;
 	import javafx.scene.Parent;
@@ -14,7 +12,7 @@
 	import javafx.scene.media.MediaPlayer;
 	
 	import java.io.File;
-//___________________________________________ATTRIBUTES____________________________________________________________________________________
+//_________________________________________________________________________________________________________________________________________
 	/**
 	 * This class manage the necessary attributes and methods to manage and launch the User Interface.
 	 * @author Lina Johanna Salinas Delgado
@@ -22,9 +20,7 @@
 	 * @version V_01_May-2019
 	 */
 	public class Main extends Application{
-		
-//_________________________________________METHODS FOR THIS CLASS__________________________________________________________________________
-		
+//_________________________________________________________________________________________________________________________________________
 		@Override
 		public void start(Stage stage) throws Exception{
 			
@@ -37,19 +33,14 @@
 			
 			Scene scene = new Scene(root);
 			stage.setTitle("Main Game Menu");
-			
+			 
 			Image image = new Image("gui/gamegui/images/icon.png");
 			stage.getIcons().add(image);
-			
-			
-			AudioClip audio = new AudioClip(this.getClass().getResource("backgroundmusic.mp3").toString());
-			audio.play();
 			
 			stage.setScene(scene);
 			stage.show();
 		}
 	//___________________________________________________________________________________________________________________________________
-	
 		public static void main(String[]args){
 			launch(args);
 		}	
