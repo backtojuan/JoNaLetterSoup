@@ -1,5 +1,5 @@
 package model.gamemodel;
 
 public enum Shape {
-	CIRCLE, RECTANGLE, TRIANGLE
+	CIRCLE, RECTANGLE
 }

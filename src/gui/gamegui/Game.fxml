@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -8,6 +9,9 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,11 +21,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="711.0" styleClass="background" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.gamegui.GameController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="711.0" styleClass="background" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.gamegui.GameController">
    <children>
-      <BorderPane layoutX="-6.0" layoutY="-5.0" prefHeight="545.0" prefWidth="729.0">
+      <BorderPane fx:id="borderpane" layoutX="-6.0" layoutY="-5.0" prefHeight="545.0" prefWidth="719.0">
          <center>
-            <GridPane BorderPane.alignment="CENTER">
+            <GridPane prefHeight="515.0" prefWidth="713.0" styleClass="background" stylesheets="@theme.css" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -49,46 +53,66 @@
                      <GridPane.margin>
                         <Insets left="50.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Berlin Sans FB" size="12.0" />
+                     </font>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#signUp" stylesheets="@demo.css" text="Sign Up" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="150.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Berlin Sans FB" size="12.0" />
+                     </font>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#removeProfile" stylesheets="@demo.css" text="Remove" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="250.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Berlin Sans FB" size="12.0" />
+                     </font>
                   </Button>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label stylesheets="@theme.css" text="NickName" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets left="125.0" />
+                        <Insets left="25.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label stylesheets="@theme.css" text="Password" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="25.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="151.0" fitWidth="325.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/logo.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="220.0" top="25.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="175.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <image>
                         <Image url="@images/welcome.png" />
                      </image>
+                     <GridPane.margin>
+                        <Insets left="125.0" />
+                     </GridPane.margin>
                   </ImageView>
-                  <Label text="NickName" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="25.0" />
-                     </GridPane.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <Label text="Password" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets left="25.0" />
-                     </GridPane.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
                </children>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
             </GridPane>
          </center>
          <top>
-            <MenuBar prefHeight="25.0" prefWidth="707.0" BorderPane.alignment="CENTER">
+            <MenuBar prefHeight="25.0" prefWidth="738.0" stylesheets="@theme.css" BorderPane.alignment="CENTER">
               <menus>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
@@ -103,11 +127,24 @@
                   </Menu>
               </menus>
                <BorderPane.margin>
-                  <Insets right="12.0" top="5.0" />
+                  <Insets top="5.0" />
                </BorderPane.margin>
                <padding>
                   <Insets left="15.0" />
                </padding>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <ImageInput />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </MenuBar>
          </top>
       </BorderPane>

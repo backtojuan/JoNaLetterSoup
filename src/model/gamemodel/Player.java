@@ -3,6 +3,8 @@
 	package model.gamemodel;
 //_________________________________________________________________________________________________________________________________________
 
+	import java.time.LocalDate;
+
 //_________________________________________________________________________________________________________________________________________
 	
 	public class Player {
@@ -11,13 +13,41 @@
 		private String nickname;
 		private String password;
 		private String favColor;
-		private Date birthday;
+		private LocalDate birthday;
 		private Shape avatar;
 //_________________________________________________________________________________________________________________________________________
 		
-		public Player(String nickname, String password) {
+		public Player(String name,String nickname, String password, String favColor, LocalDate birthday, Shape avatar) {
+			this.name = name;
 			this.nickname = nickname;
 			this.password = password;
+			this.favColor = favColor;
+			this.birthday = birthday;
+			this.avatar = avatar;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public String getNickname() {
+			return nickname;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+		public String getFavColor() {
+			return favColor;
+		}
+
+		public LocalDate getBirthday() {
+			return birthday;
+		}
+
+		public Shape getAvatar() {
+			return avatar;
 		}
 //_________________________________________________________________________________________________________________________________________
 }

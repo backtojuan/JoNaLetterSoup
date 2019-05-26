@@ -33,7 +33,9 @@
 			
 			Scene scene = new Scene(root);
 			stage.setTitle("Main Game Menu");
-			 
+			stage.setResizable(false);
+			stage.centerOnScreen();
+			
 			Image image = new Image("gui/gamegui/images/icon.png");
 			stage.getIcons().add(image);
 			
