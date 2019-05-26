@@ -1,28 +1,32 @@
 //_________________________________________________________________________________________________________________________________________
 	package gui.gamegui;
 //_________________________________________________________________________________________________________________________________________
+	import java.io.IOException;
 	import java.time.LocalDate;
-
 	import org.controlsfx.control.Notifications;
 	import customexception.InvalidInformationException;
 	import customexception.InvalidPasswordException;
+	import javafx.event.ActionEvent;
 	import javafx.fxml.FXML;
+	import javafx.fxml.FXMLLoader;
 	import javafx.geometry.Pos;
+	import javafx.scene.Parent;
+	import javafx.scene.Scene;
 	import javafx.scene.control.ColorPicker;
 	import javafx.scene.control.DatePicker;
 	import javafx.scene.control.MenuButton;
 	import javafx.scene.control.PasswordField;
 	import javafx.scene.control.TextField;
+	import javafx.scene.image.Image;
+	import javafx.scene.image.ImageView;
 	import javafx.scene.layout.Pane;
-	import javafx.scene.paint.Color;
-	import javafx.stage.Stage;
-	import model.gamemodel.Player;
-	import model.gamemodel.Shape;
-	import javafx.collections.FXCollections;
-	import javafx.event.ActionEvent;
 	import javafx.scene.shape.Circle;
 	import javafx.scene.shape.Rectangle;
-	import javafx.scene.shape.Polygon;
+	import javafx.stage.Stage;
+	import javafx.util.Duration;
+	import model.gamemodel.Game;
+	import model.gamemodel.Player;
+	import model.gamemodel.Shape;
 //_________________________________________________________________________________________________________________________________________
 	public class SignUpController {
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -44,9 +48,20 @@
 		    private PasswordField confirmPasswordField;
 	    //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private Stage stage;
+		    private Game game;
 //_________________________________________________________________________________________________________________________________________
+		    @FXML
+		    private void Initialize() {
+		    	GameController gc = new GameController();
+		    	game = gc.giveGame();
+		    }
+	//_____________________________________________________________________________________________________________________________________
 		    public void setStage(Stage stage) {
 		    	this.stage = stage;
+		    }
+	//_____________________________________________________________________________________________________________________________________
+		    public void initGame(Game game) {
+		    	this.game = game;
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
@@ -76,12 +91,16 @@
 		    		}
 		    		else{
 		    			Player player = new Player(name,nickname,password,favcolor,birthday,avatar);
+		    			game.addPlayer(player);
 		    			Notifications.create()
 		    			.title("Annoucement")
 		    			.text("You've been succesfully registered. Welcome!!!")
+		    			.graphic(new ImageView(new Image("gui/gamegui/images/success.png")))
 		    			.darkStyle()
-		    			.position(Pos.CENTER)
-		    			.showInformation()
+		    			.hideCloseButton()
+		    			.hideAfter(Duration.seconds(8))
+		    			.position(Pos.BOTTOM_CENTER)
+		    			.show()
 		    			;
 		    		}
 		    	}
@@ -89,37 +108,38 @@
 		    		Notifications.create()
 		    			.title("Something went wrong....")
 		    			.text(iie.getMessage())
+		    			.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
 		    			.darkStyle()
-		    			.position(Pos.CENTER)
-		    			.showError();
+		    			.position(Pos.TOP_CENTER)
+		    			.hideCloseButton()
+		    			.hideAfter(Duration.seconds(8))
+		    			.show();
 		    	}
 		    	catch(InvalidPasswordException ipe){
 		    		Notifications.create()
 	    			.title("Something went wrong....")
 	    			.text(ipe.getMessage())
+	    			.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
 	    			.darkStyle()
-	    			.position(Pos.CENTER)
-	    			.showWarning();
+	    			.position(Pos.TOP_CENTER)
+	    			.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+	    			.show();
 		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			@FXML
 		    private void createCircleAvatar(ActionEvent event) { 
-				Circle circle = new Circle(350.0,290.0,50,colorField.getValue());
+				Circle circle = new Circle(400.0,290.0,50,colorField.getValue());
 		   		paneSurface.getChildren().add(circle);
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			@FXML
 			private void createSquareAvatar(ActionEvent event) {
-				Rectangle square = new Rectangle(300.0,240.0,75,75);
+				Rectangle square = new Rectangle(250.0,2500,75,75);
 				square.setFill(colorField.getValue());
 				paneSurface.getChildren().add(square);
 			}
-	//_____________________________________________________________________________________________________________________________________
-		    @FXML
-		    void returnToMainStage(ActionEvent event) {
-		    	
-		    }
 	//_____________________________________________________________________________________________________________________________________
 		    private boolean confirmPassword(String password, String confirmPassword) {
 		    	if(password.equals(confirmPassword)) {

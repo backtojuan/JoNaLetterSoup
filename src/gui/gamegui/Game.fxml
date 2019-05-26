@@ -21,11 +21,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="711.0" styleClass="background" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.gamegui.GameController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="711.0" styleClass="background" stylesheets="@css/theme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.gamegui.GameController">
    <children>
-      <BorderPane fx:id="borderpane" layoutX="-6.0" layoutY="-5.0" prefHeight="545.0" prefWidth="719.0">
+      <BorderPane fx:id="borderpane" layoutX="-6.0" layoutY="-5.0" prefHeight="545.0" prefWidth="719.0" styleClass="background" stylesheets="@css/theme.css">
          <center>
-            <GridPane prefHeight="515.0" prefWidth="713.0" styleClass="background" stylesheets="@theme.css" BorderPane.alignment="CENTER">
+            <GridPane prefHeight="515.0" prefWidth="713.0" styleClass="background" stylesheets="@../lettersoupgui/css/theme.css" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -49,7 +49,7 @@
                         <Insets left="25.0" right="25.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" onAction="#signIn" stylesheets="@demo.css" text="Sign In" GridPane.rowIndex="5">
+                  <Button mnemonicParsing="false" onAction="#signIn" stylesheets="@css/theme.css" text="Sign In" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="50.0" />
                      </GridPane.margin>
@@ -57,7 +57,7 @@
                         <Font name="Berlin Sans FB" size="12.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#signUp" stylesheets="@demo.css" text="Sign Up" GridPane.rowIndex="5">
+                  <Button mnemonicParsing="false" onAction="#signUp" stylesheets="@css/theme.css" text="Sign Up" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="150.0" />
                      </GridPane.margin>
@@ -65,7 +65,7 @@
                         <Font name="Berlin Sans FB" size="12.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#removeProfile" stylesheets="@demo.css" text="Remove" GridPane.rowIndex="5">
+                  <Button mnemonicParsing="false" onAction="#removeProfile" stylesheets="@css/theme.css" text="Remove" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="250.0" />
                      </GridPane.margin>
@@ -73,7 +73,7 @@
                         <Font name="Berlin Sans FB" size="12.0" />
                      </font>
                   </Button>
-                  <Label stylesheets="@theme.css" text="NickName" GridPane.rowIndex="1">
+                  <Label stylesheets="@css/theme.css" text="NickName" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="25.0" />
                      </GridPane.margin>
@@ -81,7 +81,7 @@
                         <Font name="Berlin Sans FB Demi Bold" size="30.0" />
                      </font>
                   </Label>
-                  <Label stylesheets="@theme.css" text="Password" GridPane.rowIndex="3">
+                  <Label stylesheets="@css/theme.css" text="Password" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="25.0" />
                      </GridPane.margin>
@@ -97,7 +97,7 @@
                         <Insets left="220.0" top="25.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fitHeight="175.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <ImageView fx:id="doraemon" fitHeight="160.0" fitWidth="125.0" onMouseClicked="#playDoraemonEasterEgg" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <image>
                         <Image url="@images/welcome.png" />
                      </image>
@@ -112,12 +112,12 @@
             </GridPane>
          </center>
          <top>
-            <MenuBar prefHeight="25.0" prefWidth="738.0" stylesheets="@theme.css" BorderPane.alignment="CENTER">
+            <MenuBar prefHeight="25.0" prefWidth="738.0" stylesheets="@css/theme.css" BorderPane.alignment="CENTER">
               <menus>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#showAboutMenu" text="About" />
-                        <MenuItem mnemonicParsing="false" onAction="#showSignUpInfoMenu" text="How to sign up?" />
+                    <MenuItem mnemonicParsing="false" onAction="#showAboutInfo" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#showSignUpInfo" text="How to sign up?" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Scores">

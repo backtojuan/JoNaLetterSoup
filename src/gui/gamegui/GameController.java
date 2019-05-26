@@ -1,124 +1,224 @@
 //_________________________________________________________________________________________________________________________________________
 	package gui.gamegui;
 //_________________________________________________________________________________________________________________________________________
+	import java.io.IOException;
+	import org.controlsfx.control.Notifications;
+	import customexception.PlayerDoesNotExistException;
+	import gui.lettersoupgui.LetterSoupController;
+	import javafx.event.ActionEvent;
 	import javafx.fxml.FXML;
 	import javafx.fxml.FXMLLoader;
+	import javafx.geometry.Pos;
 	import javafx.scene.Parent;
 	import javafx.scene.Scene;
-	import javafx.stage.Modality;
-	import javafx.stage.Stage;
-import threads.BackgroundThread;
-import javafx.scene.control.PasswordField;
+	import javafx.scene.control.PasswordField;
 	import javafx.scene.control.TextField;
+	import javafx.scene.input.MouseEvent;
 	import javafx.scene.image.Image;
 	import javafx.scene.image.ImageView;
 	import javafx.scene.layout.BorderPane;
+	import javafx.scene.layout.Pane;
 	import javafx.scene.media.AudioClip;
-	import javafx.scene.media.MediaPlayer;
-	import java.io.IOException;
-	import java.util.ArrayList;
-	import java.util.Random;
-	import org.controlsfx.control.Notifications;
-	import javafx.event.ActionEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+	import javafx.util.Duration;
+	import model.gamemodel.Game;
 //_________________________________________________________________________________________________________________________________________
 	public class GameController {
 		//:::::::::::::::::::::::::::::::::::::::::::::
+	    	@FXML
+	    	private Pane pane;
 	    	@FXML
 	    	private BorderPane borderpane;
 		    @FXML
 		    private PasswordField passwordField;
 		    @FXML
 		    private TextField nicknameTextField; 
+		    @FXML
+		    private ImageView doraemon;
 		//:::::::::::::::::::::::::::::::::::::::::::::
 		    private Stage stage;
-		    private ArrayList<Image> images;
+		    private AudioClip audio;
+		    private Game game;
 		//:::::::::::::::::::::::::::::::::::::::::::::
 //_________________________________________________________________________________________________________________________________________
 		    @FXML
 		    private void initialize() {
-		    	playMusic();
-		    	initImages();
-		    	BackgroundThread bt = new BackgroundThread(this);
-		    	bt.start();
 		    	try {
-					bt.join();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		    		game = new Game(null);
+		    		playMusic();
+		    	}
+		    	catch(IOException|ClassNotFoundException e) {
+		    		Notifications.create()
+		    		.title("Announcement")
+		    		.text("The file that contained the scores of the game was deleted check for the data folder")
+		    		.darkStyle()
+		    		.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+		    		.showError();
+		    		;
+		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________
-		    private void initImages() {
-		    	images.add(new Image("gui/gamegui/images/D.png"));
-		    	images.add(new Image("gui/gamegui/images/I.png"));
-		    	images.add(new Image("gui/gamegui/images/K.png"));
-		    	images.add(new Image("gui/gamegui/images/M.png"));
-		    	images.add(new Image("gui/gamegui/images/P.png"));
-		    }
+		    public Game giveGame() {
+		    	return game;
+		    } 
 	//_____________________________________________________________________________________________________________________________________
 		    public void playMusic() {
-		    	AudioClip audio = new AudioClip(this.getClass().getResource("backgroundmusic.mp3").toString());
+		    	audio = new AudioClip(this.getClass().getResource("backgroundmusic.mp3").toString());
 		    	audio.play();
-		    }
-	//_____________________________________________________________________________________________________________________________________
-		    public void animateBackground() {
-		    	Random random = new Random();
-		    	ImageView r = new ImageView();
-		    	Image randompick = images.get(random.nextInt(images.size()));
-		    	r.setImage(randompick);
-		    	borderpane.getChildren().add(r);
-		    }
+		    } 
 	//_____________________________________________________________________________________________________________________________________	    
 		    public void setStage(Stage stage) {
 		    	this.stage = stage;
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
-		    private void removeProfile(ActionEvent event) {
-		
+		    private void playDoraemonEasterEgg(MouseEvent event) {
+		    	AudioClip audio = new AudioClip(this.getClass().getResource("doraemon.mp3").toString());
+		    	if(event.getX()<doraemon.getFitHeight()||event.getX()<doraemon.getFitWidth()) {
+		    		audio.play();
+		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
-		    private void showAboutMenu(ActionEvent event) {
-		
+		    private void removeProfile(ActionEvent event) {
+		    	/**try {
+		    		
+		    	}
+		    	catch{
+		    		
+		    	}*/
+		    }
+	//_____________________________________________________________________________________________________________________________________
+		    @FXML
+		    private void showAboutInfo(ActionEvent event) {
+		    	Notifications.create()
+		    	.title("About")
+		    	.text("Developed by Lina Johanna Salinas Delgado & Juan Jose Valencia Jaramillo."
+		    			+ "Software engineering students from Icesi University")
+		    	.graphic(new ImageView(new Image("gui/gamegui/images/suggestion.png")))
+		    	.darkStyle()
+		    	.position(Pos.BOTTOM_CENTER)
+		    	.hideCloseButton()
+    			.hideAfter(Duration.seconds(8))
+    			.show();
+		    	;
 		    }		    
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    private void showBestScoresMenu(ActionEvent event) {
-		
+		    	
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
-		    private void showSignUpInfoMenu(ActionEvent event) {
-		
+		    private void showSignUpInfo(ActionEvent event) {
+		    	Notifications.create()
+		    	.title("Help")
+		    	.text("If you want to sign up please click the sign up button and fill the required information in order to start playing")
+		    	.graphic(new ImageView(new Image("gui/gamegui/images/suggestion.png")))
+		    	.darkStyle()
+		    	.position(Pos.BOTTOM_CENTER)
+		    	.hideCloseButton()
+    			.hideAfter(Duration.seconds(8))
+		    	.show();
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    private void signIn(ActionEvent event) {
-		
+		    	try {
+		    		String nickname = nicknameTextField.getText();
+		    		String password = passwordField.getText();
+		    		if(game.playerExists(nickname)==null) {
+		    			throw new PlayerDoesNotExistException(nickname);
+		    		}
+		    		if(game.isCorrect(nickname, password)) {
+		    			
+		    			try {
+			    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/lettersoupgui/lettersoup.fxml"));
+					    	Parent root1 = (Parent) fxmlLoader.load();
+					    	LetterSoupController ltc = new LetterSoupController();
+					    	ltc.initGame(game);
+					    	stage.setTitle("LetterSoup");
+					    	stage.centerOnScreen();
+					    	stage.setResizable(false);
+							Image image = new Image("gui/lettersoupgui/images/icon.png");
+							stage.getIcons().add(image);
+							stage.setResizable(false);
+							stage.centerOnScreen();		
+					    	stage.setScene(new Scene(root1));  
+					    	stage.show();
+		    			}
+					    catch(IOException e) {
+							Notifications.create()
+							.title("Something went wrong...")
+							.text("Cannot launch the new window due to a problem with the files in the project, make sure 'SignUp.fxml' exists")
+							.darkStyle()
+							.position(Pos.TOP_RIGHT)
+				    		.hideCloseButton()
+			    			.hideAfter(Duration.seconds(8))
+			    			.show();;
+					    }
+		    		}
+		    		else {
+		    			Notifications.create()
+		    			.title("Announcement")
+		    			.text("OOPS! your password and your nickname does not match together be careful and try again")
+		    			.graphic(new ImageView(new Image("gui/gamegui/images/warning.png")))
+		    			.darkStyle()
+		    			.position(Pos.TOP_RIGHT)
+		    			.hideCloseButton()
+		    			.hideAfter(Duration.seconds(8))
+		    			.show();
+		    			;
+		    		}
+		    	}
+		    	catch (PlayerDoesNotExistException pdne){
+		    		Notifications.create()
+		    		.title("Announcement")
+		    		.text(pdne.getMessage())
+		    		.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+		    		.darkStyle()
+		    		.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+		    		.show();
+		    		;
+		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
-		    void signUp(ActionEvent event) throws IOException {
-		    	
-		    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
-		    	Parent root1 = (Parent) fxmlLoader.load();
-		    	Stage stage = new Stage();
-		    	
-		    	SignUpController supc = new SignUpController();
-		    	supc.setStage(stage);
-		    	
-		    	stage.setTitle("Sign up section");
-		    	stage.centerOnScreen();
-		    	stage.setResizable(false);
-		    	
-				Image image = new Image("gui/gamegui/images/icon.png");
-				stage.getIcons().add(image);
-				stage.initModality(Modality.APPLICATION_MODAL);
-				stage.setResizable(false);
-				stage.centerOnScreen();
-				
-		    	stage.setScene(new Scene(root1));  
-		    	stage.show();
+		    private void signUp(ActionEvent event){
+				try {
+			    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+			    	Parent root1 = (Parent) fxmlLoader.load();
+			    	
+			    	SignUpController supc = new SignUpController();
+			    	stage = new Stage();
+			    	supc.setStage(stage);
+			    	System.out.println(stage);
+			    	stage.setTitle("Sign up section");
+			    	stage.centerOnScreen();
+			    	stage.setResizable(false);
+			    	Image image = new Image("gui/gamegui/images/icon.png");
+					stage.getIcons().add(image);
+					stage.setResizable(false);
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.centerOnScreen();
+			    	stage.setScene(new Scene(root1));  
+			    	stage.show();
+				} catch (IOException e) {
+					Notifications.create()
+					.title("Something went wrong...")
+					.text("Cannot launch the new window due to a problem with the files in the project, make sure 'SignUp.fxml' exists")
+					.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+					.darkStyle()
+					.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+	    			.show();
+				}
 		    }
 //_________________________________________________________________________________________________________________________________________
 }

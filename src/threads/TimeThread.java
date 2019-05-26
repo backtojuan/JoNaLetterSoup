@@ -1,25 +1,22 @@
 //_________________________________________________________________________________________________________________________________________
 	package threads;
 //_________________________________________________________________________________________________________________________________________
-	import gui.gamegui.GameController;
+	import gui.lettersoupgui.LetterSoupController;
 //_________________________________________________________________________________________________________________________________________
-	public class BackgroundThread extends Thread{
+	public class TimeThread extends Thread{
 		
-		private GameController gamecontroller;
+		private LetterSoupController lettersoupcontroller;
+		private boolean finished;
 	//_____________________________________________________________________________________________________________________________________
-		public BackgroundThread(GameController gamecontroller) {
-			this.gamecontroller = gamecontroller;
+		public TimeThread(LetterSoupController lettersoupcontroller,boolean finished) {
+			this.lettersoupcontroller = lettersoupcontroller;
+			this.finished = finished;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		@Override
 		public void run() {
-			while(true) {
-				
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			while(finished==false) {
+				lettersoupcontroller.runTime();
 			}
 		}	
 //_________________________________________________________________________________________________________________________________________

@@ -1,46 +1,62 @@
 //_________________________________________________________________________________________________________________________________________
 		package gui.lettersoupgui;
 //_________________________________________________________________________________________________________________________________________
-		import javafx.fxml.FXML;
-		import javafx.geometry.Pos;
-		import javafx.scene.control.ComboBox;
-		import javafx.scene.control.Label;
-		import javafx.scene.control.TextArea;
-		import javafx.scene.control.Button;
 		import java.io.IOException;
+		import java.sql.Time;
+		import org.controlsfx.control.Notifications;
 		import javafx.collections.FXCollections;
 		import javafx.event.ActionEvent;
+		import javafx.fxml.FXML;
+		import javafx.geometry.Pos;
+		import javafx.scene.control.Button;
+		import javafx.scene.control.ComboBox;
+		import javafx.scene.control.Label;
+		import javafx.scene.control.ScrollPane;
+		import javafx.scene.control.TextArea;
+		import javafx.scene.image.Image;
+		import javafx.scene.image.ImageView;
 		import javafx.scene.layout.BorderPane;
 		import javafx.scene.layout.GridPane;
-		import javafx.scene.control.ScrollPane;
 		import javafx.stage.Stage;
+		import javafx.util.Duration;
 		import model.gamemodel.Difficulty;
+		import model.gamemodel.Game;
 		import model.lettersoupmodel.LettersSoup;
 		import model.lettersoupmodel.Topic;
+		import threads.TimeThread;
 //_________________________________________________________________________________________________________________________________________
 		public class LetterSoupController {
-			
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    @FXML
 		    private BorderPane borderpane;
+		    @FXML
+		    private ScrollPane scrollpane;
+		    @FXML
+		    private GridPane gridpane;
+		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    @FXML
 		    private Button playButton;
 		    @FXML
 		    private ComboBox<Topic> topicComboBox;
 		    @FXML
 		    private ComboBox<Difficulty> difficultyComboBox;		    
+		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    @FXML
 		    private TextArea solutionList;
 		    @FXML
 		    private TextArea foundList;
 		    @FXML
-		    private ScrollPane scrollpane;
+		    private Label minutesLabel;
 		    @FXML
-		    private GridPane gridpane;
+		    private Label secondsLabel;
+		    @FXML
+		    private Label scoreLabel;  
 		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private Stage stage;
 		    private Button lettersoup[][];
 		    private LettersSoup letterssoup;
+		    private Game game;
+		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//_____________________________________________________________________________________________________________________________________
 		    /**
 		     * 
@@ -65,21 +81,59 @@
 		    	stage = stg;
 		    }
 		//_________________________________________________________________________________________________________________________________
+		    public void initGame(Game game) {
+		    	this.game = game;
+		    }
+		//_________________________________________________________________________________________________________________________________
+		    public void runTime() {
+		    	if(letterssoup.getDifficultylevel()==Difficulty.BASIC) {
+		    		int minutes = 7;
+		    		int seconds = 59;
+		    		minutesLabel.setText(""+minutes);
+		    		secondsLabel.setText(""+seconds);
+		    		seconds-=1;
+		    		if(seconds==0) {
+		    			seconds=59;
+		    			minutes-=1;
+		    		}
+		    	}
+		    	else if(letterssoup.getDifficultylevel()==Difficulty.INTERMEDIUM) {
+		    		
+		    	}
+		    	else {
+		    		
+		    	}
+		    }
+		//_________________________________________________________________________________________________________________________________
 			@FXML
 		    private void playGame(ActionEvent event) {
 		    	if(topicComboBox.getValue().equals(Topic.ANIMALS) && difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
 		    		try {
 						letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.BASIC);
+						game.setDifficultyLevel(letterssoup.getDifficultylevel());
 						showBasicLetterSoup();
 						showListOfWords();
-						playButton.setDisable(true);
+						playButton.setDisable(true);	
+						
+						TimeThread tt = new TimeThread(this, false);
+						tt.start();
+						
 						prueba();
-					} catch (IOException ioe) {
-					
+					} catch (IOException|ClassNotFoundException e) {
+						Notifications.create()
+						.title("Announcement")
+						.text("The scores cannot be recovered because the file does not exist check for the folder data")
+						.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+						.darkStyle()
+						.position(Pos.TOP_RIGHT)
+						.hideCloseButton()
+		    			.hideAfter(Duration.seconds(8))
+		    			.show();
+						
 					}
 		    	}
 		    }
-	//_____________________________________________________________________________________________________________________________________
+		//_____________________________________________________________________________________________________________________________________
 		    /**
 		     * 
 		     */

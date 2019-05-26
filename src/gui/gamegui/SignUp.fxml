@@ -15,7 +15,7 @@
    <children>
       <DatePicker fx:id="birthdayField" layoutX="24.0" layoutY="50.0" />
       <TextField fx:id="nameField" layoutX="24.0" layoutY="118.0" prefHeight="25.0" prefWidth="174.0" />
-      <Button layoutX="130.0" layoutY="302.0" mnemonicParsing="false" onAction="#signUp" text="Sign Up" />
+      <Button layoutX="82.0" layoutY="301.0" mnemonicParsing="false" onAction="#signUp" stylesheets="@css/theme.css" text="Sign Up" />
       <Label layoutX="27.0" layoutY="22.0" text="Birthday Date">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
@@ -42,7 +42,7 @@
             <Font name="Berlin Sans FB Bold" size="12.0" />
          </font>
       </Label>
-      <ColorPicker fx:id="colorField" layoutX="265.0" layoutY="50.0" prefHeight="25.0" prefWidth="174.0" />
+      <ColorPicker fx:id="colorField" layoutX="265.0" layoutY="50.0" prefHeight="25.0" prefWidth="174.0" styleClass="button" stylesheets="@css/theme.css" />
       <Label layoutX="265.0" layoutY="22.0" text="Favourite Color">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
@@ -50,7 +50,7 @@
       </Label>
       <PasswordField fx:id="passwordField" layoutX="24.0" layoutY="195.0" prefHeight="25.0" prefWidth="174.0" />
       <PasswordField fx:id="confirmPasswordField" layoutX="24.0" layoutY="255.0" prefHeight="25.0" prefWidth="174.0" />
-      <MenuButton fx:id="avatarMenu" layoutX="224.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="174.0" text="choose....">
+      <MenuButton fx:id="avatarMenu" layoutX="224.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="174.0" styleClass="button" stylesheets="@css/theme.css" text="choose....">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#createCircleAvatar" text="CIRCLE" />
           <MenuItem mnemonicParsing="false" onAction="#createSquareAvatar" text="SQUARE" />
@@ -66,6 +66,5 @@
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
       </Label>
-      <Button layoutX="45.0" layoutY="302.0" mnemonicParsing="false" onAction="#returnToMainStage" text="Return" />
    </children>
 </Pane>

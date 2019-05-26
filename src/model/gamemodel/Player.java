@@ -1,10 +1,7 @@
 //_________________________________________________________________________________________________________________________________________
-	
 	package model.gamemodel;
 //_________________________________________________________________________________________________________________________________________
-
 	import java.time.LocalDate;
-
 //_________________________________________________________________________________________________________________________________________
 	
 	public class Player {
@@ -15,6 +12,7 @@
 		private String favColor;
 		private LocalDate birthday;
 		private Shape avatar;
+		private int playTime;
 //_________________________________________________________________________________________________________________________________________
 		
 		public Player(String name,String nickname, String password, String favColor, LocalDate birthday, Shape avatar) {
@@ -48,6 +46,14 @@
 
 		public Shape getAvatar() {
 			return avatar;
+		}
+		
+		public int getPlayTime() {
+			return playTime;
+		}
+		
+		public void setPlayTime(int playtime) {
+			this.playTime = playtime;
 		}
 //_________________________________________________________________________________________________________________________________________
 }

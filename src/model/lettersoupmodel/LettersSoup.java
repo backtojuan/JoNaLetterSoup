@@ -35,8 +35,9 @@
 		 * This method allows to construct objects of type letters soup
 		 * @param topic the topic that is going to determinate the words inside the letters soup
 		 * @throws IOException 
+		 * @throws ClassNotFoundException 
 		 */
-		public LettersSoup(Topic topic,Difficulty difficultylevel) throws IOException {
+		public LettersSoup(Topic topic,Difficulty difficultylevel) throws IOException, ClassNotFoundException {
 			super(difficultylevel);
 			this.topic = topic;
 			animals = new ArrayList<>();

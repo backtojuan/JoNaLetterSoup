@@ -23,9 +23,7 @@
 //_________________________________________________________________________________________________________________________________________
 		@Override
 		public void start(Stage stage) throws Exception{
-			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
-			
 			Parent root = loader.load();
 			
 			GameController gc = loader.getController();
