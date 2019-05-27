@@ -51,17 +51,24 @@
 		    private Game game;
 //_________________________________________________________________________________________________________________________________________
 		    @FXML
-		    private void Initialize() {
-		    	GameController gc = new GameController();
-		    	game = gc.giveGame();
+		    public void initialize() {
+		    	try {
+					game = new Game(null);
+				} catch (ClassNotFoundException | IOException e) {
+		    		Notifications.create()
+		    		.title("Announcement")
+		    		.text("The file that contained the scores of the game was deleted check for the data folder")
+		    		.darkStyle()
+		    		.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+		    		.showError();
+		    		;
+				}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    public void setStage(Stage stage) {
 		    	this.stage = stage;
-		    }
-	//_____________________________________________________________________________________________________________________________________
-		    public void initGame(Game game) {
-		    	this.game = game;
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
@@ -92,6 +99,7 @@
 		    		else{
 		    			Player player = new Player(name,nickname,password,favcolor,birthday,avatar);
 		    			game.addPlayer(player);
+		    			game.savePlayers();
 		    			Notifications.create()
 		    			.title("Annoucement")
 		    			.text("You've been succesfully registered. Welcome!!!")
@@ -126,6 +134,18 @@
 	    			.hideAfter(Duration.seconds(8))
 	    			.show();
 		    	}
+		    	catch(IOException ioe) {
+		    		Notifications.create()
+	    			.title("Something went wrong....")
+	    			.text("The path to save the information of the players does not exists please check the data folder is"
+	    					+ "created inside the source folder of the project")
+	    			.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+	    			.darkStyle()
+	    			.position(Pos.TOP_CENTER)
+	    			.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+	    			.show();
+		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			@FXML
@@ -136,7 +156,7 @@
 	//_____________________________________________________________________________________________________________________________________
 			@FXML
 			private void createSquareAvatar(ActionEvent event) {
-				Rectangle square = new Rectangle(250.0,2500,75,75);
+				Rectangle square = new Rectangle(250.0,250,75,75);
 				square.setFill(colorField.getValue());
 				paneSurface.getChildren().add(square);
 			}

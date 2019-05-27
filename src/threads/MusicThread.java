@@ -6,16 +6,21 @@
 	public class MusicThread extends Thread{
 		
 		private GameController gamecontroller;
-		private boolean isPlaying;
 	//_____________________________________________________________________________________________________________________________________
-		public MusicThread(GameController gamecontroller, boolean isPlaying) {
+		public MusicThread(GameController gamecontroller) {
 			this.gamecontroller = gamecontroller;
-			this.isPlaying = isPlaying;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		@Override
 		public void run() {		
-			
+			gamecontroller.playMusic();
+			try {
+				sleep(195000);
+			}
+			catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+			run();
 		}	
 //_________________________________________________________________________________________________________________________________________
 }

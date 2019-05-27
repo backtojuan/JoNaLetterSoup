@@ -2,37 +2,32 @@
 	package customexception;
 //_________________________________________________________________________________________________________________________________________
 	/**
-	 * This class manages the necessary attributes and methods to creates exception objects of type InvalidInformationException
+	 * This class manages the necessary attributes and methods to creates exception objects of type RepitedPlayerException
 	 *@author Lina Johanna Salinas Delgado
 	 *@author Juan José Valencia Jaramillo
 	 *@version V_01_MAY_2019
 	 */
-	public class InvalidInformationException extends Exception{
-		private String invalidInformation;
+	public class RepitedPlayerException extends Exception{	
+		private String nickname;
+		private String repitednickname;
 //_________________________________________________________________________________________________________________________________________
 		/**
-		 * <b>InvalidInformationException constructor</b><br>
+		 * <b>RepitedPlayerException constructor</b><br>
 		 */
-		public InvalidInformationException(String invalidInformation) {
+		public RepitedPlayerException(String nickname,String repitednickname) {
 			super();
-			this.invalidInformation = invalidInformation;
+			this.nickname = nickname;
+			this.repitednickname = repitednickname;
 		}
 //_________________________________________________________________________________________________________________________________________
 		/**
-		 * This method allow the exception to generates an special message for every case where the user enter or choosed wrong values
+		 * This method allow the exception to generates an special message for every case where the user tries to sign up with a nickname
+		 * of a player that already exists
 		 * @return A string report with the reason that lead the program to caused an exception
 		 */
 		@Override
 		public String getMessage() {
-			//report that is going to be return
-			String report = "";
-			if(this.invalidInformation == null) {
-				report += "You can not create a new Profile Player if you haven't enter enough information";
-			}
-			else if(this.invalidInformation.equals("")) {
-				report += "Please type the information requested in order to apply the task in the program";
-			}
-			return report;
+			return "There is already another player registered with this nickname, please try with other variant";
 		}
 //____________________________________________________________________________________________________________________________________
 	

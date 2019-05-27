@@ -31,7 +31,7 @@
 				report += "You can not sign in if you haven't enter any information";
 			}
 			else {
-				report += "The:"+nickname +"player does not exists or maybe it was removed. Try signing up if the problem persists";
+				report += "The: "+nickname +" player does not exists or maybe it's already removed. Try signing up if the problem persists";
 			}
 			return report;
 		}

@@ -3,7 +3,9 @@
 //_________________________________________________________________________________________________________________________________________
 	import java.io.IOException;
 	import org.controlsfx.control.Notifications;
-	import customexception.PlayerDoesNotExistException;
+
+import customexception.InvalidInformationException;
+import customexception.PlayerDoesNotExistException;
 	import gui.lettersoupgui.LetterSoupController;
 	import javafx.event.ActionEvent;
 	import javafx.fxml.FXML;
@@ -23,6 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 	import javafx.util.Duration;
 	import model.gamemodel.Game;
+import threads.MusicThread;
 //_________________________________________________________________________________________________________________________________________
 	public class GameController {
 		//:::::::::::::::::::::::::::::::::::::::::::::
@@ -46,7 +49,9 @@ import javafx.stage.Stage;
 		    private void initialize() {
 		    	try {
 		    		game = new Game(null);
-		    		playMusic();
+		    		MusicThread mt = new MusicThread(this);
+		    		mt.setDaemon(true);
+		    		mt.start();
 		    	}
 		    	catch(IOException|ClassNotFoundException e) {
 		    		Notifications.create()
@@ -57,13 +62,8 @@ import javafx.stage.Stage;
 		    		.hideCloseButton()
 	    			.hideAfter(Duration.seconds(8))
 		    		.showError();
-		    		;
 		    	}
 		    }
-	//_____________________________________________________________________________________________________________________________________
-		    public Game giveGame() {
-		    	return game;
-		    } 
 	//_____________________________________________________________________________________________________________________________________
 		    public void playMusic() {
 		    	audio = new AudioClip(this.getClass().getResource("backgroundmusic.mp3").toString());
@@ -84,12 +84,57 @@ import javafx.stage.Stage;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    private void removeProfile(ActionEvent event) {
-		    	/**try {
-		    		
+		    	try {
+		    		String nickname = nicknameTextField.getText();
+		    		String password = passwordField.getText();
+		    		if(nickname.equals("")||password.equals("")) {
+		    			throw new InvalidInformationException(nickname);
+		    		}
+		    		else if(game.playerExists(nickname)==null) {
+		    			throw new PlayerDoesNotExistException(nickname);
+		    		}
+		    		else {
+		    			if(game.isCorrect(nickname, password)) {
+		    				game.removePlayer(nickname, password);
+		    			}
+		    			else {
+			    			Notifications.create()
+			    			.title("Announcement")
+			    			.text("OOPS! your password and your nickname does not match together be careful and try again")
+			    			.graphic(new ImageView(new Image("gui/gamegui/images/warning.png")))
+			    			.darkStyle()
+			    			.position(Pos.TOP_RIGHT)
+			    			.hideCloseButton()
+			    			.hideAfter(Duration.seconds(8))
+			    			.show();
+			    			;
+		    			}
+		    		}
 		    	}
-		    	catch{
-		    		
-		    	}*/
+		    	catch (PlayerDoesNotExistException pdne){
+		    		Notifications.create()
+		    		.title("Announcement")
+		    		.text(pdne.getMessage())
+		    		.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+		    		.darkStyle()
+		    		.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+		    		.show();
+		    		;
+		    	}
+		    	catch(InvalidInformationException iie) {
+		    		Notifications.create()
+		    		.title("Announcement")
+		    		.text(iie.getMessage())
+		    		.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+		    		.darkStyle()
+		    		.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+		    		.show();
+		    		;
+		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
@@ -139,9 +184,9 @@ import javafx.stage.Stage;
 			    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/lettersoupgui/lettersoup.fxml"));
 					    	Parent root1 = (Parent) fxmlLoader.load();
 					    	LetterSoupController ltc = new LetterSoupController();
-					    	ltc.initGame(game);
 					    	stage.setTitle("LetterSoup");
 					    	stage.centerOnScreen();
+					    	stage.initModality(Modality.APPLICATION_MODAL);
 					    	stage.setResizable(false);
 							Image image = new Image("gui/lettersoupgui/images/icon.png");
 							stage.getIcons().add(image);
@@ -197,7 +242,6 @@ import javafx.stage.Stage;
 			    	SignUpController supc = new SignUpController();
 			    	stage = new Stage();
 			    	supc.setStage(stage);
-			    	System.out.println(stage);
 			    	stage.setTitle("Sign up section");
 			    	stage.centerOnScreen();
 			    	stage.setResizable(false);

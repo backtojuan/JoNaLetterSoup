@@ -70,6 +70,20 @@
 		    	borderpane.setCenter(scrollpane);
 		    	solutionList.setEditable(false);
 		    	foundList.setEditable(false);
+			    try {
+					game = new Game(null);
+			    } catch (ClassNotFoundException | IOException e) {
+			    	Notifications.create()
+			    	.title("Announcement")
+			    	.text("The file that contained the scores of the game was deleted check for the data folder")
+		    		.darkStyle()
+		    		.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+		    		.hideAfter(Duration.seconds(8))
+			   		.showError();
+			   		;
+				}
+			    
 		    }
 		//_________________________________________________________________________________________________________________________________
 			/**
@@ -79,10 +93,6 @@
 		     */
 		    public void setStage(Stage stg) {
 		    	stage = stg;
-		    }
-		//_________________________________________________________________________________________________________________________________
-		    public void initGame(Game game) {
-		    	this.game = game;
 		    }
 		//_________________________________________________________________________________________________________________________________
 		    public void runTime() {
@@ -98,42 +108,76 @@
 		    		}
 		    	}
 		    	else if(letterssoup.getDifficultylevel()==Difficulty.INTERMEDIUM) {
-		    		
+		    		int minutes = 14;
+		    		int seconds = 59;
+		    		minutesLabel.setText(""+minutes);
+		    		secondsLabel.setText(""+seconds);
+		    		seconds-=1;
+		    		if(seconds==0) {
+		    			seconds=59;
+		    			minutes-=1;
+		    		}
 		    	}
 		    	else {
-		    		
+		    		int minutes = 19;
+		    		int seconds = 59;
+		    		minutesLabel.setText(""+minutes);
+		    		secondsLabel.setText(""+seconds);
+		    		seconds-=1;
+		    		if(seconds==0) {
+		    			seconds=59;
+		    			minutes-=1;
+		    		}
 		    	}
 		    }
 		//_________________________________________________________________________________________________________________________________
 			@FXML
 		    private void playGame(ActionEvent event) {
-		    	if(topicComboBox.getValue().equals(Topic.ANIMALS) && difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
-		    		try {
-						letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.BASIC);
-						game.setDifficultyLevel(letterssoup.getDifficultylevel());
-						showBasicLetterSoup();
-						showListOfWords();
-						playButton.setDisable(true);	
-						
-						TimeThread tt = new TimeThread(this, false);
-						tt.start();
-						
-						prueba();
-					} catch (IOException|ClassNotFoundException e) {
-						Notifications.create()
-						.title("Announcement")
-						.text("The scores cannot be recovered because the file does not exist check for the folder data")
-						.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
-						.darkStyle()
-						.position(Pos.TOP_RIGHT)
-						.hideCloseButton()
-		    			.hideAfter(Duration.seconds(8))
-		    			.show();
-						
-					}
-		    	}
+				if(topicComboBox.getValue().equals(Topic.ANIMALS)) {
+					playAnimalsGame();
+				}
 		    }
-		//_____________________________________________________________________________________________________________________________________
+	//_____________________________________________________________________________________________________________________________________
+			private void playAnimalsGame() {
+	    		try {
+	    			Difficulty difficulty = null;
+	    			if(difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
+	    				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.BASIC);
+	    				game.setDifficultyLevel(letterssoup.getDifficultylevel());
+	    				showBasicLetterSoup();
+	    			}
+	    			else if(difficultyComboBox.getValue().equals(Difficulty.INTERMEDIUM)) {
+	    				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.INTERMEDIUM);
+	    				game.setDifficultyLevel(letterssoup.getDifficultylevel());
+	    				showIntermediumLetterSoup();
+	    			}
+	    			else {
+	    				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.HARD);
+	    				game.setDifficultyLevel(letterssoup.getDifficultylevel());
+	    				showHardLetterSoup();
+	    			}
+					showListOfWords();
+					playButton.setDisable(true);	
+					TimeThread tt = new TimeThread(this, false);
+					tt.start();
+					prueba();
+				} catch (IOException|ClassNotFoundException e) {
+					Notifications.create()
+					.title("Announcement")
+					.text("The scores cannot be recovered because the file does not exist check for the folder data")
+					.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+					.darkStyle()
+					.position(Pos.TOP_RIGHT)
+					.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+	    			.show();	
+				}
+			}
+	//_____________________________________________________________________________________________________________________________________
+			private void playCitiesGame() {
+				
+			}
+	//_____________________________________________________________________________________________________________________________________
 		    /**
 		     * 
 		     */
@@ -201,8 +245,7 @@
 					}
 				}
 		    } 
-	//_____________________________________________________________________________________________________________________________________
-			
+	//_____________________________________________________________________________________________________________________________________		
 			private void showListOfWords() {
 				String list = "";
 				for(int i=0;i<letterssoup.getSolution().length;i++) {
