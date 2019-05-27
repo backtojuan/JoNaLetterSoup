@@ -110,7 +110,7 @@ import model.gamemodel.Difficulty;
 				solution = new Word[10];
 			}
 			else {
-				size = 30;
+				size = 25;
 				solution = new Word[15];
 			}
 		}
@@ -131,7 +131,6 @@ import model.gamemodel.Difficulty;
 				}
 			br.close();
 		}
-	//_____________________________________________________________________________________________________________________________________
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
@@ -155,7 +154,7 @@ import model.gamemodel.Difficulty;
 		 * @throws IOException
 		 */
 		private void loadNumbers() throws IOException {
-			String path = "data/dictionaries(lettersoup)/cities.txt";
+			String path = "data/dictionaries(lettersoup)/numbers.txt";
 			BufferedReader br = new BufferedReader(new FileReader(path));
 			String line = br.readLine();
 				while(line!=null) {
@@ -179,7 +178,7 @@ import model.gamemodel.Difficulty;
 				checkForNonRepitedElements(solution[i], i);
 				addWord(solution[i]);
 			}
-			//fillSoup();
+			fillSoup();
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**

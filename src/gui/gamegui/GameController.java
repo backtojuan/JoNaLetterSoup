@@ -7,7 +7,8 @@
 	import customexception.PlayerDoesNotExistException;
 	import gui.lettersoupgui.LetterSoupController;
 	import javafx.event.ActionEvent;
-	import javafx.fxml.FXML;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 	import javafx.fxml.FXMLLoader;
 	import javafx.geometry.Pos;
 	import javafx.scene.Parent;
@@ -26,7 +27,7 @@
 	import model.gamemodel.Game;
 import threads.MusicThread;
 //_________________________________________________________________________________________________________________________________________
-	public class GameController {
+	public class GameController{
 		//:::::::::::::::::::::::::::::::::::::::::::::
 	    	@FXML
 	    	private Pane pane;
@@ -47,9 +48,9 @@ import threads.MusicThread;
 		    @FXML
 		    private void initialize(){
 		    		game = new Game(null);
-		    		MusicThread mt = new MusicThread(this);
+		    		/**MusicThread mt = new MusicThread(this);
 		    		mt.setDaemon(true);
-		    		mt.start();
+		    		mt.start();*/
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    public void playMusic() {
@@ -178,17 +179,16 @@ import threads.MusicThread;
 		    			try {
 			    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/lettersoupgui/lettersoup.fxml"));
 					    	Parent root1 = (Parent) fxmlLoader.load();
-					    	stage.close();
 					    	stage = new Stage();
 					    	LetterSoupController ltc = new LetterSoupController();
 					    	ltc.setStage(stage);
 					    	stage.setTitle("LetterSoup");
 					    	stage.centerOnScreen();
 					    	stage.initModality(Modality.APPLICATION_MODAL);
-					    	stage.setResizable(false);
+					    	//stage.setFullScreen(true);
 							Image image = new Image("gui/lettersoupgui/images/icon.png");
 							stage.getIcons().add(image);
-							stage.setResizable(false);
+							//stage.setResizable(false);
 							stage.centerOnScreen();		
 					    	stage.setScene(new Scene(root1));  
 					    	stage.show();
@@ -196,7 +196,7 @@ import threads.MusicThread;
 					    catch(IOException e) {
 							Notifications.create()
 							.title("Something went wrong...")
-							.text("Cannot launch the new window due to a problem with the files in the project, make sure 'SignUp.fxml' exists")
+							.text("Cannot launch the new window due to a problem with the files in the project, make sure 'SignIn.fxml' exists")
 							.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
 							.darkStyle()
 							.position(Pos.TOP_RIGHT)

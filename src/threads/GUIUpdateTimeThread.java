@@ -7,15 +7,28 @@ import javafx.application.Platform;
 	public class GUIUpdateTimeThread extends Thread{
 		
 		private LetterSoupController lettersoupcontroller;
+		private boolean finished;
 	//_____________________________________________________________________________________________________________________________________
 		public GUIUpdateTimeThread(LetterSoupController lettersoupcontroller) {
 			this.lettersoupcontroller = lettersoupcontroller;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		public void isFinished() {
+			finished = true;
+		}
+	//_____________________________________________________________________________________________________________________________________
 		@Override
 		public void run() {
-			TimeThread tt = new TimeThread(lettersoupcontroller, false);
-			Platform.runLater(tt);
+			while(finished == false) {
+				GUIUpdateWithRunnable guiupdaterunnable = new GUIUpdateWithRunnable(lettersoupcontroller);
+				Platform.setImplicitExit(true);
+				Platform.runLater(guiupdaterunnable);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}	
 //_________________________________________________________________________________________________________________________________________
 }
