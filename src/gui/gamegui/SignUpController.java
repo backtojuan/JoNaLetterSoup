@@ -6,7 +6,8 @@
 	import org.controlsfx.control.Notifications;
 	import customexception.InvalidInformationException;
 	import customexception.InvalidPasswordException;
-	import javafx.event.ActionEvent;
+import customexception.RepitedPlayerException;
+import javafx.event.ActionEvent;
 	import javafx.fxml.FXML;
 	import javafx.fxml.FXMLLoader;
 	import javafx.geometry.Pos;
@@ -52,19 +53,7 @@
 //_________________________________________________________________________________________________________________________________________
 		    @FXML
 		    public void initialize() {
-		    	try {
-					game = new Game(null);
-				} catch (ClassNotFoundException | IOException e) {
-		    		Notifications.create()
-		    		.title("Announcement")
-		    		.text("The file that contained the scores of the game was deleted check for the data folder")
-		    		.darkStyle()
-		    		.position(Pos.TOP_RIGHT)
-		    		.hideCloseButton()
-	    			.hideAfter(Duration.seconds(8))
-		    		.showError();
-		    		;
-				}
+				game = new Game(null);
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    public void setStage(Stage stage) {
@@ -81,20 +70,21 @@
 		    		String avatars = avatarMenu.getText();
 		    		String password = passwordField.getText();
 		    		String confirmPassword = confirmPasswordField.getText();
-		    		Shape avatar = null;
-		    		if(avatars.equals("CIRCLE")) {
-		    			avatar = Shape.CIRCLE;
-		    		}
-		    		else{
-		    			avatar = Shape.RECTANGLE;
-		    		}
-		    		if(birthday == null||name == null||nickname == null||
-		    		favcolor == null||avatar == null||password == null) {
+		    		Shape avatar = avatars.equals("CIRCLE")?Shape.CIRCLE:Shape.RECTANGLE;   		
+		    		if(birthday == null) {
 		    			throw new InvalidInformationException(null);
 		    		}
-		    		else if(password == password.toUpperCase()||password.length()!=confirmPassword.length()||
-		    				password.length()<8 || confirmPassword(password,confirmPassword)==false) {
+		    		if(name.equals("")||nickname.equals("")){
+		    			throw new InvalidInformationException("");
+		    		}	
+		    		if(password == password.toUpperCase()||password.length()!=confirmPassword.length()||confirmPassword(password,confirmPassword)==false) {
 		    			throw new InvalidPasswordException(password,confirmPassword);
+		    		}
+		    		else if(password.length()<8) {
+		    			throw new InvalidPasswordException(password,confirmPassword);
+		    		}
+		    		if(game.playerExists(nickname)!=null) {
+		    			throw new RepitedPlayerException(game.playerExists(nickname).getNickname(), nickname);
 		    		}
 		    		else{
 		    			Player player = new Player(name,nickname,password,favcolor,birthday,avatar);
@@ -102,7 +92,10 @@
 		    			game.savePlayers();
 		    			Notifications.create()
 		    			.title("Annoucement")
-		    			.text("You've been succesfully registered. Welcome!!!")
+		    			.text("You've been succesfully registered. Welcome!!!"
+		    					+ "\nThe default avatar is: Rectangle"
+		    					+ ",The default color is white"
+		    					+ "(In the case that you haven't choose an specific one)")
 		    			.graphic(new ImageView(new Image("gui/gamegui/images/success.png")))
 		    			.darkStyle()
 		    			.hideCloseButton()
@@ -134,11 +127,10 @@
 	    			.hideAfter(Duration.seconds(8))
 	    			.show();
 		    	}
-		    	catch(IOException ioe) {
+		    	catch(RepitedPlayerException rpe) {
 		    		Notifications.create()
 	    			.title("Something went wrong....")
-	    			.text("The path to save the information of the players does not exists please check the data folder is"
-	    					+ "created inside the source folder of the project")
+	    			.text(rpe.getMessage())
 	    			.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
 	    			.darkStyle()
 	    			.position(Pos.TOP_CENTER)

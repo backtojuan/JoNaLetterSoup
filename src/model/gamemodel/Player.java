@@ -2,7 +2,7 @@
 	package model.gamemodel;
 //_________________________________________________________________________________________________________________________________________
 	import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+	import java.time.format.DateTimeFormatter;
 //_________________________________________________________________________________________________________________________________________
 	
 	public class Player {
@@ -41,7 +41,7 @@ import java.time.format.DateTimeFormatter;
 		}
 
 		public String getBirthday() {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			String formattedString = birthday.format(formatter); 
 			return formattedString;
 		}

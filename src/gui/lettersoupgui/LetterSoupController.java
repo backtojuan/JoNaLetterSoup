@@ -23,7 +23,8 @@
 		import model.gamemodel.Game;
 		import model.lettersoupmodel.LettersSoup;
 		import model.lettersoupmodel.Topic;
-		import threads.TimeThread;
+import threads.GUIUpdateTimeThread;
+import threads.TimeThread;
 //_________________________________________________________________________________________________________________________________________
 		public class LetterSoupController {
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -70,20 +71,7 @@
 		    	borderpane.setCenter(scrollpane);
 		    	solutionList.setEditable(false);
 		    	foundList.setEditable(false);
-			    try {
-					game = new Game(null);
-			    } catch (ClassNotFoundException | IOException e) {
-			    	Notifications.create()
-			    	.title("Announcement")
-			    	.text("The file that contained the scores of the game was deleted check for the data folder")
-		    		.darkStyle()
-		    		.position(Pos.TOP_RIGHT)
-		    		.hideCloseButton()
-		    		.hideAfter(Duration.seconds(8))
-			   		.showError();
-			   		;
-				}
-			    
+				game = new Game(null);
 		    }
 		//_________________________________________________________________________________________________________________________________
 			/**
@@ -139,7 +127,6 @@
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			private void playAnimalsGame() {
-	    		try {
 	    			Difficulty difficulty = null;
 	    			if(difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
 	    				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.BASIC);
@@ -158,20 +145,10 @@
 	    			}
 					showListOfWords();
 					playButton.setDisable(true);	
-					TimeThread tt = new TimeThread(this, false);
-					tt.start();
+					GUIUpdateTimeThread guiupdate = new GUIUpdateTimeThread(this);
+					guiupdate.setDaemon(true);
+					guiupdate.start();
 					prueba();
-				} catch (IOException|ClassNotFoundException e) {
-					Notifications.create()
-					.title("Announcement")
-					.text("The scores cannot be recovered because the file does not exist check for the folder data")
-					.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
-					.darkStyle()
-					.position(Pos.TOP_RIGHT)
-					.hideCloseButton()
-	    			.hideAfter(Duration.seconds(8))
-	    			.show();	
-				}
 			}
 	//_____________________________________________________________________________________________________________________________________
 			private void playCitiesGame() {

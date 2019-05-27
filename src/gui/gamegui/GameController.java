@@ -3,9 +3,8 @@
 //_________________________________________________________________________________________________________________________________________
 	import java.io.IOException;
 	import org.controlsfx.control.Notifications;
-
-import customexception.InvalidInformationException;
-import customexception.PlayerDoesNotExistException;
+	import customexception.InvalidInformationException;
+	import customexception.PlayerDoesNotExistException;
 	import gui.lettersoupgui.LetterSoupController;
 	import javafx.event.ActionEvent;
 	import javafx.fxml.FXML;
@@ -15,14 +14,14 @@ import customexception.PlayerDoesNotExistException;
 	import javafx.scene.Scene;
 	import javafx.scene.control.PasswordField;
 	import javafx.scene.control.TextField;
-	import javafx.scene.input.MouseEvent;
 	import javafx.scene.image.Image;
 	import javafx.scene.image.ImageView;
+	import javafx.scene.input.MouseEvent;
 	import javafx.scene.layout.BorderPane;
 	import javafx.scene.layout.Pane;
 	import javafx.scene.media.AudioClip;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+	import javafx.stage.Modality;
+	import javafx.stage.Stage;
 	import javafx.util.Duration;
 	import model.gamemodel.Game;
 import threads.MusicThread;
@@ -46,23 +45,11 @@ import threads.MusicThread;
 		//:::::::::::::::::::::::::::::::::::::::::::::
 //_________________________________________________________________________________________________________________________________________
 		    @FXML
-		    private void initialize() {
-		    	try {
+		    private void initialize(){
 		    		game = new Game(null);
 		    		MusicThread mt = new MusicThread(this);
 		    		mt.setDaemon(true);
 		    		mt.start();
-		    	}
-		    	catch(IOException|ClassNotFoundException e) {
-		    		Notifications.create()
-		    		.title("Announcement")
-		    		.text("The file that contained the scores of the game was deleted check for the data folder")
-		    		.darkStyle()
-		    		.position(Pos.TOP_RIGHT)
-		    		.hideCloseButton()
-	    			.hideAfter(Duration.seconds(8))
-		    		.showError();
-		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    public void playMusic() {
@@ -90,12 +77,22 @@ import threads.MusicThread;
 		    		if(nickname.equals("")||password.equals("")) {
 		    			throw new InvalidInformationException(nickname);
 		    		}
-		    		else if(game.playerExists(nickname)==null) {
+		    		if(game.playerExists(nickname)==null) {
 		    			throw new PlayerDoesNotExistException(nickname);
 		    		}
 		    		else {
 		    			if(game.isCorrect(nickname, password)) {
 		    				game.removePlayer(nickname, password);
+		    				game.savePlayers();
+			    			Notifications.create()
+			    			.title("Annoucement")
+			    			.text("You've been succesfully removed. We hope you come back someday!!!")
+			    			.graphic(new ImageView(new Image("gui/gamegui/images/success.png")))
+			    			.darkStyle()
+			    			.hideCloseButton()
+			    			.hideAfter(Duration.seconds(8))
+			    			.position(Pos.BOTTOM_CENTER)
+			    			.show();
 		    			}
 		    			else {
 			    			Notifications.create()
@@ -107,7 +104,6 @@ import threads.MusicThread;
 			    			.hideCloseButton()
 			    			.hideAfter(Duration.seconds(8))
 			    			.show();
-			    			;
 		    			}
 		    		}
 		    	}
@@ -121,7 +117,6 @@ import threads.MusicThread;
 		    		.hideCloseButton()
 	    			.hideAfter(Duration.seconds(8))
 		    		.show();
-		    		;
 		    	}
 		    	catch(InvalidInformationException iie) {
 		    		Notifications.create()
@@ -133,8 +128,8 @@ import threads.MusicThread;
 		    		.hideCloseButton()
 	    			.hideAfter(Duration.seconds(8))
 		    		.show();
-		    		;
 		    	}
+
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
@@ -149,7 +144,6 @@ import threads.MusicThread;
 		    	.hideCloseButton()
     			.hideAfter(Duration.seconds(8))
     			.show();
-		    	;
 		    }		    
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
@@ -173,6 +167,7 @@ import threads.MusicThread;
 		    @FXML
 		    private void signIn(ActionEvent event) {
 		    	try {
+		    		game.refreshPlayers();
 		    		String nickname = nicknameTextField.getText();
 		    		String password = passwordField.getText();
 		    		if(game.playerExists(nickname)==null) {
@@ -181,9 +176,12 @@ import threads.MusicThread;
 		    		if(game.isCorrect(nickname, password)) {
 		    			
 		    			try {
-			    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/lettersoupgui/lettersoup.fxml"));
+			    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/lettersoupgui/lettersoup.fxml"));
 					    	Parent root1 = (Parent) fxmlLoader.load();
+					    	stage.close();
+					    	stage = new Stage();
 					    	LetterSoupController ltc = new LetterSoupController();
+					    	ltc.setStage(stage);
 					    	stage.setTitle("LetterSoup");
 					    	stage.centerOnScreen();
 					    	stage.initModality(Modality.APPLICATION_MODAL);
@@ -199,6 +197,7 @@ import threads.MusicThread;
 							Notifications.create()
 							.title("Something went wrong...")
 							.text("Cannot launch the new window due to a problem with the files in the project, make sure 'SignUp.fxml' exists")
+							.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
 							.darkStyle()
 							.position(Pos.TOP_RIGHT)
 				    		.hideCloseButton()
@@ -216,7 +215,6 @@ import threads.MusicThread;
 		    			.hideCloseButton()
 		    			.hideAfter(Duration.seconds(8))
 		    			.show();
-		    			;
 		    		}
 		    	}
 		    	catch (PlayerDoesNotExistException pdne){
@@ -229,7 +227,6 @@ import threads.MusicThread;
 		    		.hideCloseButton()
 	    			.hideAfter(Duration.seconds(8))
 		    		.show();
-		    		;
 		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________

@@ -7,7 +7,12 @@
 	import java.io.IOException;
 	import java.util.ArrayList;
 	import java.util.Random;
-	import model.gamemodel.Difficulty;
+
+import org.controlsfx.control.Notifications;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import model.gamemodel.Difficulty;
 	import model.gamemodel.Game;
 //___________________________________________ATTRIBUTES____________________________________________________________________________________
 	/**
@@ -37,7 +42,7 @@
 		 * @throws IOException 
 		 * @throws ClassNotFoundException 
 		 */
-		public LettersSoup(Topic topic,Difficulty difficultylevel) throws IOException, ClassNotFoundException {
+		public LettersSoup(Topic topic,Difficulty difficultylevel){
 			super(difficultylevel);
 			this.topic = topic;
 			animals = new ArrayList<>();
@@ -74,15 +79,24 @@
 			return randomWord;
 		}
 	//_____________________________________________________________________________________________________________________________________
-		private void load() throws IOException {
-			if(topic == Topic.ANIMALS) {
-				loadAnimals();
+		private void load(){
+			try {
+				if(topic == Topic.ANIMALS) {
+					loadAnimals();
+				}
+				else if(topic == Topic.CITIES) {
+					loadCities();
+				}
+				else {
+					loadNumbers();
+				}
 			}
-			else if(topic == Topic.CITIES) {
-				loadCities();
-			}
-			else {
-				loadNumbers();
+			catch(IOException ioe) {
+				Notifications.create()
+				.title("Announcement")
+				.text("The dictionaries cannot be found please make sure there are file texts in the data folder of the project")
+				.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+				.darkStyle();
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________
@@ -155,7 +169,7 @@
 		 * @throws IOException 
 		 * 
 		 */
-		private void generateLetterSoup(Topic topic) throws IOException {
+		private void generateLetterSoup(Topic topic){
 			initData();
 			lettersoup = new String[size][size]; 
 			load();

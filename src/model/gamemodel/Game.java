@@ -1,15 +1,24 @@
 //_________________________________________________________________________________________________________________________________________
 	package model.gamemodel;
 //_________________________________________________________________________________________________________________________________________	
+	import java.io.BufferedReader;
 	import java.io.File;
 	import java.io.FileInputStream;
 	import java.io.FileNotFoundException;
 	import java.io.FileOutputStream;
+	import java.io.FileReader;
 	import java.io.IOException;
 	import java.io.ObjectInputStream;
 	import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+	import java.io.PrintWriter;
+	import java.time.LocalDate;
+	import java.time.format.DateTimeFormatter;
+	import java.util.ArrayList;
+	import org.controlsfx.control.Notifications;
+	import javafx.geometry.Pos;
+	import javafx.scene.image.Image;
+	import javafx.scene.image.ImageView;
+	import javafx.util.Duration;
 //_________________________________________________________________________________________________________________________________________
 	public class Game{
 		
@@ -19,10 +28,11 @@ import java.util.ArrayList;
 		
 		private PlayedTime root;
 //_________________________________________________________________________________________________________________________________________
-		public Game(Difficulty difficultylevel) throws IOException, ClassNotFoundException {
+		public Game(Difficulty difficultylevel){
 			this.difficultylevel = difficultylevel;
 			players = new ArrayList<Player>();
 			loadScores();
+			loadPlayers();
 		}
 	//_____________________________________________________________________________________________________________________________________
 		public ArrayList<Player> getPlayers(){
@@ -134,31 +144,105 @@ import java.util.ArrayList;
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________
-		private void saveScores() throws IOException {
-			File f = new File("data/scores");
-			ObjectOutputStream oops = new ObjectOutputStream(new FileOutputStream(f));
-			oops.writeObject(scores);
-			oops.close();
+		private void saveScores(){
+			try {
+				File f = new File("data/scores");
+				ObjectOutputStream oops = new ObjectOutputStream(new FileOutputStream(f));
+				oops.writeObject(scores);
+				oops.close();
+			}
+	    	catch(IOException e) {
+	    		Notifications.create()
+	    		.title("Announcement")
+	    		.text("The file that contained the scores of the game was deleted check for the data folder")
+	    		.darkStyle()
+	    		.position(Pos.TOP_RIGHT)
+	    		.hideCloseButton()
+    			.hideAfter(Duration.seconds(8))
+	    		.showError();
+	    	}
 		}
 	//_____________________________________________________________________________________________________________________________________
 		@SuppressWarnings("unchecked")
-		private void loadScores() throws IOException, ClassNotFoundException {
-			File f = new File("data/scores");
-			if(f.exists()) {
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-				scores = (ArrayList<Integer>) ois.readObject();
-				ois.close();
+		private void loadScores(){
+			try {
+				File f = new File("data/scores");
+				if(f.exists()) {
+					ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+					scores = (ArrayList<Integer>) ois.readObject();
+					ois.close();
+				}
+				else {
+					scores = new ArrayList<Integer>();
+				}
 			}
-			else {
-				scores = new ArrayList<Integer>();
-			}
+	    	catch(IOException|ClassNotFoundException e) {
+	    		Notifications.create()
+	    		.title("Announcement")
+	    		.text("The file that contained the scores of the game was deleted check for the data folder")
+	    		.darkStyle()
+	    		.position(Pos.TOP_RIGHT)
+	    		.hideCloseButton()
+    			.hideAfter(Duration.seconds(8))
+	    		.showError();
+	    	}
 		}
 	//_____________________________________________________________________________________________________________________________________
-		public void savePlayers() throws FileNotFoundException {
-			PrintWriter pw = new PrintWriter("data/players.txt");
-			pw.print(playersReport());
-			pw.close();
+		public void savePlayers(){
+			try {
+				PrintWriter pw = new PrintWriter("data/players.txt");
+				pw.print(playersReport());
+				pw.close();
+			}
+	    	catch(FileNotFoundException fnfe) {
+	    		Notifications.create()
+	    		.title("Announcement")
+	    		.text("The Path to save the players does not exists, please make sure the folder is created inside the project")
+	    		.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+	    		.darkStyle()
+	    		.position(Pos.TOP_RIGHT)
+	    		.hideCloseButton()
+    			.hideAfter(Duration.seconds(8))
+	    		.show();
+	    	}
 		}
+	//_____________________________________________________________________________________________________________________________________
+		private void loadPlayers(){
+			try {
+				BufferedReader br=new BufferedReader(new FileReader("data/players.txt"));
+				String line=br.readLine();
+				while(line!=null) {
+					String[] parts=line.split(",");
+					String name = parts[0];
+					String nickname=parts[1];
+					String password=parts[2];
+					String favColor=parts[3];
+					
+					String birthday = parts[4];
+					DateTimeFormatter formatter=parts[4].substring(3,5).contains("/")?DateTimeFormatter.ofPattern("dd/M/yyyy"):DateTimeFormatter.ofPattern("dd/MM/yyyy");
+					LocalDate birthdate=LocalDate.parse(birthday, formatter);
+					
+					Shape avatar=parts[4].equals("CIRCLE")?Shape.CIRCLE:Shape.RECTANGLE;
+					
+					Player player=new Player(name,nickname,password,favColor,birthdate,avatar);
+					
+					players.add(player);
+					line=br.readLine();
+			    }
+				br.close();
+			}
+		    catch(IOException e) {
+				Notifications.create()
+				.title("Something went wrong...")
+				.text("Cannot load the players due to a problem finding the text with the information, make sure the players.txt file"
+						+ "is created in the data folder of the project")
+				.darkStyle()
+				.position(Pos.TOP_RIGHT)
+	    		.hideCloseButton()
+    			.hideAfter(Duration.seconds(8))
+    			.show();
+		}
+	}
 	//_____________________________________________________________________________________________________________________________________
 		private String playersReport() {
 			String report = "";
@@ -192,5 +276,8 @@ import java.util.ArrayList;
 			return correct;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		public void refreshPlayers() {
+			loadPlayers();
+		}
 //_________________________________________________________________________________________________________________________________________
 }

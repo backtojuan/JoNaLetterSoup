@@ -2,22 +2,20 @@
 	package threads;
 //_________________________________________________________________________________________________________________________________________
 	import gui.lettersoupgui.LetterSoupController;
+import javafx.application.Platform;
 //_________________________________________________________________________________________________________________________________________
-	public class TimeThread implements Runnable{
+	public class GUIUpdateTimeThread extends Thread{
 		
 		private LetterSoupController lettersoupcontroller;
-		private boolean finished;
 	//_____________________________________________________________________________________________________________________________________
-		public TimeThread(LetterSoupController lettersoupcontroller,boolean finished) {
+		public GUIUpdateTimeThread(LetterSoupController lettersoupcontroller) {
 			this.lettersoupcontroller = lettersoupcontroller;
-			this.finished = finished;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		@Override
 		public void run() {
-			while(finished==false) {
-				lettersoupcontroller.runTime();
-			}
+			TimeThread tt = new TimeThread(lettersoupcontroller, false);
+			Platform.runLater(tt);
 		}	
 //_________________________________________________________________________________________________________________________________________
 }

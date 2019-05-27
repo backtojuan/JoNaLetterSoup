@@ -3,11 +3,11 @@
 //_________________________________________________________________________________________________________________________________________
 	import gui.gamegui.GameController;
 //_________________________________________________________________________________________________________________________________________
-	public class BackgroundThread extends Thread{
+	public class LoadingThread extends Thread{
 		
 		private GameController gamecontroller;
 	//_____________________________________________________________________________________________________________________________________
-		public BackgroundThread(GameController gamecontroller) {
+		public LoadingThread(GameController gamecontroller) {
 			this.gamecontroller = gamecontroller;
 		}
 	//_____________________________________________________________________________________________________________________________________
