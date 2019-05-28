@@ -202,16 +202,6 @@
 		//_____________________________________________________________________________________________________________________________________
 			/**
 			 * 
-			 * @param playedtime
-			 */
-			private void removePlayedTime(int playedtime) {
-				if(searchPlayedTime(playedtime).isLeaf()) {
-					
-				}
-			}
-		//_____________________________________________________________________________________________________________________________________
-			/**
-			 * 
 			 * @param nickname
 			 * @param password
 			 */
@@ -424,7 +414,6 @@
 			 * @return
 			 */
 			public boolean isCorrect(String nickname,String password){
-	
 				boolean correct = false;
 				if(playerExists(nickname)!=null) {
 					if(playerExists(nickname).getPassword().equals(password)) {
@@ -440,5 +429,5 @@
 			public void refreshPlayers() {
 				loadPlayers();
 			}
-//_________________________________________________________________________________________________________________________________________
+//_____________________________________________________________________________________________________________________________________________
 }

@@ -7,10 +7,6 @@
 	import javafx.scene.Scene;
 	import javafx.stage.Stage;
 	import javafx.scene.image.Image;
-	import javafx.scene.media.AudioClip;
-	import javafx.scene.media.Media;
-	import javafx.scene.media.MediaPlayer;
-	
 	import java.io.File;
 //_________________________________________________________________________________________________________________________________________
 	/**
