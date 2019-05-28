@@ -416,7 +416,8 @@
 			public boolean isCorrect(String nickname,String password){
 				boolean correct = false;
 				if(playerExists(nickname)!=null) {
-					if(playerExists(nickname).getPassword().equals(password)) {
+					if(playerExists(nickname).getPassword().equals(password)) 
+					{	
 						correct = true;
 					}
 				}
