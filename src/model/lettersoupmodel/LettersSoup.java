@@ -37,10 +37,9 @@ import model.gamemodel.Difficulty;
 //_________________________________________METHODS FOR THIS CLASS__________________________________________________________________________
 		/**
 		 * <b>Letters Soup Constructor</b><br>
-		 * This method allows to construct objects of type letters soup
+		 * This method allows to construct objects of type letters soup<br>
 		 * @param topic the topic that is going to determinate the words inside the letters soup
-		 * @throws IOException 
-		 * @throws ClassNotFoundException 
+		 * @param difficultylevel the difficultylevel that is going to determinate the words to be found
 		 */
 		public LettersSoup(Topic topic,Difficulty difficultylevel){
 			super(difficultylevel);
@@ -53,18 +52,26 @@ import model.gamemodel.Difficulty;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * This method returns the lettersoup matrix to be manipulated and be printed, modified, etc.
-		 * <b>Pre:</b> the lettersoup exists.
+		 * This method returns the lettersoup matrix to be manipulated and be printed, modified, etc.<br>
+		 * <b>Pre:</b> the lettersoup exists.<br>
 		 * @return the matrix of Strings that represents the lettersoup
 		 */
 		public String[][] getLetterSoup() {
 			return lettersoup;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
 		public Word[] getSolution(){
 			return solution;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
 		private String generateRandomWord() {
 			String randomWord = "";
 			if(topic == Topic.ANIMALS) {
@@ -79,6 +86,9 @@ import model.gamemodel.Difficulty;
 			return randomWord;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 */
 		private void load(){
 			try {
 				if(topic == Topic.ANIMALS) {
@@ -100,6 +110,9 @@ import model.gamemodel.Difficulty;
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 */
 		private void initData() {
 			if(this.getDifficultylevel() == Difficulty.BASIC) {
 				size = 15;
@@ -165,8 +178,8 @@ import model.gamemodel.Difficulty;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * @throws IOException 
 		 * 
+		 * @param topic
 		 */
 		private void generateLetterSoup(Topic topic){
 			initData();
@@ -204,6 +217,8 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param pos
 		 */
 		private void checkForNonRepitedElements(Word word, int pos) {
 			String wordfromfiletext = "";
@@ -231,6 +246,7 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
 		 */
 		private void addWord(Word word) {
 			Direction dir = word.getDirection();
@@ -267,6 +283,8 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param column
+		 * @return
 		 */
 		private boolean verifyColumn(int column) {
 			boolean empty = true;
@@ -279,6 +297,8 @@ import model.gamemodel.Difficulty;
 		}
 		/**
 		 * 
+		 * @param row
+		 * @return
 		 */
 		private boolean verifyRow(int row) {
 
@@ -293,6 +313,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param row
+		 * @param column
+		 * @param length
+		 * @return
 		 */
 		private boolean verifyNorthWestDiagonal(int row, int column,int length) {
 			boolean empty = true;
@@ -308,6 +332,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param row
+		 * @param column
+		 * @param length
+		 * @return
 		 */
 		private boolean verifyNorthEastDiagonal(int row, int column,int length) {
 			boolean empty = true;
@@ -323,6 +351,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param row
+		 * @param column
+		 * @param length
+		 * @return
 		 */
 		private boolean verifySouthWestDiagonal(int row, int column,int length) {
 			boolean empty = true;
@@ -338,6 +370,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param row
+		 * @param column
+		 * @param length
+		 * @return
 		 */
 		private boolean verifySouthEastDiagonal(int row, int column,int length) {
 			boolean empty = true;
@@ -355,6 +391,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param row
+		 * @param column
+		 * @param length
 		 */
 		private void addWordToUp(Word word, int row, int column, int length){
 			String c;
@@ -378,6 +418,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param row
+		 * @param column
+		 * @param length
 		 */
 		private void addWordtoDown(Word word, int row, int column, int length){
 			String c;
@@ -401,6 +445,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param row
+		 * @param column
+		 * @param length
 		 */
 		private void addWordToLeft(Word word, int row, int column, int length){
 			String c;
@@ -428,6 +476,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param row
+		 * @param column
+		 * @param length
 		 */
 		private void addWordToRight(Word word, int row, int column, int length){
 			String c;
@@ -455,6 +507,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param row
+		 * @param column
+		 * @param length
 		 */
 		private void addWordToNorthWest(Word word,int row, int column, int length){
 			String c;
@@ -487,6 +543,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param row
+		 * @param column
+		 * @param length
 		 */
 		private void addWordToNorthEast(Word word, int row, int column, int length){
 			String c;
@@ -521,6 +581,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param row
+		 * @param column
+		 * @param length
 		 */
 		private void addWordToSouthWest(Word word,int row, int column, int length){
 			String c;
@@ -555,6 +619,10 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @param column
+		 * @param row
+		 * @param length
 		 */
 		private void addWordToSouthEast(Word word, int column, int row, int length){
 			String c;
@@ -589,11 +657,15 @@ import model.gamemodel.Difficulty;
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
+		 * @param word
+		 * @return
 		 */
 		public boolean checkSolution(Word word) {
 			boolean correct = false;
+			System.out.println(word.getName());
 			for(int i=0;i<solution.length&&correct==false;i++) {
-				if(solution[i].getName() == word.getName()) {
+				if(solution[i].getName().equals(word.getName())) {
+					System.out.println("correcta");
 					correct = true;
 				}
 			}
@@ -612,6 +684,36 @@ import model.gamemodel.Difficulty;
 				}
 			}
 			return size;
+		}
+	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @param i
+		 * @return
+		 */
+		public Direction getDirection(int i) {
+			Direction direction = null;
+			for(Word word : solution) {
+				if(word.getRow()==i) {
+					direction = word.getDirection();
+				}
+			}
+			return direction;
+		}
+	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @param i
+		 * @return
+		 */
+		public int getLength(int i) {
+			int length = 0;
+			for(Word word : solution) {
+				if(word.getRow()==i) {
+					length = word.getLength()-1;
+				}
+			}
+			return length;
 		}
 //_________________________________________________________________________________________________________________________________________
 }

@@ -47,9 +47,9 @@
 		    @FXML
 		    private void initialize(){
 		    		game = new Game(null);
-		    		MusicThread mt = new MusicThread(this);
+		    		/**MusicThread mt = new MusicThread(this);
 		    		mt.setDaemon(true);
-		    		mt.start();
+		    		mt.start();*/
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    public void playMusic() {
@@ -181,6 +181,7 @@
 					    	stage = new Stage();
 					    	LetterSoupController ltc = new LetterSoupController();
 					    	ltc.setStage(stage);
+					    	System.out.println(nickname);
 					    	stage.setTitle("LetterSoup");
 					    	stage.centerOnScreen();
 					    	stage.initModality(Modality.APPLICATION_MODAL);

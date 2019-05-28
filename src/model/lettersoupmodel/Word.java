@@ -5,7 +5,7 @@
 	import model.lettersoupmodel.Direction;
 //___________________________________________ATTRIBUTES____________________________________________________________________________________
 	/**
-	 * This class manages the nedeed methods and attributes to create letters soup.
+	 * This class manages the nedeed methods and attributes to create Words
 	 * @author Lina Johanna Salinas Delgado
 	 * @author Juan José Valencia Jaramillo
 	 * @version V_01 May_2019
@@ -21,7 +21,13 @@
 		
 		private Random random;
 //_________________________________________METHODS FOR THIS CLASS__________________________________________________________________________
-	
+		/**
+		 * 
+		 * @param name
+		 * @param row
+		 * @param column
+		 * @param length
+		 */
 		public Word(String name,int row, int column,int length) {
 			this.name = name;
 			this.row = row;
@@ -30,7 +36,9 @@
 			generateRandomDirection();
 		}
 	//_____________________________________________________________________________________________________________________________________
-		
+		/**
+		 * 
+		 */
 		public void generateRandomDirection() {
 			random = new Random();
 			int indicator = random.nextInt(8);
@@ -62,43 +70,82 @@
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
 		public String getName() {
 			return name;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
 		public int getRow() {
 			return row;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
 		public int getColumn() {
 			return column;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
 		public int getLength() {
 			return length;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
 		public Direction getDirection() {
 			return direction;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @param name
+		 */
 		public void setName(String name) {
 			this.name = name;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @param row
+		 */
 		public void setRow(int row) {
 			this.row = row;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @param column
+		 */
 		public void setColumn(int column) {
 			this.column = column;
 		}
 	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @param direction
+		 */
 		public void setDirection(Direction direction) {
 			this.direction = direction;
 		}
 	//____________________________________________________________________________________________________________________________________
 		@Override
+		/**
+		 * @return 
+		 */
 		public String toString() {
 			return "Name "+name +" Row "+row +" Column "+column+" Length "+length+" Direction "+direction;
 		}

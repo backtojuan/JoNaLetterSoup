@@ -2,7 +2,9 @@
 		package gui.lettersoupgui;
 //_________________________________________________________________________________________________________________________________________	
 		import org.controlsfx.control.Notifications;
-		
+
+		import customexception.InvalidInformationException;
+		import gui.gamegui.GameController;
 		import javafx.application.Platform;
 		import javafx.collections.FXCollections;
 		import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@
 		import javafx.scene.control.ScrollPane;
 		import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 		import javafx.scene.control.TextArea;
+		import javafx.scene.control.TextField;
 		import javafx.scene.image.Image;
 		import javafx.scene.image.ImageView;
 		import javafx.scene.input.MouseEvent;
@@ -28,8 +31,11 @@
 		import javafx.util.Duration;
 		import model.gamemodel.Difficulty;
 		import model.gamemodel.Game;
+		import model.gamemodel.PlayedTime;
+		import model.lettersoupmodel.Direction;
 		import model.lettersoupmodel.LettersSoup;
 		import model.lettersoupmodel.Topic;
+		import model.lettersoupmodel.Word;
 		import threads.GUIUpdateTimeThread;
 		import threads.LoadingThread;
 		import threads.TimeThread;
@@ -45,6 +51,8 @@
 		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    @FXML
 		    private Button playButton;
+		    @FXML
+		    private Button checkButton;
 		    @FXML
 		    private ComboBox<Topic> topicComboBox;
 		    @FXML
@@ -63,9 +71,11 @@
 		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private Stage stage;
 		    private Button lettersoup[][];
+		    private int score;
 		    private LettersSoup letterssoup;
 		    private Game game;
-		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
+		    private String nickname;
+		    //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private TimeThread timethread;
 		    private GUIUpdateTimeThread guiupdate;
 		    private Integer minutes;
@@ -75,21 +85,31 @@
 		    private Circle circle1;
 		    private Circle circle2;
 		    private Circle circle3;
+		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
+		    @FXML
+		    private TextField checkRow;
+		    @FXML
+		    private ComboBox<Direction> directionComboBox;
+		    @FXML
+		    private TextField checkColumn;
 //_________________________________________________________________________________________________________________________________________
 		    /**
 		     * 
 		     */
 		    @FXML
 		    private void initialize() {
-		    	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		    	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		    		System.out.println(nickname);
 		    	//Initialize the visual components of this fxml
 			    	topicComboBox.setItems(FXCollections.observableArrayList(Topic.ANIMALS,Topic.CITIES,Topic.NUMBERS));
 			    	difficultyComboBox.setItems(FXCollections.observableArrayList(Difficulty.BASIC,Difficulty.INTERMEDIUM,Difficulty.HARD));
+			    	directionComboBox.setItems(FXCollections.observableArrayList(Direction.UP,Direction.DOWN,Direction.LEFT,Direction.RIGHT
+			    			,Direction.NORTHEAST,Direction.NORTHWEST,Direction.SOUTHEAST,Direction.SOUTHWEST));
 					gridpane = new GridPane();
 				    scrollpane = new ScrollPane();
 			    	solutionList.setEditable(false);
 			    	foundList.setEditable(false);
-			    //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			    //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 			    //Initialize the model and the needed threads
 			    	game = new Game(null);
 					showLoading();
@@ -132,8 +152,9 @@
 	//_________________________________________________________________________________________________________________________________
 			@FXML
 		    private void playGame(ActionEvent event) {
-				try {
+				//try {
 					if(topicComboBox.getValue().equals(Topic.ANIMALS)) {
+						System.out.println(nickname);
 						playAnimalsGame();
 					}
 					else if(topicComboBox.getValue().equals(Topic.CITIES)) {
@@ -142,7 +163,7 @@
 					else {
 						playNumbersGame();
 					}
-				}
+				/**}
 				catch(NullPointerException npe) {
 					Notifications.create()
 					.title("Announcement")
@@ -153,7 +174,7 @@
 	    			.hideAfter(Duration.seconds(8))
 					.darkStyle()
 					.show();
-				}
+				}*/
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			private void playAnimalsGame() {
@@ -181,7 +202,7 @@
 	    				showHardLetterSoup();
 	    			}
 					showListOfWords();
-					disableButton(true);
+					playButton.setDisable(true);
 					guiupdate.start();
 					timethread.start();
 			}
@@ -215,7 +236,7 @@
     				showHardLetterSoup();
     			}
 				showListOfWords();
-				disableButton(true);
+				playButton.setDisable(true);
 				guiupdate.start();
 				timethread.start();
 			}
@@ -249,7 +270,7 @@
     				showHardLetterSoup();
     			}
 				showListOfWords();
-				disableButton(true);
+				playButton.setDisable(true);
 				guiupdate.start();
 				timethread.start();
 			}
@@ -264,21 +285,13 @@
 					for (int j = 0; j < lettersoup[i].length; j++) {
 						lettersoup[i][j] = new Button(String.valueOf(letterssoup.getLetterSoup()[i][j]));
 						lettersoup[i][j].setMaxSize(30.0, 30.0);
-						lettersoup[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-						    @Override
-						    public void handle(MouseEvent event) {
-						        if (event.getClickCount()>1) {
-						            System.out.println("double clicked!");    
-						        }
-						    }
-						});
 						gridpane.setAlignment(Pos.CENTER);
 						gridpane.setVgap(5);
 						gridpane.setHgap(5);
-						gridpane.add(lettersoup[i][j], j, i);
-						scrollpane.setContent(gridpane);
+						gridpane.add(lettersoup[i][j], j, i);		
 					}
 				}
+				scrollpane.setContent(gridpane);
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    /**
@@ -294,9 +307,9 @@
 						gridpane.setVgap(5);
 						gridpane.setHgap(5);
 						gridpane.add(lettersoup[i][j], j, i);
-						scrollpane.setContent(gridpane);
 					}
 				}
+				scrollpane.setContent(gridpane);
 		    } 
 	//_____________________________________________________________________________________________________________________________________
 		    /**
@@ -312,9 +325,9 @@
 						gridpane.setVgap(5);
 						gridpane.setHgap(5);
 						gridpane.add(lettersoup[i][j], j, i);
-						scrollpane.setContent(gridpane);
 					}
 				}
+				scrollpane.setContent(gridpane);
 		    } 
 	//_____________________________________________________________________________________________________________________________________		
 			private void showListOfWords() {
@@ -359,7 +372,113 @@
 			}
 	//_____________________________________________________________________________________________________________________________________
 			public void disableButton(boolean b) {
-				playButton.setDisable(b);
+					playButton.setDisable(b);
+					checkButton.setDisable(b);
 			}
+	//_____________________________________________________________________________________________________________________________________
+		    @FXML
+		    private void checkSolution(ActionEvent event) {
+		    	try {
+		    		Direction direction = directionComboBox.getValue();
+		    		if(checkRow.getText().equals("")||checkColumn.getText().equals("")) {
+		    			throw new InvalidInformationException(checkRow.getText());
+		    		}
+		    		if(directionComboBox.getValue().equals(null)) {
+		    			throw new InvalidInformationException(null);
+		    		}
+		    		int row = Integer.parseInt(checkRow.getText())-1;
+		    		int column = Integer.parseInt(checkColumn.getText())-1;
+		    		if(checkSolution(row, column, direction)) {
+		    			this.score+=1;
+		    			String score = this.score<10?"0"+this.score:""+this.score;
+		    			scoreLabel.setText(score);
+		    			if(this.score==letterssoup.getSolution().length) {
+		    				
+		    				guiupdate.isFinished();
+		    				timethread.finished();
+		    				game.addScore(this.score);
+		    				
+		    				int seconds1 = Integer.parseInt(minutesLabel.getText())*60;
+		    				int seconds = Integer.parseInt(secondsLabel.getText());
+		    				int playedtime = seconds1 + seconds;
+		    				PlayedTime playedTime = new PlayedTime(playedtime);
+		    			}
+		    		}
+		    	}
+		    	catch(InvalidInformationException iie) {
+		    		Notifications.create()
+		    		.title("Announcement")
+		    		.text(iie.getMessage())
+		    		.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+		    		.darkStyle()
+		    		.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+		    		.show();
+		    	}
+		    }
+	//_____________________________________________________________________________________________________________________________________
+		    private boolean checkSolution(int row,int column,Direction dir) {
+		    	int row1 = row;
+		    	int column1 = column;
+		    	boolean correct = false;
+		    	String name = "";
+		    	System.out.println();
+		    	System.out.println(row);
+		    	System.out.println(column);
+		    	System.out.println();
+				int length = letterssoup.getLength(row);
+				for(int k=0;k<=length;k++) {
+						System.out.println("Palabra:"+name);
+						System.out.println("Columnan:"+column);
+						System.out.println("Fila:"+row);
+						System.out.println("Tamaño"+length);
+						System.out.println("Ciclo"+k);
+						System.out.println();
+						name += lettersoup[row][column].getText();
+						if(dir.equals(Direction.UP)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.NORTHWEST)) {
+							System.out.println("--fila");
+							row--;
+						}
+						if(dir.equals(Direction.DOWN)||dir.equals(Direction.SOUTHEAST)||dir.equals(Direction.SOUTHWEST)) {
+							System.out.println("++fila");
+							row++;
+						}
+						if(dir.equals(Direction.RIGHT)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.SOUTHEAST)) {
+							System.out.println("++columna");
+							column++;
+						}
+						if(dir.equals(Direction.LEFT)||dir.equals(Direction.NORTHWEST)||dir.equals(Direction.SOUTHWEST)) {
+							System.out.println("--column");
+							column--;
+					}
+				}
+				System.out.println(name);
+				if(letterssoup.checkSolution(new Word(name,row1,column1,length))) {
+					System.out.println("correcta a poner verde");
+					correct = true;
+					setAllCorrectButtons(row1, column1, dir);
+				}
+		    	return correct;
+		    }
+		//_____________________________________________________________________________________________________________________________________
+			private void setAllCorrectButtons(int row,int column,Direction dir) {
+				int length = letterssoup.getLength(row);
+				for(int k=0;k<=length;k++) {
+						lettersoup[row][column].setStyle("-fx-background-color : GREEN");
+						if(dir.equals(Direction.UP)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.NORTHWEST)) {
+							row--;
+						}
+						else if(dir.equals(Direction.DOWN)||dir.equals(Direction.SOUTHEAST)||dir.equals(Direction.SOUTHWEST)) {
+							row++;
+						}
+						else if(dir.equals(Direction.RIGHT)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.SOUTHEAST)) {
+							column++;
+						}
+						else if(dir.equals(Direction.LEFT)||dir.equals(Direction.NORTHWEST)||dir.equals(Direction.SOUTHWEST)) {
+							column--;
+						}
+					}
+				}
 //_________________________________________________________________________________________________________________________________________
 }

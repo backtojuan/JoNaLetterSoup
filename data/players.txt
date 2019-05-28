@@ -1,1 +1,2 @@
 Juan Jose Valencia,1212,juanjose,0xff6666ff,13/03/2002,RECTANGLE
+Juan Jose Valencia Jaramillo,backtojuan,juanjose,0xffcce6ff,13/03/2002,RECTANGLE
