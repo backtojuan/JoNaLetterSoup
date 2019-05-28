@@ -6,28 +6,32 @@
 		import javafx.application.Platform;
 		import javafx.collections.FXCollections;
 		import javafx.event.ActionEvent;
+		import javafx.event.EventHandler;
 		import javafx.fxml.FXML;
 		import javafx.geometry.Pos;
 		import javafx.scene.control.Button;
 		import javafx.scene.control.ComboBox;
 		import javafx.scene.control.Label;
-		import javafx.scene.control.ProgressBar;
 		import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TextArea;
+		import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+		import javafx.scene.control.TextArea;
 		import javafx.scene.image.Image;
 		import javafx.scene.image.ImageView;
+		import javafx.scene.input.MouseEvent;
 		import javafx.scene.layout.BorderPane;
 		import javafx.scene.layout.GridPane;
+		import javafx.scene.layout.Pane;
+		import javafx.scene.media.AudioClip;
+		import javafx.scene.paint.Color;
+		import javafx.scene.shape.Circle;
 		import javafx.stage.Stage;
 		import javafx.util.Duration;
-		import javafx.concurrent.Task;
-		import javafx.concurrent.Service;
 		import model.gamemodel.Difficulty;
 		import model.gamemodel.Game;
 		import model.lettersoupmodel.LettersSoup;
 		import model.lettersoupmodel.Topic;
 		import threads.GUIUpdateTimeThread;
+		import threads.LoadingThread;
 		import threads.TimeThread;
 //_________________________________________________________________________________________________________________________________________
 		public class LetterSoupController {
@@ -45,8 +49,6 @@ import javafx.scene.control.TextArea;
 		    private ComboBox<Topic> topicComboBox;
 		    @FXML
 		    private ComboBox<Difficulty> difficultyComboBox;
-		    @FXML
-		    private ProgressBar progressbar;
 		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    @FXML
 		    private TextArea solutionList;
@@ -63,29 +65,42 @@ import javafx.scene.control.TextArea;
 		    private Button lettersoup[][];
 		    private LettersSoup letterssoup;
 		    private Game game;
-		    private Integer minutes;
-		    private Integer seconds;
 		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private TimeThread timethread;
 		    private GUIUpdateTimeThread guiupdate;
+		    private Integer minutes;
+		    private Integer seconds;
+		    private LoadingThread loadingthread;
+		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
+		    private Circle circle1;
+		    private Circle circle2;
+		    private Circle circle3;
 //_________________________________________________________________________________________________________________________________________
 		    /**
 		     * 
 		     */
 		    @FXML
 		    private void initialize() {
-		    	topicComboBox.setItems(FXCollections.observableArrayList(Topic.ANIMALS,Topic.CITIES,Topic.NUMBERS));
-		    	difficultyComboBox.setItems(FXCollections.observableArrayList(Difficulty.BASIC,Difficulty.INTERMEDIUM,Difficulty.HARD));
-		    	gridpane = new GridPane();
-		    	scrollpane = new ScrollPane();
-		    	scrollpane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
-		    	scrollpane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		    	borderpane.setCenter(scrollpane);
-		    	solutionList.setEditable(false);
-		    	foundList.setEditable(false);
-		    	progressbar = new ProgressBar();
-				game = new Game(null);
-				Platform.setImplicitExit(true);
+		    	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		    	//Initialize the visual components of this fxml
+			    	topicComboBox.setItems(FXCollections.observableArrayList(Topic.ANIMALS,Topic.CITIES,Topic.NUMBERS));
+			    	difficultyComboBox.setItems(FXCollections.observableArrayList(Difficulty.BASIC,Difficulty.INTERMEDIUM,Difficulty.HARD));
+					gridpane = new GridPane();
+				    scrollpane = new ScrollPane();
+			    	solutionList.setEditable(false);
+			    	foundList.setEditable(false);
+			    //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			    //Initialize the model and the needed threads
+			    	game = new Game(null);
+					showLoading();
+					guiupdate = new GUIUpdateTimeThread(this);
+					timethread = new TimeThread(this, false);
+					guiupdate.setDaemon(true);
+					timethread.setDaemon(true);
+					loadingthread = new LoadingThread(this);
+					loadingthread.setDaemon(true);
+					loadingthread.start();
+					Platform.setImplicitExit(true);
 		    }
 	//_________________________________________________________________________________________________________________________________
 			/**
@@ -148,7 +163,6 @@ import javafx.scene.control.TextArea;
 	    				game.setDifficultyLevel(letterssoup.getDifficultylevel());
 	    				minutes = 5;
 	    				seconds = 59;
-	    				showLoading();
 	    				showBasicLetterSoup();
 	    			}
 	    			else if(difficultyComboBox.getValue().equals(Difficulty.INTERMEDIUM)) {
@@ -167,21 +181,14 @@ import javafx.scene.control.TextArea;
 	    				showHardLetterSoup();
 	    			}
 					showListOfWords();
-					playButton.setDisable(true);
-					
-					Platform.setImplicitExit(true);
-					
-					guiupdate = new GUIUpdateTimeThread(this);
-					guiupdate.setDaemon(true);
+					disableButton(true);
 					guiupdate.start();
-					
-					timethread = new TimeThread(this, false);
-					timethread.setDaemon(true);
 					timethread.start();
 			}
 	//_____________________________________________________________________________________________________________________________________
 			private void playCitiesGame() {
 				Difficulty difficulty = null;
+				loadingthread.start();
 				Topic topic = Topic.CITIES;
 				if(difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
 					difficulty = Difficulty.BASIC;
@@ -208,18 +215,14 @@ import javafx.scene.control.TextArea;
     				showHardLetterSoup();
     			}
 				showListOfWords();
-				playButton.setDisable(true);
-				guiupdate = new GUIUpdateTimeThread(this);
-				guiupdate.setDaemon(true);
+				disableButton(true);
 				guiupdate.start();
-				
-				timethread = new TimeThread(this, false);
-				timethread.setDaemon(true);
 				timethread.start();
 			}
 	//_____________________________________________________________________________________________________________________________________
 			private void playNumbersGame() {
 				Difficulty difficulty = null;
+				loadingthread.start();
 				Topic topic = Topic.NUMBERS;
 				if(difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
 					difficulty = Difficulty.BASIC;
@@ -246,13 +249,8 @@ import javafx.scene.control.TextArea;
     				showHardLetterSoup();
     			}
 				showListOfWords();
-				playButton.setDisable(true);
-				guiupdate = new GUIUpdateTimeThread(this);
-				guiupdate.setDaemon(true);
+				disableButton(true);
 				guiupdate.start();
-				
-				timethread = new TimeThread(this, false);
-				timethread.setDaemon(true);
 				timethread.start();
 			}
 	//_____________________________________________________________________________________________________________________________________
@@ -260,11 +258,20 @@ import javafx.scene.control.TextArea;
 		     * 
 		     */
 			private void showBasicLetterSoup() {
+		    borderpane.setCenter(scrollpane);
 		    lettersoup = new Button[15][15];
 				for (int i = 0; i < lettersoup.length; i++) {
 					for (int j = 0; j < lettersoup[i].length; j++) {
 						lettersoup[i][j] = new Button(String.valueOf(letterssoup.getLetterSoup()[i][j]));
 						lettersoup[i][j].setMaxSize(30.0, 30.0);
+						lettersoup[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+						    @Override
+						    public void handle(MouseEvent event) {
+						        if (event.getClickCount()>1) {
+						            System.out.println("double clicked!");    
+						        }
+						    }
+						});
 						gridpane.setAlignment(Pos.CENTER);
 						gridpane.setVgap(5);
 						gridpane.setHgap(5);
@@ -278,6 +285,7 @@ import javafx.scene.control.TextArea;
 		     * 
 		     */
 			private void showIntermediumLetterSoup() {
+			borderpane.setCenter(scrollpane);
 			lettersoup = new Button[20][20];
 				for (int i = 0; i < lettersoup.length; i++) {
 					for (int j = 0; j < lettersoup[i].length; j++) {
@@ -295,7 +303,8 @@ import javafx.scene.control.TextArea;
 		     * 
 		     */
 			private void showHardLetterSoup() {
-			lettersoup = new Button[30][30];
+			borderpane.setCenter(scrollpane);
+			lettersoup = new Button[25][25];
 				for (int i = 0; i < lettersoup.length; i++) {
 					for (int j = 0; j < lettersoup[i].length; j++) {
 						lettersoup[i][j] = new Button(String.valueOf(letterssoup.getLetterSoup()[i][j]));
@@ -316,25 +325,41 @@ import javafx.scene.control.TextArea;
 				}
 				solutionList.setText(list);
 			}
-	//____________________________________________________________________________________________________________________________________
+	//_____________________________________________________________________________________________________________________________________
 			private void showLoading() {
-				final Service<Integer> thread = new Service<Integer>() {
-					@Override
-					public Task<Integer> createTask() {
-						return new Task<Integer>() {
-							@Override
-							public Integer call() throws InterruptedException{
-								int i;
-								for(i=0;i<1000;i++) {
-									updateProgress(i,1000);
-									Thread.sleep(10);
-								}
-								return i;
-							} 
-						};
-					}	
-				};
-				progressbar.progressProperty().bind(thread.progressProperty());
+				circle1 = new Circle(170.0,265.0,25,Color.BLACK);
+				circle2 = new Circle(235.0,265.0,25,Color.BLACK);
+				circle3 = new Circle(300.0,265.0,25,Color.BLACK);
+				Pane pane = new Pane();
+				pane.getChildren().add(circle1);
+				pane.getChildren().add(circle2);
+				pane.getChildren().add(circle3);
+				borderpane.setCenter(pane);
+				Label label = new Label("Wait while we prepare everything for you");
+				label.setLayoutX(125);
+				label.setLayoutY(200);
+				pane.getChildren().add(label);
+			}
+	//_____________________________________________________________________________________________________________________________________
+			public void setFill(int indicator) {
+				if(indicator==1) {
+					circle1.setFill(Color.RED);
+				}
+				else if(indicator==2) {
+					circle2.setFill(Color.ORANGE);
+				}
+				else if(indicator==3) {
+					circle3.setFill(Color.YELLOW);
+				}
+				else if(indicator==4) {
+					circle1.setFill(Color.GREEN);
+					circle2.setFill(Color.GREEN);
+					circle3.setFill(Color.GREEN);
+				}
+			}
+	//_____________________________________________________________________________________________________________________________________
+			public void disableButton(boolean b) {
+				playButton.setDisable(b);
 			}
 //_________________________________________________________________________________________________________________________________________
 }

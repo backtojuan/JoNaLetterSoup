@@ -1,25 +1,31 @@
 //_________________________________________________________________________________________________________________________________________
 	package threads;
 //_________________________________________________________________________________________________________________________________________
-	import gui.gamegui.GameController;
+	import gui.lettersoupgui.LetterSoupController;
 //_________________________________________________________________________________________________________________________________________
 	public class LoadingThread extends Thread{
 		
-		private GameController gamecontroller;
+		private LetterSoupController lettersoupcontroller;
 	//_____________________________________________________________________________________________________________________________________
-		public LoadingThread(GameController gamecontroller) {
-			this.gamecontroller = gamecontroller;
+		public LoadingThread(LetterSoupController lettersoupcontroller) {
+			this.lettersoupcontroller = lettersoupcontroller;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		@Override
 		public void run() {
-			while(true) {
-				
+			int indicator = 1;
+			lettersoupcontroller.disableButton(true);
+			while(indicator<=4) {
+				lettersoupcontroller.setFill(indicator);
+				if(indicator==4) {
+					lettersoupcontroller.disableButton(false);
+				}
 				try {
-					Thread.sleep(50);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				indicator++;
 			}
 		}	
 //_________________________________________________________________________________________________________________________________________

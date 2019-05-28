@@ -7,8 +7,7 @@
 	import customexception.PlayerDoesNotExistException;
 	import gui.lettersoupgui.LetterSoupController;
 	import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
+	import javafx.fxml.FXML;
 	import javafx.fxml.FXMLLoader;
 	import javafx.geometry.Pos;
 	import javafx.scene.Parent;
@@ -25,7 +24,7 @@ import javafx.fxml.FXML;
 	import javafx.stage.Stage;
 	import javafx.util.Duration;
 	import model.gamemodel.Game;
-import threads.MusicThread;
+	import threads.MusicThread;
 //_________________________________________________________________________________________________________________________________________
 	public class GameController{
 		//:::::::::::::::::::::::::::::::::::::::::::::
@@ -48,9 +47,9 @@ import threads.MusicThread;
 		    @FXML
 		    private void initialize(){
 		    		game = new Game(null);
-		    		/**MusicThread mt = new MusicThread(this);
+		    		MusicThread mt = new MusicThread(this);
 		    		mt.setDaemon(true);
-		    		mt.start();*/
+		    		mt.start();
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    public void playMusic() {
