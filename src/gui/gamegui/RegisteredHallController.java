@@ -35,7 +35,7 @@ import javafx.util.Duration;
 	 * @author Juan José Valencia Jaramillo
 	 * @version V_01_MAY-2019
 	 */
-	public class ScoresHallController {	
+	public class RegisteredHallController {	
 		//:::::::::::::::::::::::::::::::::::::::::
 		    @FXML
 		    private BorderPane borderpane;
@@ -69,7 +69,6 @@ import javafx.util.Duration;
 		    	insertion = new Insertion();
 		    	binary = new BinarySearching();
 				initializeTV();
-				System.out.println(birthdayPicker.getValue());
 			}
 	//_____________________________________________________________________________________________________________________________________
 			/**

@@ -50,7 +50,7 @@
       </Label>
       <PasswordField fx:id="passwordField" layoutX="24.0" layoutY="195.0" prefHeight="25.0" prefWidth="174.0" />
       <PasswordField fx:id="confirmPasswordField" layoutX="24.0" layoutY="255.0" prefHeight="25.0" prefWidth="174.0" />
-      <MenuButton fx:id="avatarMenu" layoutX="224.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="174.0" styleClass="button" stylesheets="@css/theme.css" text="choose....">
+      <MenuButton fx:id="avatarMenu" layoutX="217.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="174.0" styleClass="button" stylesheets="@css/theme.css" text="choose....">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#createCircleAvatar" text="CIRCLE" />
           <MenuItem mnemonicParsing="false" onAction="#createSquareAvatar" text="SQUARE" />
@@ -62,6 +62,11 @@
          </font>
       </Label>
       <Label layoutX="224.0" layoutY="175.0" text="(choose a color and then choose a shape below)">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="avatarLabel" layoutX="403.0" layoutY="201.0" prefHeight="14.0" prefWidth="58.0" text="----------">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>

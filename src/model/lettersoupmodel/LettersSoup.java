@@ -7,33 +7,31 @@
 	import java.io.IOException;
 	import java.util.ArrayList;
 	import java.util.Random;
-
-import org.controlsfx.control.Notifications;
-
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import model.gamemodel.Difficulty;
+	import org.controlsfx.control.Notifications;
+	import javafx.scene.image.Image;
+	import javafx.scene.image.ImageView;
+	import model.gamemodel.Difficulty;
 	import model.gamemodel.Game;
 //___________________________________________ATTRIBUTES____________________________________________________________________________________
-	/**
-	 * This class manages the nedeed methods and attributes to create letters soup.
-	 * @author Lina Johanna Salinas Delgado
-	 * @author Juan José Valencia Jaramillo
-	 * @version V_01 May_2019
-	 * 
-	 */
-	public class LettersSoup extends Game{
-	
-	private String[][] lettersoup;
-	private Topic topic;
-	private int size;
-	
-	private ArrayList<String> animals;
-	private ArrayList<String> cities;
-	private ArrayList<String> numbers; 
-	
-	private Word[] solution;
-	private Random random;
+		/**
+		 * This class manages the nedeed methods and attributes to create letters soup.
+		 * @author Lina Johanna Salinas Delgado
+		 * @author Juan José Valencia Jaramillo
+		 * @version V_01 May_2019
+		 * 
+		 */
+		public class LettersSoup extends Game{
+		
+		private String[][] lettersoup;
+		private Topic topic;
+		private int size;
+		
+		private ArrayList<String> animals;
+		private ArrayList<String> cities;
+		private ArrayList<String> numbers; 
+		
+		private Word[] solution;
+		private Random random;
 //_________________________________________METHODS FOR THIS CLASS__________________________________________________________________________
 		/**
 		 * <b>Letters Soup Constructor</b><br>
@@ -115,16 +113,12 @@ import model.gamemodel.Difficulty;
 		 */
 		private void initData() {
 			if(this.getDifficultylevel() == Difficulty.BASIC) {
-				size = 15;
-				solution = new Word[5];
-			}
-			else if(this.getDifficultylevel() == Difficulty.INTERMEDIUM) {
-				size = 20;
-				solution = new Word[10];
+				size = 10;
+				solution = new Word[3];
 			}
 			else {
-				size = 25;
-				solution = new Word[15];
+				size = 15;
+				solution = new Word[6];
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________
@@ -208,7 +202,7 @@ import model.gamemodel.Difficulty;
 							lettersoup[i][j] = Character.toString(cities.get(random.nextInt(cities.size())).charAt(1));
 						}
 						else {
-							lettersoup[i][j] = Character.toString(numbers.get(random.nextInt(animals.size())).charAt(0));
+							lettersoup[i][j] = Character.toString(numbers.get(random.nextInt(numbers.size())).charAt(2));
 						}
 					}
 				}
@@ -381,8 +375,6 @@ import model.gamemodel.Difficulty;
 				if(lettersoup[row][column] != null) {
 					empty = false;
 				}
-				System.out.println(row);
-				System.out.println(column);
 				row++;
 				column++;
 			}
@@ -399,15 +391,21 @@ import model.gamemodel.Difficulty;
 		private void addWordToUp(Word word, int row, int column, int length){
 			String c;
 			int i = 0;
-			System.out.println(word);
+			
 			if(row<length) {
 				word.setRow(length);
 				row = word.getRow();
 			}
-			while((verifyColumn(column)==false) && verifyRow(row)==false){
+			
+			boolean spacec = verifyColumn(column);
+			boolean spacer = verifyRow(row);
+			while(spacec==false && spacer == false) {
 				column = random.nextInt(lettersoup.length-1);
-				word.setColumn(column);
+				spacec = verifyColumn(column);
+				spacer = verifyRow(row);	
 			}
+			word.setColumn(column);
+			
 			while(i<=length) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
@@ -426,15 +424,21 @@ import model.gamemodel.Difficulty;
 		private void addWordtoDown(Word word, int row, int column, int length){
 			String c;
 			int i = 0;
-			System.out.println(word);
+			
 			if((lettersoup.length-1)-row<length) {
 				word.setRow((lettersoup.length-1)-length);
 				row = word.getRow();
 			}
-			while((verifyColumn(column)==false) && verifyRow(row)==false){
+			
+			boolean spacec = verifyColumn(column);
+			boolean spacer = verifyRow(row);
+			while(spacec==false && spacer==false){
 				column = random.nextInt(lettersoup.length-1);
-				word.setColumn(column);
+				spacec = verifyColumn(column);
+				spacer = verifyRow(row);
 			}
+			word.setColumn(column);
+			
 			while(i<=length) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
@@ -453,19 +457,21 @@ import model.gamemodel.Difficulty;
 		private void addWordToLeft(Word word, int row, int column, int length){
 			String c;
 			int i = 0;
-			System.out.println(word);
+			
 			if(column<=length) {
 				word.setColumn(length);
 				column = word.getColumn();
 			}
-			while((verifyRow(row)==false)&&verifyColumn(column)==false){
+			boolean spacec = verifyColumn(column);
+			boolean spacer = verifyRow(row);
+			
+			while((spacec==false)&&(spacer==false)){
 				row = random.nextInt(lettersoup.length-1);
-				word.setRow(row);
-				if(column<=length) {
-					word.setColumn(length);
-					column = word.getColumn();
-				}
+				spacec = verifyColumn(column);
+				spacer = verifyRow(row);
 			}			
+			word.setRow(row);
+			
 			while(i<=length) {
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
@@ -484,19 +490,21 @@ import model.gamemodel.Difficulty;
 		private void addWordToRight(Word word, int row, int column, int length){
 			String c;
 			int i = 0;
-			System.out.println(word);
+			
 			if(column+length>lettersoup.length-1) {
 				word.setColumn((lettersoup.length-1)-length);
 				column = word.getColumn();
 			}
+			boolean spacec = verifyColumn(column);
+			boolean spacer = verifyRow(row);
+			
 			while((verifyRow(row)==false)&&verifyColumn(column)==false){
 				row = random.nextInt(lettersoup.length-1);
-				word.setRow(row);
-				if(column+length>lettersoup.length-1) {
-					word.setColumn((lettersoup.length-1)-length);
-					column = word.getColumn();
-				}
+				spacec = verifyColumn(column);
+				spacer = verifyRow(row);
 			}
+			word.setRow(row);
+			
 			while(i<=length){
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
@@ -515,23 +523,31 @@ import model.gamemodel.Difficulty;
 		private void addWordToNorthWest(Word word,int row, int column, int length){
 			String c;
 			int i = 0;
-			System.out.println(word);
+			
 			if(column<length || row<length) {
 				word.setColumn(length);
 				word.setRow(length);
 				column = word.getColumn();
 				row = word.getRow();
 			}
-			while((verifyNorthWestDiagonal(row,column,length))==false){
+			
+			boolean space = verifyNorthWestDiagonal(row, column, length);
+			int temprow = row;
+			int tempcolumn = column;
+			while(space==false){
 				row = random.nextInt(lettersoup.length-1);
 				column = random.nextInt(lettersoup.length-1);
+				space = verifyNorthWestDiagonal(row, column, length);
+				setSolution(temprow, tempcolumn, row, column);
 				if(column<length || row<length) {
 					word.setRow(length);
 					word.setColumn(length);
 					column = length;
 					row = length;
+					setSolution(temprow, tempcolumn, row, column);
 				}
 			}
+			
 			while(i<=length){
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
@@ -551,25 +567,31 @@ import model.gamemodel.Difficulty;
 		private void addWordToNorthEast(Word word, int row, int column, int length){
 			String c;
 			int i = 0;
-			System.out.println(word);
+			
 			if(((lettersoup.length-1)-column<length)||(row<length)){
 				word.setColumn((lettersoup.length-1)-length);
 				word.setRow(length);
 				column = word.getColumn();
 				row = word.getRow();
 			}
-			while((verifyNorthEastDiagonal(row,column,length)==false)){
+			
+			boolean space = verifyNorthEastDiagonal(row, column, length);
+			int temprow = row;
+			int tempcolumn = column;
+			while(space==false) {
 				column = random.nextInt(lettersoup.length-1);
 				row = random.nextInt(lettersoup.length-1);
-				word.setColumn(column);
-				word.setRow(row);
+				space = verifyNorthEastDiagonal(row, column, length);
+				setSolution(temprow, tempcolumn, row, column);
 				if((lettersoup.length-1)-column<length || row<length){
 					word.setColumn((lettersoup.length-1)-length);
 					word.setRow(length);
 					column = word.getColumn();
 					row = word.getRow();
+					setSolution(temprow, tempcolumn, row, column);
 				}
 			}
+			
 			while(i<=length){
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
@@ -589,25 +611,31 @@ import model.gamemodel.Difficulty;
 		private void addWordToSouthWest(Word word,int row, int column, int length){
 			String c;
 			int i = 0;
-			System.out.println(word);
+			
 			if((row+length>(lettersoup.length-1))||(column<length)){
 				word.setRow((lettersoup.length-1)-length);
 				word.setColumn(length);
 				row = word.getRow();
 				column = word.getColumn();
-			}			
-			while((verifySouthWestDiagonal(row,column,length)==false)){
+			}
+			
+			boolean space = verifySouthWestDiagonal(row, column, length);
+			int temprow = row;
+			int tempcolumn = column;
+			while(space==false){
 				row = random.nextInt(lettersoup.length-1);
 				column = random.nextInt(lettersoup.length-1);
-				word.setRow(row);
-				word.setColumn(column);
+				space = verifySouthWestDiagonal(row, column, length);	
+				setSolution(temprow, tempcolumn, row, column);
 				if((row+length>(lettersoup.length-1))||(column<length)){
 					word.setRow((lettersoup.length-1)-length);
 					word.setColumn(length);
 					row = word.getRow();
 					column = word.getColumn();
+					setSolution(temprow, tempcolumn, row, column);
 				}	
 			}
+			
 			while(i<=length){
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
@@ -627,31 +655,53 @@ import model.gamemodel.Difficulty;
 		private void addWordToSouthEast(Word word, int column, int row, int length){
 			String c;
 			int i = 0;
-			System.out.println(word);
+			
 			if(((lettersoup.length-1)-column<length)||(row+length>(lettersoup.length-1))){
 				word.setColumn((lettersoup.length-1)-length);
 				word.setRow((lettersoup.length-1)-length);
 				row = word.getRow();
 				column = word.getColumn();
 			}
-			while((verifySouthEastDiagonal(row,column,length)==false)){
+			
+			boolean space = verifySouthEastDiagonal(row, column, length);
+			int temprow = row;
+			int tempcolumn = column;
+			while(space == false){
 				row = random.nextInt(lettersoup.length-1);
 				column = random.nextInt(lettersoup.length-1);
-				word.setColumn(column);
-				word.setRow(row);
+				space = verifySouthEastDiagonal(row, column, length);
+				setSolution(temprow, tempcolumn, row, column);
 				if(((lettersoup.length-1)-column<length)||(row+length>(lettersoup.length-1))){
 					word.setColumn((lettersoup.length-1)-length);
 					word.setRow((lettersoup.length-1)-length);
 					row = word.getRow();
 					column = word.getColumn();
+					setSolution(temprow, tempcolumn, row, column);
 				}
 			}
+			
 			while(i<=length){
 				c = Character.toString(word.getName().charAt(i));
 				lettersoup[row][column] = c;
 				i++;
 				row++;
 				column++;
+			}
+		}
+	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @param i
+		 * @param j
+		 * @param row
+		 * @param column
+		 */
+		private void setSolution(int i,int j, int row, int column) {
+			for(Word word : solution) {
+				if(word.getRow()==i && word.getColumn()==j) {
+					word.setRow(row);
+					word.setColumn(column);
+				}
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________

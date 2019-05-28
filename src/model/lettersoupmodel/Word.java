@@ -42,6 +42,7 @@
 		public void generateRandomDirection() {
 			random = new Random();
 			int indicator = random.nextInt(8);
+			
 			switch(indicator) {
 			case 0:
 				direction = Direction.DOWN;

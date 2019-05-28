@@ -7,11 +7,13 @@
 	public class TimeThread extends Thread{
 		
 		private LetterSoupController lettersoupcontroller;
+		private int over;
 		private boolean finished;
 	//_____________________________________________________________________________________________________________________________________
-		public TimeThread(LetterSoupController lettersoupcontroller,boolean finished) {
+		public TimeThread(LetterSoupController lettersoupcontroller,boolean finished,int minutes) {
 			this.lettersoupcontroller = lettersoupcontroller;
 			this.finished = finished;
+			this.over = minutes;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		public void finished() {
@@ -20,7 +22,7 @@
 	//_____________________________________________________________________________________________________________________________________
 		@Override
 		public void run() {
-			while(finished==false) {
+			while(finished==false || over!=0) {
 				Platform.setImplicitExit(true);
 				lettersoupcontroller.runTime();
 				try {
@@ -28,6 +30,7 @@
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				over--;
 			}
 		}	
 //_________________________________________________________________________________________________________________________________________

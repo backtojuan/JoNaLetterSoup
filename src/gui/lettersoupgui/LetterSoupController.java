@@ -73,8 +73,9 @@
 		    private Button lettersoup[][];
 		    private int score;
 		    private LettersSoup letterssoup;
+		    private boolean found;
 		    private Game game;
-		    private String nickname;
+		    private String foundlist;
 		    //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private TimeThread timethread;
 		    private GUIUpdateTimeThread guiupdate;
@@ -99,10 +100,9 @@
 		    @FXML
 		    private void initialize() {
 		    	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		    		System.out.println(nickname);
 		    	//Initialize the visual components of this fxml
 			    	topicComboBox.setItems(FXCollections.observableArrayList(Topic.ANIMALS,Topic.CITIES,Topic.NUMBERS));
-			    	difficultyComboBox.setItems(FXCollections.observableArrayList(Difficulty.BASIC,Difficulty.INTERMEDIUM,Difficulty.HARD));
+			    	difficultyComboBox.setItems(FXCollections.observableArrayList(Difficulty.BASIC,Difficulty.INTERMEDIUM));
 			    	directionComboBox.setItems(FXCollections.observableArrayList(Direction.UP,Direction.DOWN,Direction.LEFT,Direction.RIGHT
 			    			,Direction.NORTHEAST,Direction.NORTHWEST,Direction.SOUTHEAST,Direction.SOUTHWEST));
 					gridpane = new GridPane();
@@ -114,9 +114,7 @@
 			    	game = new Game(null);
 					showLoading();
 					guiupdate = new GUIUpdateTimeThread(this);
-					timethread = new TimeThread(this, false);
 					guiupdate.setDaemon(true);
-					timethread.setDaemon(true);
 					loadingthread = new LoadingThread(this);
 					loadingthread.setDaemon(true);
 					loadingthread.start();
@@ -152,9 +150,8 @@
 	//_________________________________________________________________________________________________________________________________
 			@FXML
 		    private void playGame(ActionEvent event) {
-				//try {
+				try {
 					if(topicComboBox.getValue().equals(Topic.ANIMALS)) {
-						System.out.println(nickname);
 						playAnimalsGame();
 					}
 					else if(topicComboBox.getValue().equals(Topic.CITIES)) {
@@ -163,7 +160,7 @@
 					else {
 						playNumbersGame();
 					}
-				/**}
+				}
 				catch(NullPointerException npe) {
 					Notifications.create()
 					.title("Announcement")
@@ -174,7 +171,7 @@
 	    			.hideAfter(Duration.seconds(8))
 					.darkStyle()
 					.show();
-				}*/
+				}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			private void playAnimalsGame() {
@@ -186,7 +183,7 @@
 	    				seconds = 59;
 	    				showBasicLetterSoup();
 	    			}
-	    			else if(difficultyComboBox.getValue().equals(Difficulty.INTERMEDIUM)) {
+	    			else{
 	    				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.INTERMEDIUM);
 	    				game.setDifficultyLevel(letterssoup.getDifficultylevel());
 	    				minutes = 11;
@@ -194,13 +191,8 @@
 	    				showIntermediumLetterSoup();
 
 	    			}
-	    			else {
-	    				letterssoup = new LettersSoup(Topic.ANIMALS, Difficulty.HARD);
-	    				game.setDifficultyLevel(letterssoup.getDifficultylevel());
-	    				minutes = 14;
-	    				seconds = 59;
-	    				showHardLetterSoup();
-	    			}
+	    			timethread = new TimeThread(this, false,minutes);
+					timethread.setDaemon(true);
 					showListOfWords();
 					playButton.setDisable(true);
 					guiupdate.start();
@@ -209,7 +201,6 @@
 	//_____________________________________________________________________________________________________________________________________
 			private void playCitiesGame() {
 				Difficulty difficulty = null;
-				loadingthread.start();
 				Topic topic = Topic.CITIES;
 				if(difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
 					difficulty = Difficulty.BASIC;
@@ -219,7 +210,7 @@
     				seconds = 59;
     				showBasicLetterSoup();
     			}
-    			else if(difficultyComboBox.getValue().equals(Difficulty.INTERMEDIUM)) {
+    			else{
     				difficulty = Difficulty.INTERMEDIUM;
     				letterssoup = new LettersSoup(topic,difficulty);
     				game.setDifficultyLevel(letterssoup.getDifficultylevel());
@@ -227,14 +218,8 @@
     				seconds = 59;
     				showIntermediumLetterSoup();
     			}
-    			else {
-    				difficulty = Difficulty.HARD;
-    				letterssoup = new LettersSoup(topic, difficulty);
-    				game.setDifficultyLevel(letterssoup.getDifficultylevel());
-    				minutes = 14;
-    				seconds = 59;
-    				showHardLetterSoup();
-    			}
+    			timethread = new TimeThread(this, false,minutes);
+				timethread.setDaemon(true);
 				showListOfWords();
 				playButton.setDisable(true);
 				guiupdate.start();
@@ -243,7 +228,6 @@
 	//_____________________________________________________________________________________________________________________________________
 			private void playNumbersGame() {
 				Difficulty difficulty = null;
-				loadingthread.start();
 				Topic topic = Topic.NUMBERS;
 				if(difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
 					difficulty = Difficulty.BASIC;
@@ -253,7 +237,7 @@
     				seconds = 59;
     				showBasicLetterSoup();
     			}
-    			else if(difficultyComboBox.getValue().equals(Difficulty.INTERMEDIUM)) {
+    			else{
     				difficulty = Difficulty.INTERMEDIUM;
     				letterssoup = new LettersSoup(topic,difficulty);
     				game.setDifficultyLevel(letterssoup.getDifficultylevel());
@@ -261,14 +245,8 @@
     				seconds = 59;
     				showIntermediumLetterSoup();
     			}
-    			else {
-    				difficulty = Difficulty.HARD;
-    				letterssoup = new LettersSoup(topic, difficulty);
-    				game.setDifficultyLevel(letterssoup.getDifficultylevel());
-    				minutes = 14;
-    				seconds = 59;
-    				showHardLetterSoup();
-    			}
+    			timethread = new TimeThread(this, false,minutes);
+				timethread.setDaemon(true);
 				showListOfWords();
 				playButton.setDisable(true);
 				guiupdate.start();
@@ -280,11 +258,12 @@
 		     */
 			private void showBasicLetterSoup() {
 		    borderpane.setCenter(scrollpane);
-		    lettersoup = new Button[15][15];
+		    lettersoup = new Button[10][10];
 				for (int i = 0; i < lettersoup.length; i++) {
 					for (int j = 0; j < lettersoup[i].length; j++) {
 						lettersoup[i][j] = new Button(String.valueOf(letterssoup.getLetterSoup()[i][j]));
 						lettersoup[i][j].setMaxSize(30.0, 30.0);
+						lettersoup[i][j].setStyle("-fx-background-color : SLATEGRAY");
 						gridpane.setAlignment(Pos.CENTER);
 						gridpane.setVgap(5);
 						gridpane.setHgap(5);
@@ -299,28 +278,12 @@
 		     */
 			private void showIntermediumLetterSoup() {
 			borderpane.setCenter(scrollpane);
-			lettersoup = new Button[20][20];
+			lettersoup = new Button[15][15];
 				for (int i = 0; i < lettersoup.length; i++) {
 					for (int j = 0; j < lettersoup[i].length; j++) {
 						lettersoup[i][j] = new Button(String.valueOf(letterssoup.getLetterSoup()[i][j]));
-						gridpane.setAlignment(Pos.CENTER);
-						gridpane.setVgap(5);
-						gridpane.setHgap(5);
-						gridpane.add(lettersoup[i][j], j, i);
-					}
-				}
-				scrollpane.setContent(gridpane);
-		    } 
-	//_____________________________________________________________________________________________________________________________________
-		    /**
-		     * 
-		     */
-			private void showHardLetterSoup() {
-			borderpane.setCenter(scrollpane);
-			lettersoup = new Button[25][25];
-				for (int i = 0; i < lettersoup.length; i++) {
-					for (int j = 0; j < lettersoup[i].length; j++) {
-						lettersoup[i][j] = new Button(String.valueOf(letterssoup.getLetterSoup()[i][j]));
+						lettersoup[i][j].setMaxSize(30.0, 30.0);
+						lettersoup[i][j].setStyle("-fx-background-color : SLATEGRAY");
 						gridpane.setAlignment(Pos.CENTER);
 						gridpane.setVgap(5);
 						gridpane.setHgap(5);
@@ -423,41 +386,31 @@
 		    	int column1 = column;
 		    	boolean correct = false;
 		    	String name = "";
-		    	System.out.println();
-		    	System.out.println(row);
-		    	System.out.println(column);
-		    	System.out.println();
 				int length = letterssoup.getLength(row);
-				for(int k=0;k<=length;k++) {
-						System.out.println("Palabra:"+name);
-						System.out.println("Columnan:"+column);
-						System.out.println("Fila:"+row);
-						System.out.println("Tamaño"+length);
-						System.out.println("Ciclo"+k);
-						System.out.println();
+				for(int k=0;k<length;k++) {
+						System.out.println(name);
+						System.out.println(dir);
+						System.out.println(row);
+						System.out.println(row);
 						name += lettersoup[row][column].getText();
 						if(dir.equals(Direction.UP)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.NORTHWEST)) {
-							System.out.println("--fila");
 							row--;
 						}
 						if(dir.equals(Direction.DOWN)||dir.equals(Direction.SOUTHEAST)||dir.equals(Direction.SOUTHWEST)) {
-							System.out.println("++fila");
 							row++;
 						}
 						if(dir.equals(Direction.RIGHT)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.SOUTHEAST)) {
-							System.out.println("++columna");
 							column++;
 						}
 						if(dir.equals(Direction.LEFT)||dir.equals(Direction.NORTHWEST)||dir.equals(Direction.SOUTHWEST)) {
-							System.out.println("--column");
 							column--;
 					}
 				}
-				System.out.println(name);
 				if(letterssoup.checkSolution(new Word(name,row1,column1,length))) {
-					System.out.println("correcta a poner verde");
 					correct = true;
 					setAllCorrectButtons(row1, column1, dir);
+					foundlist+=name+"\n";
+					foundList.setText(foundlist);
 				}
 		    	return correct;
 		    }
@@ -469,13 +422,13 @@
 						if(dir.equals(Direction.UP)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.NORTHWEST)) {
 							row--;
 						}
-						else if(dir.equals(Direction.DOWN)||dir.equals(Direction.SOUTHEAST)||dir.equals(Direction.SOUTHWEST)) {
+						if(dir.equals(Direction.DOWN)||dir.equals(Direction.SOUTHEAST)||dir.equals(Direction.SOUTHWEST)) {
 							row++;
 						}
-						else if(dir.equals(Direction.RIGHT)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.SOUTHEAST)) {
+						if(dir.equals(Direction.RIGHT)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.SOUTHEAST)) {
 							column++;
 						}
-						else if(dir.equals(Direction.LEFT)||dir.equals(Direction.NORTHWEST)||dir.equals(Direction.SOUTHWEST)) {
+						if(dir.equals(Direction.LEFT)||dir.equals(Direction.NORTHWEST)||dir.equals(Direction.SOUTHWEST)) {
 							column--;
 						}
 					}
