@@ -1,4 +1,4 @@
-package lettersoupmodel;
+package gamemodel;
 
 import static org.junit.jupiter.api.Assertions.*;
 

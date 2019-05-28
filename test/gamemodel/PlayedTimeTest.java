@@ -1,10 +1,10 @@
-package lettersoupmodel;
+package gamemodel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class GameTest {
+class PlayedTimeTest {
 
 	@Test
 	void test() {

@@ -148,7 +148,31 @@
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    private void showBestScoresMenu(ActionEvent event) {
-		    	
+				try {
+			    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ScoresHall.fxml"));
+			    	Parent root1 = (Parent) fxmlLoader.load();
+			    	ScoresHallController shc = new ScoresHallController();
+			    	stage = new Stage();
+			    	shc.setStage(stage);
+			    	stage.setTitle("Scores Hall");
+			    	stage.centerOnScreen();
+			    	stage.setFullScreen(true);
+			    	Image image = new Image("gui/gamegui/images/icon.png");
+					stage.getIcons().add(image);
+					stage.initModality(Modality.APPLICATION_MODAL);
+			    	stage.setScene(new Scene(root1));  
+			    	stage.show();
+				} catch (IOException e) {
+					Notifications.create()
+					.title("Something went wrong...")
+					.text("Cannot launch the new window due to a problem with the files in the project, make sure 'ScoresHall.fxml' exists")
+					.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+					.darkStyle()
+					.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+	    			.show();
+				}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
@@ -242,11 +266,10 @@
 			    	stage.setTitle("Sign up section");
 			    	stage.centerOnScreen();
 			    	stage.setResizable(false);
+			    	stage.setFullScreen(true);
 			    	Image image = new Image("gui/gamegui/images/icon.png");
 					stage.getIcons().add(image);
-					stage.setResizable(false);
 					stage.initModality(Modality.APPLICATION_MODAL);
-					stage.centerOnScreen();
 			    	stage.setScene(new Scene(root1));  
 			    	stage.show();
 				} catch (IOException e) {

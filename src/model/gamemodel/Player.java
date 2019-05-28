@@ -83,6 +83,15 @@
 		 * 
 		 * @return
 		 */
+		public LocalDate getBirthdate() {
+			return birthday;
+		}
+		
+		
+		/**
+		 * 
+		 * @return
+		 */
 		public Shape getAvatar() {
 			return avatar;
 		}
