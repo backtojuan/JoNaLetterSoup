@@ -5,7 +5,6 @@
 	import static org.junit.Assert.assertTrue;
 	import static org.junit.jupiter.api.Assertions.*;
 
-	import java.time.LocalDate;
 	import org.junit.jupiter.api.Test;
 	import model.lettersoupmodel.*;
 //_________________________________________________________________________________________________________________________________________
@@ -17,7 +16,6 @@
 	 */
 	class WordTest {
 		
-		private Word word;
 		/**
 		 *This scenary is created to test the Word Constructor. 
 		 */
@@ -27,12 +25,34 @@
 //_________________________________________________________________________________________________________________________________________
 		@Test
 		/**
-		 * This method test the constructor method of the Model class Word making sure a word can be created and be initialized with its
-		 * correct attributes.
+		 * This method test the constructor method of the Model class Word besides 
+		 * its getters and setters, making sure a word can be created, initialized andd be modified with expected values
 		 */
 		public void testPlayer() {
 			setUpScenary1();
-
+			
+			String name = "HORSE";
+			Word word = new Word(name,0,0,name.length());
+			
+			assertNotNull("The word is null as not expected",word);
+			assertEquals(name, word.getName(), "The expected assignated name for this word is wrong");
+			assertEquals(0, word.getRow(), "The row value for this word is not the expected one");
+			assertEquals(0, word.getColumn(), "The	column value for this word is not the expected one");
+			assertEquals(name.length(), word.getLength(), "");
+			assertNotNull("The direction value for this word was not assignated as expected",word.getDirection());
+			
+			String toString = "Name "+word.getName()+" Row "+word.getRow()+" Column "+word.getColumn()
+			+" Length "+word.getLength()+" Direction "+word.getDirection();
+			
+			assertEquals(word.toString(),toString,"The toString convertion for this word was not the expected one");
+			
+			word.setRow(5);
+			word.setColumn(7);
+			word.setDirection(Direction.LEFT);
+			
+			assertEquals(5, word.getRow(), "The row value for this word was not set as expected");
+			assertEquals(7, word.getColumn(), "The column value for this word was not set as expected");
+			assertEquals(Direction.LEFT, word.getDirection(), "The direction value for this word was not set as expected");
 		}		
 //_________________________________________________________________________________________________________________________________________
 }
