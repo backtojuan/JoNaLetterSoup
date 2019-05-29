@@ -59,24 +59,24 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method gets the solution for the current lettersoup 
+		 * @return an array that contains the current solution for this lettersoup
 		 */
 		public Word[] getSolution(){
 			return solution;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method gets the topic related for the current lettersoup
+		 * @return the related topic for this lettersoup
 		 */
 		public Topic getTopic() {
 			return topic;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method generates a random word from the dictionaries of words in the data folder
+		 * @return the Current String that represents a word taken out for a topic related dictionary
 		 */
 		private String generateRandomWord() {
 			String randomWord = "";
@@ -93,7 +93,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
+		 * This method loads the dictionaries file text that contains the words to generate the lettersoup
+		 * <b>Pre:</b> the textfile with the words exists
+		 * <b>Pos:</b> the dictionaries of words are being loaded
 		 */
 		private void load(){
 			try {
@@ -117,7 +119,8 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
+		 * This method initialize the size of the lettersoup and the number of words that this lettersoup is going to have
+		 * depending on its difficulty level
 		 */
 		private void initData() {
 			if(this.getDifficultylevel() == Difficulty.BASIC) {
@@ -133,7 +136,7 @@
 		/**
 		 * This method loads the textfile that contains the words related with animals topic<br>
 		 * <b>Pos:</b> The textfile with the topic words about animals is read.
-		 * @param path
+		 * @param path the path related to the dictionarie of words
 		 * @throws IOException
 		 */
 		private void loadAnimals() throws IOException {
@@ -148,8 +151,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param path
+		 * This method loads the textfile that contains the words related with cities topic<br>
+		 * <b>Pos:</b> The textfile with the topic words about cities is read.
+		 * @param path the path related to the dictionarie of words
 		 * @throws IOException
 		 */
 		private void loadCities() throws IOException {
@@ -164,8 +168,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param path
+		 * This method loads the textfile that contains the words related with numbers topic<br>
+		 * <b>Pos:</b> The textfile with the topic words about numbers is read.
+		 * @param path the path related to the dictionarie of words
 		 * @throws IOException
 		 */
 		private void loadNumbers() throws IOException {
@@ -180,8 +185,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param topic
+		 * This method generates the whole lettersoup depending of the topic and the difficulty level. adds the word by its random directions
+		 * checks that the words are not repited and finally fills the whole soup in the empty spaces.
+		 * @param topic the related topic for this lettersoup
 		 */
 		private void generateLetterSoup(Topic topic){
 			initData();
@@ -197,7 +203,7 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
+		 * This method fills the empty spaces of the current lettersoup
 		 */
 		private void fillSoup() {
 			for(int i=0;i<lettersoup.length;i++) {
@@ -218,9 +224,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param word
-		 * @param pos
+		 * This method checks that the current generated word is not repited comparing it with the past generated random words
+		 * @param word the current word that needs to be check with the past generateed ones
+		 * @param pos the current pos for this word.
 		 */
 		private void checkForNonRepitedElements(Word word, int pos) {
 			String wordfromfiletext = "";
@@ -247,8 +253,8 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param word
+		 * This method determines the adding process of the word
+		 * @param word the word that is going to be add in the lettersoup
 		 */
 		private void addWord(Word word) {
 			Direction dir = word.getDirection();
@@ -272,9 +278,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param column
-		 * @return
+		 * This method verifies that the current column has space so the word can be place on it
+		 * @param column the current column that is going to be verified
+		 * @return a boolean that confirms wether this column is empty or not
 		 */
 		private boolean verifyColumn(int column) {
 			boolean empty = true;
@@ -286,9 +292,9 @@
 			return empty;
 		}
 		/**
-		 * 
-		 * @param row
-		 * @return
+		 * This method verifies that the current row has space so the word can be place on it
+		 * @param column the current row that is going to be verified
+		 * @return a boolean that confirms wether this row is empty or not
 		 */
 		private boolean verifyRow(int row) {
 
@@ -302,11 +308,11 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param word
-		 * @param row
-		 * @param column
-		 * @param length
+		 * This method adds a word to the upper direction (vertical)
+		 * @param word the word that is going to be added
+		 * @param row the current row where the word is going to be place
+		 * @param column the current column where the word is going to be place
+		 * @param length the current length for the word that is going to be added
 		 */
 		private void addWordToUp(Word word, int row, int column, int length){
 			String c;
@@ -335,11 +341,11 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param word
-		 * @param row
-		 * @param column
-		 * @param length
+		 * This method adds a word to the inferior direction (vertical)
+		 * @param word the word that is going to be added
+		 * @param row the current row where the word is going to be place
+		 * @param column the current column where the word is going to be place
+		 * @param length the current length for the word that is going to be added
 		 */
 		private void addWordtoDown(Word word, int row, int column, int length){
 			String c;
@@ -368,11 +374,11 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param word
-		 * @param row
-		 * @param column
-		 * @param length
+		 * This method adds a word to the western direction (horizontal)
+		 * @param word the word that is going to be added
+		 * @param row the current row where the word is going to be place
+		 * @param column the current column where the word is going to be place
+		 * @param length the current length for the word that is going to be added
 		 */
 		private void addWordToLeft(Word word, int row, int column, int length){
 			String c;
@@ -401,11 +407,11 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param word
-		 * @param row
-		 * @param column
-		 * @param length
+		 * This method adds a word to the eastern direction (horizontal)
+		 * @param word the word that is going to be added
+		 * @param row the current row where the word is going to be place
+		 * @param column the current column where the word is going to be place
+		 * @param length the current length for the word that is going to be added
 		 */
 		private void addWordToRight(Word word, int row, int column, int length){
 			String c;
@@ -434,11 +440,11 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param i
-		 * @param j
-		 * @param row
-		 * @param column
+		 * This method sets the row and the column for the solution once it had been changed due to problems in the space 
+		 * @param i the row of the word that needs to be find and replaced
+		 * @param j the column of the word that needs to be find and replaced
+		 * @param row the new row value for the searched word
+		 * @param column the new column value for the searched word
 		 */
 		private void setSolution(int i,int j, int row, int column) {
 			Word word = null;
@@ -452,9 +458,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param word
-		 * @return
+		 * This method checks if the current word makes part of the solution for this lettersoup
+		 * @param word the word that is going to be check
+		 * @return a boolean that confirms wether this word makes part of the solution for this lettersoup or not
 		 */
 		public boolean checkSolution(Word word) {
 			boolean correct = false;
@@ -468,8 +474,8 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method counts the current numbers of solution that had been added during the proccess of random generation
+		 * @return the number of solutions that are in the current moment of adding 
 		 */
 		private int countSolutions() {
 			int size=0;
@@ -482,9 +488,9 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param i
-		 * @return
+		 * This method returns the size of a word related with its position
+		 * @param i the postion of a word that needs to be searched in the solution array of this letter soup
+		 * @return the size of a word searched with its position
 		 */
 		public int getLengthFromAPosition(int i) {
 			int length = 0;

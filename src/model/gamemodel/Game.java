@@ -130,9 +130,10 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
-			 * @param current
-			 * @param playedtime
+			 * This method adds a played time to the binary searching tree making sure that the order criteria keeps it balanced
+			 *  <b>Pos:</b> the requested playedtime was added to the binary searching tree without any incovenient<br>
+			 * @param current the current node where the adding is going to start
+			 * @param playedtime the current playedtime that needs to be inserted
 			 */
 			private void addPlayedTime(PlayedTime current, PlayedTime playedtime) {
 				if(current.compareTo(playedtime)>0) {
@@ -154,9 +155,12 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
-			 * @param playedtime
-			 * @return
+			 * This method searchs a played time inside the binary searching tree of played times
+			 * <b>Pre:</b> the Game exists<br>
+			 * <b>Pos:</b> the requested playedtime was returned as a value that represents wether the related node was found (object) 
+			 * or not (null)<br>
+			 * @param playedtime the value of seconds that represents the playedtime spend by any player and needs to be searched
+			 * @return the PlayedTime node that contains the requested value
 			 */
 			public PlayedTime searchPlayedTime(int playedtime) {
 				PlayedTime searched = new PlayedTime(playedtime);
@@ -169,10 +173,11 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
-			 * @param current
-			 * @param searched
-			 * @return
+			 * This method searchs a played time inside the binary searching tree of played times
+			 * <b>Pos:</b> the requested playedtime was returned as a value that represents wether the related node was found (object) 
+			 * or not (null)<br>
+			 * @param playedtime the value of seconds that represents the playedtime spend by any player and needs to be searched
+			 * @return the PlayedTime node that contains the requested value
 			 */
 			private PlayedTime searchPlayedTime(PlayedTime current, PlayedTime searched) {
 				if(current!=null) {
@@ -201,9 +206,11 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
-			 * @param nickname
-			 * @param password
+			 * This method removes a player of the curren list of players by checking the related nickname and password.
+			 * <b>Pre:</b> the game exists<br>
+			 * <b>Pos:</b> the requested player was remove for the list of players<br>
+			 * @param nickname the nickname of the user that is going to be remove from the game
+			 * @param password the password related to the nickname of the player that is going to be remove
 			 */
 			public void removePlayer(String nickname, String password) {
 				for(int i=0;i<players.size();i++) {
@@ -216,9 +223,12 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
+			 * This method serializes the scores of the game by making sure everytime a new score is added is saved to be inside the list
+			 * once the application has been closed or restarted
+			 * <b>Pre:</b> the game exists<br>
+			 * <b>Pos:</b> the scores of the game had been serialized 
 			 */
-			private void saveScores(){
+			public void saveScores(){
 				try {
 					File f = new File("data/scores");
 					ObjectOutputStream oops = new ObjectOutputStream(new FileOutputStream(f));
@@ -239,7 +249,9 @@
 		//_____________________________________________________________________________________________________________________________________
 			@SuppressWarnings("unchecked")
 			/**
-			 * 
+			 * This method loads the serialized object that contains the scores adding to the game in past sessions
+			 * <b>Pre:</b> the serialized object with the scores exists
+			 * <b>Pos:</b> the state of the scores for the game has been recovered
 			 */
 			private void loadScores(){
 				try {
@@ -266,7 +278,10 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
+			 * This method saves the current registered players of the game to a filetext so they can be recovered any time the application
+			 * is restarted
+			 * <b>Pre:</b> the game exists<br>
+			 * <b>Pos:</b> the players for the current session had been saved to the filetext of players
 			 */
 			public void savePlayers(){
 				try {
@@ -288,7 +303,10 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
+			 * This method loads the players that had been registered previously to the game by reading the respective filetext with 
+			 * the information of them
+			 * <b>Pre:</b> the file with the information of the players exists<br>
+			 * <b>Pos:</b> the information of the players had been recovered for the current session
 			 */
 			private void loadPlayers(){
 				try {
@@ -329,9 +347,12 @@
 			
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
+			 * This method serialize the played times of the game by serializing the root node of the binary searching tree of Played Time
+			 * that also implements serializable interface
+			 * <b>Pre:</b> the game exists
+			 * <b>Pos:</b> the played times of this current session had been saving to be recover later 
 			 */
-			private void saveTimes(){
+			public void saveTimes(){
 				try {
 					File f = new File("data/scores");
 					ObjectOutputStream oops = new ObjectOutputStream(new FileOutputStream(f));
@@ -351,7 +372,9 @@
 				}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
+			 * This method loads the played times of the game making sure the past ones are recovered for the current session
+			 * <b>Pre:</b> the serialized object exists
+			 * <b>Pos:</b> the playedtimes of past sessions had been recovered
 			 */
 			private void loadTimes(){
 				try {
@@ -378,8 +401,8 @@
 				}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
-			 * @return
+			 * This method creates a report for the current players so they can be save in a file text by being printed
+			 * @return the String report with the information that is going to be put inside the file text format of players
 			 */
 			private String playersReport() {
 				String report = "";
@@ -393,9 +416,9 @@
 			} 
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
-			 * @param nickname
-			 * @return
+			 * This method checks if the current requested player exists as a registered user
+			 * @param nickname the nickname of the user that needs to be verify as a player
+			 * @return the player associated with the name, if not found the value is null
 			 */
 			public Player playerExists(String nickname){
 				Player player = null;
@@ -408,10 +431,10 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
-			 * @param nickname
-			 * @param password
-			 * @return
+			 * This method checks if the requested nickname and password matchs together, in order to let the user start a game
+			 * @param nickname the nickname of the player requested to play
+			 * @param password the related password to the nickname of the player that wants to play
+			 * @return a boolean that confirms whether the user can sign in or not
 			 */
 			public boolean isCorrect(String nickname,String password){
 				boolean correct = false;
@@ -425,7 +448,10 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
+			 * This method refresh the players of the game, loading the current updated textfile with the information of the last added 
+			 * players
+			 * <b>Pre:</b> the game exists</b>
+			 * <b>Pos:</b> the players registered are recovered and they can be use for the current session.<br>
 			 */
 			public void refreshPlayers() {
 				loadPlayers();

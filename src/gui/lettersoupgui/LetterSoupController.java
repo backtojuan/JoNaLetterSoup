@@ -2,8 +2,9 @@
 		package gui.lettersoupgui;
 //_________________________________________________________________________________________________________________________________________	
 		import org.controlsfx.control.Notifications;
+import org.junit.runner.notification.RunListener.ThreadSafe;
 
-		import customexception.InvalidInformationException;
+import customexception.InvalidInformationException;
 		import gui.gamegui.GameController;
 		import javafx.application.Platform;
 		import javafx.collections.FXCollections;
@@ -40,6 +41,12 @@
 		import threads.LoadingThread;
 		import threads.TimeThread;
 //_________________________________________________________________________________________________________________________________________
+		/**
+		 * This class manage the necessary attributes and methods to manage and launch the lettersoup gui 
+		 * @author Lina Johanna Salinas Delgado
+		 * @author Juan José Valencia Jaramillo
+		 * @version V_01_MAY-2019
+		 */
 		public class LetterSoupController {
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    @FXML
@@ -94,10 +101,10 @@
 		    @FXML
 		    private TextField checkColumn;
 //_________________________________________________________________________________________________________________________________________
-		    /**
-		     * 
-		     */
 		    @FXML
+		    /**
+		     * This method initializes the GUI once it has been launched making sure the needed objects are ready to work
+		     */
 		    private void initialize() {
 		    	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    	//Initialize the visual components of this fxml
@@ -120,15 +127,19 @@
 					Platform.setImplicitExit(true);
 		    }
 	//_________________________________________________________________________________________________________________________________
-			/**
-		     * This method allows to set the current stage to the respective controller.
-		     * @param stg the stage that this controller is going to manage
-		     * @see GUI.Main#start(Stage)
+		    /**
+		     * This method sets the stage of the window that is going to manage this controller once it has been initialized
+		     * @param stage the new stage for this window
 		     */
 		    public void setStage(Stage stg) {
 		    	stage = stg;
 		    }
 	//_________________________________________________________________________________________________________________________________
+		    /**
+		     * This method works a timer, decreasing two values (minutes and seconds) in order to give the user a limit time to solve
+		     * the lettersoup created
+		     * @see threads.TimeThread#run()
+		     */
 		    public void runTime() {		    		
 		    		seconds-=1;
 		    		if(seconds==0) {
@@ -137,6 +148,11 @@
 		    		}
 		    }
 	//_________________________________________________________________________________________________________________________________
+		    /**
+		     * This method sets the timer decreament by being called with a thread.
+		     * @see threads.GUIUpdateWithRunnable#run()
+		     * @see threads.GUIUpdateTimeThread#run()
+		     */
 		    public void setTime() {
 	    		minutesLabel.setText("0"+minutes);
 	    		if(seconds>10) {
@@ -148,6 +164,10 @@
 		    } 
 	//_________________________________________________________________________________________________________________________________
 			@FXML
+			/**
+			 * This method starts the game by calling the neeed methods to generate the current lettersoup
+			 * @param event the event triggered by the user
+			 */
 		    private void playGame(ActionEvent event) {
 				try {
 					if(topicComboBox.getValue().equals(Topic.ANIMALS)) {
@@ -173,6 +193,9 @@
 				}
 		    }
 	//_____________________________________________________________________________________________________________________________________
+			/**
+			 * This method determinates if the user wants to play an animals related lettersoup in any difficulty level
+			 */
 			private void playAnimalsGame() {
 					Difficulty difficulty = null;
 	    			if(difficultyComboBox.getValue().equals(Difficulty.BASIC)) {
@@ -198,6 +221,9 @@
 					timethread.start();
 			}
 	//_____________________________________________________________________________________________________________________________________
+			/**
+			 * This method determinates if the user wants to play a cities related lettersoup in any difficulty level
+			 */
 			private void playCitiesGame() {
 				Difficulty difficulty = null;
 				Topic topic = Topic.CITIES;
@@ -225,6 +251,9 @@
 				timethread.start();
 			}
 	//_____________________________________________________________________________________________________________________________________
+			/**
+			 * This method determinates if the user wants to play a numbers related lettersoup in any difficulty level
+			 */
 			private void playNumbersGame() {
 				Difficulty difficulty = null;
 				Topic topic = Topic.NUMBERS;
@@ -253,7 +282,8 @@
 			}
 	//_____________________________________________________________________________________________________________________________________
 		    /**
-		     * 
+		     * This method generates a button matrix that is going to be displayed inside a gridpane in the center of the main borderpane 
+		     * of the window
 		     */
 			private void showBasicLetterSoup() {
 		    borderpane.setCenter(scrollpane);
@@ -272,9 +302,10 @@
 				scrollpane.setContent(gridpane);
 		    }
 	//_____________________________________________________________________________________________________________________________________
-		    /**
-		     * 
-		     */
+			/**
+		     * This method generates a button matrix that is going to be displayed inside a gridpane in the center of the main borderpane 
+		     * of the window
+			*/
 			private void showIntermediumLetterSoup() {
 			borderpane.setCenter(scrollpane);
 			lettersoup = new Button[15][15];
@@ -291,7 +322,10 @@
 				}
 				scrollpane.setContent(gridpane);
 		    } 
-	//_____________________________________________________________________________________________________________________________________		
+	//_____________________________________________________________________________________________________________________________________	
+			/**
+			 * This method shows the current list of words that the player needs to find for this lettersoup
+			 */
 			private void showListOfWords() {
 				String list = "";
 				for(int i=0;i<letterssoup.getSolution().length;i++) {
@@ -301,6 +335,10 @@
 				solutionList.setText(list);
 			}
 	//_____________________________________________________________________________________________________________________________________
+			/**
+			 * This method creates and sets the graphic animation part of a simulation that a loading by changing circles and their fill
+			 * color
+			 */
 			private void showLoading() {
 				circle1 = new Circle(170.0,265.0,25,Color.BLACK);
 				circle2 = new Circle(235.0,265.0,25,Color.BLACK);
@@ -316,6 +354,10 @@
 				pane.getChildren().add(label);
 			}
 	//_____________________________________________________________________________________________________________________________________
+			/**
+			 * This method fills the color of the circles that simulates the graphic loading of the game
+			 * @param indicator an integer that indicates the order in which the circles are going to be fill
+			 */
 			public void setFill(int indicator) {
 				if(indicator==1) {
 					circle1.setFill(Color.RED);
@@ -333,12 +375,21 @@
 				}
 			}
 	//_____________________________________________________________________________________________________________________________________
+			/**
+			 * This method disables the main buttons of this window with various porpuses such as avoiding the user to play an cause a 
+			 * distorsion of the visual generation of the lettersoup, and and interruption in the simulation of the loading 
+			 * @param b
+			 */
 			public void disableButton(boolean b) {
 					playButton.setDisable(b);
 					checkButton.setDisable(b);
 			}
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method checks the solution given by the user, making sure to increase its score and resalting its found word
+		     * @param event the event triggered by the user
+		     */
 		    private void checkSolution(ActionEvent event) {
 		    	try {
 		    		Direction direction = directionComboBox.getValue();
@@ -380,6 +431,14 @@
 		    	}
 		    }
 	//_____________________________________________________________________________________________________________________________________
+		    /**
+		     * This method checks the solution given by the user comparing the initial position and the direction making sure if the 
+		     * word is part of the solution
+		     * @param row the initial row for the word to be check
+		     * @param column the initial column for the word to be check
+		     * @param dir the direction that the word moves towards
+		     * @return a boolean that confirms is the solution given by the user is the right one
+		     */
 		    private boolean checkSolution(int row,int column,Direction dir) {
 		    	int row1 = row;
 		    	int column1 = column;
@@ -410,6 +469,13 @@
 		    	return correct;
 		    }
 		//_____________________________________________________________________________________________________________________________________
+		    /**
+		     * This method sets the filling of the visual buttons of the lettersoup when the user had found a word that makes
+		     * part of the solution of the lettersoup
+		     * @param row the initial row for the right word
+		     * @param column the initial column for the right word
+		     * @param dir the direction in which the word move towards
+		     */
 			private void setAllCorrectButtons(int row,int column,Direction dir) {
 				int length = letterssoup.getLengthFromAPosition(row);
 				for(int k=0;k<=length;k++) {

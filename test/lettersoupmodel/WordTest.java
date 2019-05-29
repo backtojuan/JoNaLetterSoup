@@ -48,11 +48,9 @@
 			
 			word.setRow(5);
 			word.setColumn(7);
-			word.setDirection(Direction.LEFT);
 			
 			assertEquals(5, word.getRow(), "The row value for this word was not set as expected");
 			assertEquals(7, word.getColumn(), "The column value for this word was not set as expected");
-			assertEquals(Direction.LEFT, word.getDirection(), "The direction value for this word was not set as expected");
 		}		
 //_________________________________________________________________________________________________________________________________________
 }

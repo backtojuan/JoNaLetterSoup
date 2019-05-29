@@ -60,7 +60,8 @@ import javafx.util.Duration;
 //_________________________________________________________________________________________________________________________________________
 			@FXML
 			/**
-			 * 
+			 * This method initializes the GUI once it has been launched creating the necessary objects and components that are going 
+			 * to be used for this window
 			 */
 			private void initialize() {
 				game = new Game(null);
@@ -72,8 +73,8 @@ import javafx.util.Duration;
 			}
 	//_____________________________________________________________________________________________________________________________________
 			/**
-			 * 
-			 * @param stage
+			 * This method sets the new stage of the window that this controller is going to manage
+			 * @param stage the new stage for this window
 			 */
 			public void setStage(Stage stage) {
 				this.stage = stage;
@@ -129,8 +130,8 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
-		     * 
-		     * @param event
+		     * This method searchs a birthday in the registeredtable of players by using binary searching
+		     * @param event the event triggered by the user
 		     */
 		    private void searchBirthday(ActionEvent event) {
 		    	try {
@@ -165,8 +166,8 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
-		     * 
-		     * @param event
+		     * This method searchs a name in the registeredplayers table by binary searching
+		     * @param event the event triggered by the user
 		     */
 		    private void searchName(ActionEvent event) {
 		    	try {
@@ -200,8 +201,8 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
-		     * 
-		     * @param event
+		     * This method searchs a nickname in the registeredplayers table by using binary searching
+		     * @param event the event triggered by the user
 		     */
 		    private void searchNickName(ActionEvent event) {
 		    	try {
@@ -235,8 +236,8 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
-		     * 		    
-		     * @param event
+		     * This method sorts the registeredplayers table by avatar using selection sorting		   
+		     * @param event the event triggered by the user
 		     */
 		    private void sortByAvatar(ActionEvent event) {
 		    	selection.sortByAvatar(game);
@@ -245,8 +246,8 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
-		     * 
-		     * @param event
+		     * This method sorts the registeredplayers table by birthday using selection sorting
+		     * @param event the event triggered by the user
 		     */
 		    private void sortByBirthday(ActionEvent event) {
 		    	selection.sortByBirthday(game);
@@ -255,8 +256,8 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
-		     * 
-		     * @param event
+		     * This method sorts the registeredplayers table by color using bubble sorting
+		     * @param event the event triggered by the user
 		     */
 		    private void sortByColor(ActionEvent event) {
 		    	bubble.sortByColor(game);
@@ -265,8 +266,8 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
-		     * 
-		     * @param event
+		     * This method sorts the registeredplayers table by name using bubble sorting
+		     * @param event the event triggered by the user
 		     */
 		    private void sortByName(ActionEvent event) {
 		    	bubble.sortByName(game);
@@ -274,8 +275,8 @@ import javafx.util.Duration;
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    /**
-		     * 
-		     * @param event
+		     * This method sorts the registeredplayers table by nickname using insertion sorting
+		     * @param event the event triggered by the user
 		     */
 		    @FXML
 		    private void sortByNickname(ActionEvent event) {
@@ -285,8 +286,8 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
-		     * 
-		     * @param event
+		     * This method sorts the registeredplayers table by password using insertion sorting
+		     * @param event the event triggered by the user
 		     */
 		    private void sortByPassword(ActionEvent event) {
 		    	insertion.sortByPassword(game);

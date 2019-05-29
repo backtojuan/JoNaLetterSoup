@@ -30,6 +30,12 @@
 	import model.gamemodel.Player;
 	import model.gamemodel.Shape;
 //_________________________________________________________________________________________________________________________________________
+	/**
+	 * This class manage the necessary attributes and methods to manage and launch the sign up gui 
+	 * @author Lina Johanna Salinas Delgado
+	 * @author Juan José Valencia Jaramillo
+	 * @version V_01_MAY-2019
+	 */
 	public class SignUpController {
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	    	@FXML
@@ -54,16 +60,28 @@
 		    private Stage stage;
 		    private Game game;
 //_________________________________________________________________________________________________________________________________________
-		    @FXML
+			@FXML
+			/**
+			 * This method initializes the GUI once it has been launched creating the necessary objects and components that are going 
+			 * to be used for this window
+			 */
 		    public void initialize() {
 				game = new Game(null);
 		    }
 	//_____________________________________________________________________________________________________________________________________
-		    public void setStage(Stage stage) {
+			/**
+			 * This method sets the new stage of the window that this controller is going to manage
+			 * @param stage the new stage for this window
+			 */
+			public void setStage(Stage stage) {
 		    	this.stage = stage;
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method signs up the user as a new Player contained for this game. 
+		     * @param event the event triggered by the user
+		     */
 		    private void signUp(ActionEvent event) {
 		    	try {
 		    		LocalDate birthday = birthdayField.getValue();
@@ -144,6 +162,10 @@
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			@FXML
+			/**
+			 * This method displays the avatar that the user wants to be identify as
+			 * @param event the event triggered by the user
+			 */
 		    private void createCircleAvatar(ActionEvent event) { 
 				Circle circle = new Circle(400.0,290.0,50,colorField.getValue());
 		   		paneSurface.getChildren().add(circle);
@@ -151,6 +173,10 @@
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			@FXML
+			/**
+			 * This method displays the avatar that the user wants to be identify as
+			 * @param event the event triggere by the user
+			 */
 			private void createSquareAvatar(ActionEvent event) {
 				Rectangle square = new Rectangle(250.0,250,75,75);
 				square.setFill(colorField.getValue());
@@ -158,7 +184,13 @@
 				avatarLabel.setText(""+Shape.RECTANGLE);
 			}
 	//_____________________________________________________________________________________________________________________________________
-		    private boolean confirmPassword(String password, String confirmPassword) {
+		    /**
+		     * This method verifies if the user typed well their password and they match together
+		     * @param password the first attemp of the password typed
+		     * @param confirmPassword the second attemp of the password typed
+		     * @return a boolean condition that confirms if these passwords match or not
+		     */
+			private boolean confirmPassword(String password, String confirmPassword) {
 		    	if(password.equals(confirmPassword)) {
 		    		return true;
 		    	}

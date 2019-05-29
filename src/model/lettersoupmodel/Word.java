@@ -22,11 +22,11 @@
 		private Random random;
 //_________________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param name
-		 * @param row
-		 * @param column
-		 * @param length
+		 * <b>Word constructor</b> 
+		 * @param name the name of the word
+		 * @param row the horizontal position of the word in the matrix
+		 * @param column the vertical position of the word in the matrix
+		 * @param length the size of the word
 		 */
 		public Word(String name,int row, int column,int length) {
 			this.name = name;
@@ -37,7 +37,7 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
+		 * This method gives to the word a random Direction value
 		 */
 		private void generateRandomDirection() {
 			random = new Random();
@@ -59,72 +59,65 @@
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method returns the name of this word
+		 * @return the name of the word
 		 */
 		public String getName() {
 			return name;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method returns the row of this word
+		 * @return the row of this word
 		 */
 		public int getRow() {
 			return row;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method returns the column of this word
+		 * @return the column of this word
 		 */
 		public int getColumn() {
 			return column;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method returns the size value of this word
+		 * @return the size of this word
 		 */
 		public int getLength() {
 			return length;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @return
+		 * This method returns the Direction value of this word
+		 * @return the direction of this word
 		 */
 		public Direction getDirection() {
 			return direction;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param row
+		 * This method sets the current row for this word with the new value requested
+		 * @param row the new value of the row for this word
 		 */
 		public void setRow(int row) {
 			this.row = row;
 		}
 	//_____________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param column
+		 * This method sets the current column for this word with the new value requested
+		 * @param column the new value of the column for this column
 		 */
 		public void setColumn(int column) {
 			this.column = column;
 		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param direction
-		 */
-		public void setDirection(Direction direction) {
-			this.direction = direction;
-		}
 	//____________________________________________________________________________________________________________________________________
 		@Override
 		/**
-		 * @return 
+		 * This method returns a current String representation of this word
+		 * @return the string representation for this word
 		 */
 		public String toString() {
 			return "Name "+name +" Row "+row +" Column "+column+" Length "+length+" Direction "+direction;

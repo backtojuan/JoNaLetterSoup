@@ -20,13 +20,13 @@
 		private Shape avatar;
 //_________________________________________________________________________________________________________________________________________
 		/**
-		 * 
-		 * @param name
-		 * @param nickname
-		 * @param password
-		 * @param favColor
-		 * @param birthday
-		 * @param avatar
+		 * <b>Player Constructor</b> 
+		 * @param name the name of the player
+		 * @param nickname the nickname which the player wants to be identify as
+		 * @param password the pasword that is going to be used for signing in
+		 * @param favColor the favorite color of the player
+		 * @param birthday the birthday of the player
+		 * @param avatar the avatar of the player
 		 */
 		public Player(String name,String nickname, String password, String favColor, LocalDate birthday, Shape avatar) {
 			this.name = name;
@@ -38,40 +38,40 @@
 		}
 		
 		/**
-		 * 
-		 * @return
+		 * This method returns the name of the player
+		 * @return the name of the player
 		 */
 		public String getName() {
 			return name;
 		}
 		
 		/**
-		 * 
-		 * @return
+		 * This method returns the nickname of the player
+		 * @return the nickname of the player
 		 */
 		public String getNickname() {
 			return nickname;
 		}
 		
 		/**
-		 * 
-		 * @return
+		 * This method returns the password of the player
+		 * @return the password of the player
 		 */
 		public String getPassword() {
 			return password;
 		}
 		
 		/**
-		 * 
-		 * @return
+		 * This method returns the favorite color of the player
+		 * @return the fav color of the player
 		 */
 		public String getFavColor() {
 			return favColor;
 		}
 		
 		/**
-		 * 
-		 * @return
+		 * This method returns the birthday of the player as a String representation by parsing the selected one for the user
+		 * @return a string representation of the birthday of the player
 		 */
 		public String getBirthday() {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -80,8 +80,8 @@
 		}
 		
 		/**
-		 * 
-		 * @return
+		 * This method returns the birthday of the player as a LoCalDate representation
+		 * @return the localdate object representation of the birthday 
 		 */
 		public LocalDate getBirthdate() {
 			return birthday;
@@ -89,8 +89,8 @@
 		
 		
 		/**
-		 * 
-		 * @return
+		 * This method returns thee avatar of the player
+		 * @return the related shape representation of the avatar of the player
 		 */
 		public Shape getAvatar() {
 			return avatar;

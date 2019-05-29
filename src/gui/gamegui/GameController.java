@@ -26,6 +26,12 @@
 	import model.gamemodel.Game;
 	import threads.MusicThread;
 //_________________________________________________________________________________________________________________________________________
+	/**
+	 * This class manage the necessary attributes and methods to manage and launch the main game gui 
+	 * @author Lina Johanna Salinas Delgado
+	 * @author Juan José Valencia Jaramillo
+	 * @version V_01_MAY-2019
+	 */
 	public class GameController{
 		//:::::::::::::::::::::::::::::::::::::::::::::
 	    	@FXML
@@ -45,23 +51,37 @@
 		//:::::::::::::::::::::::::::::::::::::::::::::
 //_________________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method initializes the GUI once it has been launched making sure the needed objects are ready to work
+		     */
 		    private void initialize(){
 		    		game = new Game(null);
-		    		/**MusicThread mt = new MusicThread(this);
+		    		MusicThread mt = new MusicThread(this);
 		    		mt.setDaemon(true);
-		    		mt.start();*/
+		    		mt.start();
 		    }
 	//_____________________________________________________________________________________________________________________________________
+		    /**
+		     * This method plays the background music of the game by calling the audio to be played.
+		     */
 		    public void playMusic() {
 		    	audio = new AudioClip(this.getClass().getResource("backgroundmusic.mp3").toString());
 		    	audio.play();
 		    } 
-	//_____________________________________________________________________________________________________________________________________	    
+	//_____________________________________________________________________________________________________________________________________	
+		    /**
+		     * This method sets the stage of the window that is going to manage this controller once it has been initialized
+		     * @param stage the new stage for this window
+		     */
 		    public void setStage(Stage stage) {
 		    	this.stage = stage;
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method plays a background animated sound of the popular asian character "Doraemon" as a little easter egg :3
+		     * @param event the event triggered by the user
+		     */
 		    private void playDoraemonEasterEgg(MouseEvent event) {
 		    	AudioClip audio = new AudioClip(this.getClass().getResource("doraemon.mp3").toString());
 		    	if(event.getX()<doraemon.getFitHeight()||event.getX()<doraemon.getFitWidth()) {
@@ -70,6 +90,10 @@
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method allows to remove a registered player in the game throught the game.
+		     * @param event the event triggered by the user
+		     */
 		    private void removeProfile(ActionEvent event) {
 		    	try {
 		    		String nickname = nicknameTextField.getText();
@@ -133,6 +157,10 @@
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method shows a little information about the development of this project
+		     * @param event the event triggered by the user
+		     */
 		    private void showAboutInfo(ActionEvent event) {
 		    	Notifications.create()
 		    	.title("About")
@@ -147,6 +175,10 @@
 		    }		    
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method launchs the new window that contains the registered players table of the game
+		     * @param event the event triggered by the user
+		     */
 		    private void showBestScoresMenu(ActionEvent event) {
 				try {
 			    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RegisteredHall.fxml"));
@@ -176,6 +208,10 @@
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method shows a little information about instructions of signing up in the game
+		     * @param event the event triggered by the user
+		     */
 		    private void showSignUpInfo(ActionEvent event) {
 		    	Notifications.create()
 		    	.title("Help")
@@ -189,6 +225,10 @@
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This methods signs in the player in the game allowing them to be able to play a new lettersoup  
+		     * @param event the event triggered by the user
+		     */
 		    private void signIn(ActionEvent event) {
 		    	try {
 		    		game.refreshPlayers();
@@ -253,6 +293,10 @@
 		    }
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
+		    /**
+		     * This method signs up the user to the game allowing them to register in a new form window. 
+		     * @param event The event triggered by the user
+		     */
 		    private void signUp(ActionEvent event){
 				try {
 			    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
