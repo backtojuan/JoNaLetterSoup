@@ -1,24 +1,24 @@
 //_________________________________________________________________________________________________________________________________________
 		package gui.lettersoupgui;
-import java.io.IOException;
+		import java.io.IOException;
 
 //_________________________________________________________________________________________________________________________________________	
 		import org.controlsfx.control.Notifications;
-import org.junit.runner.notification.RunListener.ThreadSafe;
+		import org.junit.runner.notification.RunListener.ThreadSafe;
 
-import customexception.InvalidInformationException;
+		import customexception.InvalidInformationException;
 		import gui.gamegui.GameController;
-import gui.gamegui.SignUpController;
-import javafx.application.Platform;
+		import gui.gamegui.SignUpController;
+		import javafx.application.Platform;
 		import javafx.collections.FXCollections;
 		import javafx.event.ActionEvent;
 		import javafx.event.EventHandler;
 		import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+		import javafx.fxml.FXMLLoader;
+		import javafx.geometry.Pos;
+		import javafx.scene.Parent;
+		import javafx.scene.Scene;
+		import javafx.scene.control.Button;
 		import javafx.scene.control.ComboBox;
 		import javafx.scene.control.Label;
 		import javafx.scene.control.ScrollPane;
@@ -34,8 +34,8 @@ import javafx.scene.control.Button;
 		import javafx.scene.media.AudioClip;
 		import javafx.scene.paint.Color;
 		import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+		import javafx.stage.Modality;
+		import javafx.stage.Stage;
 		import javafx.util.Duration;
 		import model.gamemodel.Difficulty;
 		import model.gamemodel.Game;
@@ -470,7 +470,7 @@ import javafx.stage.Stage;
 		    	int row1 = row;
 		    	int column1 = column;
 		    	boolean correct = false;
-		    	String name = " ";
+		    	String name = "";
 				int length = letterssoup.getLengthFromAPosition(row);
 				for(int k=0;k<=length;k++) {
 						name += lettersoup[row][column].getText();
@@ -491,6 +491,7 @@ import javafx.stage.Stage;
 					correct = true;
 					setAllCorrectButtons(row1, column1, dir);
 					foundlist+=name+"\n";
+					System.out.println(name);
 					foundList.setText(foundlist);
 				}
 		    	return correct;

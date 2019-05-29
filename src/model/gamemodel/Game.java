@@ -30,10 +30,9 @@
 			
 			private Difficulty difficultylevel;
 			private ArrayList<Player> players;
-			private ArrayList<Integer> scores;
 			
 			private PlayedTime root;
-			private Scores first;
+			private Score first;
 //_________________________________________________________________________________________________________________________________________
 			/**
 			 * <b>Game Constructor</b><br>
@@ -62,8 +61,8 @@
 			 * <b>Pre:</b> the Game exists<br>
 			 * @return the list that contains all the scores that belongs to some players
 			 */
-			public ArrayList<Integer> getScores(){
-				return scores;
+			public Score getScores(){
+				return first;
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
@@ -80,7 +79,7 @@
 			 * <b>Pre:</b> the Game exists<br>
 			 * @return the first node 
 			 */
-			public Scores getFirst() {
+			public Score getFirst() {
 				return first;
 			}
 		//_____________________________________________________________________________________________________________________________________
@@ -120,7 +119,7 @@
 			 * @param player the player that it's going to be added
 			 */
 			public void addScore(int score) {
-				Scores s = new Scores(score);
+				Score s = new Score(score);
 				if(first==null) {
 					first = s;
 				}
@@ -134,7 +133,7 @@
 			 * <b>Pos:</b> the requested score was added to the linked list of scores<br>
 			 * @param player the player that it's going to be added
 			 */
-			private void addScore(Scores current, Scores newScore) {
+			private void addScore(Score current, Score newScore) {
 				if(current.compareTo(newScore)>0) {
 					current.getPrev().setNext(newScore);
 					newScore.setPrev(current.getPrev());
@@ -152,8 +151,8 @@
 			 * <b>Pos:</b> the last element of the double linked list of the scores is return.
  			 * @return the last element of this linked list.
 			 */
-			private Scores getLast() {
-				Scores temp = first;
+			private Score getLast() {
+				Score temp = first;
 				while(temp.getNext()!=null) {
 					temp = temp.getNext();
 				}
@@ -279,7 +278,7 @@
 				try {
 					File f = new File("data/scores");
 					ObjectOutputStream oops = new ObjectOutputStream(new FileOutputStream(f));
-					oops.writeObject(scores);
+					oops.writeObject(first);
 					oops.close();
 				}
 		    	catch(IOException e) {
@@ -294,7 +293,6 @@
 		    	}
 			}
 		//_____________________________________________________________________________________________________________________________________
-			@SuppressWarnings("unchecked")
 			/**
 			 * This method loads the serialized object that contains the scores adding to the game in past sessions
 			 * <b>Pre:</b> the serialized object with the scores exists
@@ -305,11 +303,11 @@
 					File f = new File("data/scores");
 					if(f.exists()) {
 						ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-						scores = (ArrayList<Integer>) ois.readObject();
+						first = (Score) ois.readObject();
 						ois.close();
 					}
 					else {
-						scores = new ArrayList<Integer>();
+						first = null;
 					}
 				}
 		    	catch(IOException|ClassNotFoundException e) {
@@ -401,7 +399,7 @@
 			 */
 			public void saveTimes(){
 				try {
-					File f = new File("data/scores");
+					File f = new File("data/times");
 					ObjectOutputStream oops = new ObjectOutputStream(new FileOutputStream(f));
 					oops.writeObject(root);
 					oops.close();
@@ -425,7 +423,7 @@
 			 */
 			private void loadTimes(){
 				try {
-					File f = new File("data/scores");
+					File f = new File("data/times");
 					if(f.exists()) {
 					ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 					root = (PlayedTime) ois.readObject();

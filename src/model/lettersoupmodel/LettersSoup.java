@@ -464,7 +464,7 @@
 		 */
 		public boolean checkSolution(Word word) {
 			boolean correct = false;
-			System.out.println(word.getName());
+			System.out.println(word);
 			for(int i=0;i<solution.length&&correct==false;i++) {
 				if(solution[i].getName().equals(word.getName())) {
 					correct = true;
