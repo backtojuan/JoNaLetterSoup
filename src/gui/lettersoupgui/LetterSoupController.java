@@ -103,8 +103,7 @@
 		    	//Initialize the visual components of this fxml
 			    	topicComboBox.setItems(FXCollections.observableArrayList(Topic.ANIMALS,Topic.CITIES,Topic.NUMBERS));
 			    	difficultyComboBox.setItems(FXCollections.observableArrayList(Difficulty.BASIC,Difficulty.INTERMEDIUM));
-			    	directionComboBox.setItems(FXCollections.observableArrayList(Direction.UP,Direction.DOWN,Direction.LEFT,Direction.RIGHT
-			    			,Direction.NORTHEAST,Direction.NORTHWEST,Direction.SOUTHEAST,Direction.SOUTHWEST));
+			    	directionComboBox.setItems(FXCollections.observableArrayList(Direction.UP,Direction.DOWN,Direction.LEFT,Direction.RIGHT));
 					gridpane = new GridPane();
 				    scrollpane = new ScrollPane();
 			    	solutionList.setEditable(false);
@@ -359,7 +358,7 @@
 		    				
 		    				guiupdate.isFinished();
 		    				timethread.finished();
-		    				game.addScore(this.score);
+		    				letterssoup.addScore(this.score);
 		    				
 		    				int seconds1 = Integer.parseInt(minutesLabel.getText())*60;
 		    				int seconds = Integer.parseInt(secondsLabel.getText());
@@ -385,24 +384,20 @@
 		    	int row1 = row;
 		    	int column1 = column;
 		    	boolean correct = false;
-		    	String name = "";
-				int length = letterssoup.getLength(row);
-				for(int k=0;k<length;k++) {
-						System.out.println(name);
-						System.out.println(dir);
-						System.out.println(row);
-						System.out.println(row);
+		    	String name = " ";
+				int length = letterssoup.getLengthFromAPosition(row);
+				for(int k=0;k<=length;k++) {
 						name += lettersoup[row][column].getText();
-						if(dir.equals(Direction.UP)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.NORTHWEST)) {
+						if(dir.equals(Direction.UP)) {
 							row--;
 						}
-						if(dir.equals(Direction.DOWN)||dir.equals(Direction.SOUTHEAST)||dir.equals(Direction.SOUTHWEST)) {
+						if(dir.equals(Direction.DOWN)) {
 							row++;
 						}
-						if(dir.equals(Direction.RIGHT)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.SOUTHEAST)) {
+						if(dir.equals(Direction.RIGHT)) {
 							column++;
 						}
-						if(dir.equals(Direction.LEFT)||dir.equals(Direction.NORTHWEST)||dir.equals(Direction.SOUTHWEST)) {
+						if(dir.equals(Direction.LEFT)) {
 							column--;
 					}
 				}
@@ -416,19 +411,19 @@
 		    }
 		//_____________________________________________________________________________________________________________________________________
 			private void setAllCorrectButtons(int row,int column,Direction dir) {
-				int length = letterssoup.getLength(row);
+				int length = letterssoup.getLengthFromAPosition(row);
 				for(int k=0;k<=length;k++) {
 						lettersoup[row][column].setStyle("-fx-background-color : GREEN");
-						if(dir.equals(Direction.UP)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.NORTHWEST)) {
+						if(dir.equals(Direction.UP)) {
 							row--;
 						}
-						if(dir.equals(Direction.DOWN)||dir.equals(Direction.SOUTHEAST)||dir.equals(Direction.SOUTHWEST)) {
+						if(dir.equals(Direction.DOWN)) {
 							row++;
 						}
-						if(dir.equals(Direction.RIGHT)||dir.equals(Direction.NORTHEAST)||dir.equals(Direction.SOUTHEAST)) {
+						if(dir.equals(Direction.RIGHT)) {
 							column++;
 						}
-						if(dir.equals(Direction.LEFT)||dir.equals(Direction.NORTHWEST)||dir.equals(Direction.SOUTHWEST)) {
+						if(dir.equals(Direction.LEFT)) {
 							column--;
 						}
 					}

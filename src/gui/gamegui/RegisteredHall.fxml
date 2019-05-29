@@ -38,17 +38,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="161.0" styleClass="button" stylesheets="@css/theme.css" text="Sort" GridPane.rowIndex="2">
+            <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="161.0" styleClass="button" stylesheets="@css/theme%20(black%20labels).css" text="Sort" GridPane.rowIndex="2">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#sortByName" text="sort by Name" />
                 <MenuItem mnemonicParsing="false" onAction="#sortByNickname" text="sort by NickName" />
                   <MenuItem mnemonicParsing="false" onAction="#sortByBirthday" text="sort by Birthday" />
+                  <MenuItem mnemonicParsing="false" onAction="#sortByPassword" text="sort by Password" />
+                  <MenuItem mnemonicParsing="false" onAction="#sortByColor" text="sort by Color" />
+                  <MenuItem mnemonicParsing="false" onAction="#sortByAvatar" text="sort by Avatar" />
               </items>
                <GridPane.margin>
                   <Insets left="25.0" right="-25.0" />
                </GridPane.margin>
             </MenuButton>
-            <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="162.0" styleClass="button" stylesheets="@css/theme.css" text="Search" GridPane.rowIndex="4">
+            <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="162.0" styleClass="button" stylesheets="@css/theme%20(black%20labels).css" text="Search" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="25.0" right="-25.0" />
                </GridPane.margin>

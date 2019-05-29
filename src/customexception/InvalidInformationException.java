@@ -26,7 +26,7 @@
 		public String getMessage() {
 			//report that is going to be return
 			String report = "";
-			if(this.invalidInformation.equals(null)) {
+			if(this.invalidInformation==null) {
 				report += "You can not create a new Profile Player if you haven't enter enough information";
 			}
 			else if(this.invalidInformation.equals("")) {

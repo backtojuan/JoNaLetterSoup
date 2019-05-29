@@ -156,7 +156,7 @@
 			    	shc.setStage(stage);
 			    	stage.setTitle("Scores Hall");
 			    	stage.centerOnScreen();
-			    	stage.setFullScreen(true);
+			    	stage.setResizable(false);
 			    	Image image = new Image("gui/gamegui/images/icon.png");
 					stage.getIcons().add(image);
 					stage.initModality(Modality.APPLICATION_MODAL);
@@ -205,7 +205,6 @@
 					    	stage = new Stage();
 					    	LetterSoupController ltc = new LetterSoupController();
 					    	ltc.setStage(stage);
-					    	System.out.println(nickname);
 					    	stage.setTitle("LetterSoup");
 					    	stage.centerOnScreen();
 					    	stage.initModality(Modality.APPLICATION_MODAL);

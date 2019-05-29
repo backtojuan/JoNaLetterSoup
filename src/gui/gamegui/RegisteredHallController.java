@@ -90,33 +90,39 @@ import javafx.util.Duration;
 				//Creates the table of flights
 				//Name Column
 				TableColumn<Player, String> nameColumn = new TableColumn<>("Name");
-				nameColumn.setMinWidth(200);
+				nameColumn.setMinWidth(150);
 				nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 				
 				//NickName Column
 				TableColumn<Player, String> nicknameColumn = new TableColumn<>("Nickname");
-				nicknameColumn.setMinWidth(200);
+				nicknameColumn.setMinWidth(100);
 				nicknameColumn.setCellValueFactory(new PropertyValueFactory<>("nickname"));
+				
+				//Avatar Column
+				TableColumn<Player, Shape> passwordColumn = new TableColumn<>("Password");
+				passwordColumn.setMinWidth(100);
+				passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
 				
 				//Color Column
 				TableColumn<Player, String> colorColumn = new TableColumn<>("FavColor");
-				colorColumn.setMinWidth(200);
+				colorColumn.setMinWidth(75);
 				colorColumn.setCellValueFactory(new PropertyValueFactory<>("favColor"));
 				
 				//Birthday Column
 				TableColumn<Player, LocalDate> birthdayColumn = new TableColumn<>("Birthday");
-				birthdayColumn.setMinWidth(200);
+				birthdayColumn.setMinWidth(75);
 				birthdayColumn.setCellValueFactory(new PropertyValueFactory<>("birthday"));
 				
 				//Avatar Column
 				TableColumn<Player, Shape> avatarColumn = new TableColumn<>("Avatar");
-				avatarColumn.setMinWidth(200);
+				avatarColumn.setMinWidth(75);
 				avatarColumn.setCellValueFactory(new PropertyValueFactory<>("avatar"));
+
 		
 				//Creates the table of flights
 				table = new TableView<>();
 				table.setItems(getPlayers());
-				table.getColumns().addAll(nameColumn,nicknameColumn,colorColumn,birthdayColumn,avatarColumn);
+				table.getColumns().addAll(nameColumn,nicknameColumn,passwordColumn,colorColumn,birthdayColumn,avatarColumn);
 				table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 				borderpane.setCenter(table);	
 			}
@@ -128,15 +134,17 @@ import javafx.util.Duration;
 		     */
 		    private void searchBirthday(ActionEvent event) {
 		    	try {
-			    	if(birthdayPicker.getValue().equals(null)) {
+			    	if(birthdayPicker.getValue()==null) {
 			    		throw new InvalidInformationException(null);
 			    	}
 			    	else {
 			    		int pos = binary.searchBirthday(game, birthdayPicker.getValue());
+			    		System.out.println(pos);
 			    		if(pos==0) {
 			    			lblMessage.setText("We could not find your request, sorry try again :(");
 			    		}
 			    		else {
+			    			game.getPlayers().set(0, game.getPlayers().get(pos));
 			    			updateGUI();
 			    			lblMessage.setText("We find your request!! now is being displayed as first");
 			    		}
@@ -171,6 +179,7 @@ import javafx.util.Duration;
 			    			lblMessage.setText("We could not find your request, sorry try again :(");
 			    		}
 			    		else {
+			    			game.getPlayers().set(0, game.getPlayers().get(pos));
 			    			updateGUI();
 			    			lblMessage.setText("We find your request!! now is being displayed as first");
 			    		}
@@ -205,6 +214,7 @@ import javafx.util.Duration;
 			    			lblMessage.setText("We could not find your request, sorry try again :(");
 			    		}
 			    		else {
+			    			game.getPlayers().set(0, game.getPlayers().get(pos));
 			    			updateGUI();
 			    			lblMessage.setText("We find your request!! now is being displayed as first");
 			    		}
@@ -225,11 +235,31 @@ import javafx.util.Duration;
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
+		     * 		    
+		     * @param event
+		     */
+		    private void sortByAvatar(ActionEvent event) {
+		    	selection.sortByAvatar(game);
+		    	updateGUI();
+		    }
+	//_____________________________________________________________________________________________________________________________________
+		    @FXML
+		    /**
 		     * 
 		     * @param event
 		     */
 		    private void sortByBirthday(ActionEvent event) {
 		    	selection.sortByBirthday(game);
+		    	updateGUI();
+		    }
+	//_____________________________________________________________________________________________________________________________________
+		    @FXML
+		    /**
+		     * 
+		     * @param event
+		     */
+		    private void sortByColor(ActionEvent event) {
+		    	bubble.sortByColor(game);
 		    	updateGUI();
 		    }
 	//_____________________________________________________________________________________________________________________________________
@@ -250,6 +280,16 @@ import javafx.util.Duration;
 		    @FXML
 		    private void sortByNickname(ActionEvent event) {
 		    	insertion.sortByNickName(game);
+		    	updateGUI();
+		    }
+	//_____________________________________________________________________________________________________________________________________
+		    @FXML
+		    /**
+		     * 
+		     * @param event
+		     */
+		    private void sortByPassword(ActionEvent event) {
+		    	insertion.sortByPassword(game);
 		    	updateGUI();
 		    }
 	    

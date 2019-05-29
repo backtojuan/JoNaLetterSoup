@@ -41,7 +41,7 @@
 		 */
 		private void generateRandomDirection() {
 			random = new Random();
-			int indicator = random.nextInt(8);
+			int indicator = random.nextInt(4);
 			switch(indicator) {
 			case 0:
 				direction = Direction.DOWN;
@@ -50,21 +50,9 @@
 				direction = Direction.LEFT;
 				break;
 			case 2:
-				direction = Direction.NORTHEAST;
-				break;
-			case 3:
-				direction = Direction.NORTHWEST;
-				break;
-			case 4:
-				direction = Direction.SOUTHWEST;
-				break;
-			case 5:
-				direction = Direction.SOUTHEAST;
-				break;
-			case 6:
 				direction = Direction.UP;
 				break;
-			case 7:
+			case 3:
 				direction = Direction.RIGHT;
 				break;
 			}

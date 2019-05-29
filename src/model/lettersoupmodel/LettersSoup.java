@@ -70,6 +70,14 @@
 		 * 
 		 * @return
 		 */
+		public Topic getTopic() {
+			return topic;
+		}
+	//_____________________________________________________________________________________________________________________________________
+		/**
+		 * 
+		 * @return
+		 */
 		private String generateRandomWord() {
 			String randomWord = "";
 			if(topic == Topic.ANIMALS) {
@@ -260,18 +268,6 @@
 				case RIGHT:
 					addWordToRight(word,row,column,length);
 				break;
-				case NORTHWEST:
-					addWordToNorthWest(word,row,column,length);
-					break;
-				case NORTHEAST:
-					addWordToNorthEast(word,row,column,length);
-					break;
-				case SOUTHWEST:
-					addWordToSouthWest(word,row,column,length);
-					break;
-				case SOUTHEAST:
-					addWordToSouthEast(word,row,column,length);
-					break;
 			}
 		}
 	//_____________________________________________________________________________________________________________________________________
@@ -301,82 +297,6 @@
 				if(lettersoup[row][i]!=null){
 					empty = false;
 				}
-			}
-			return empty;
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param row
-		 * @param column
-		 * @param length
-		 * @return
-		 */
-		private boolean verifyNorthWestDiagonal(int row, int column,int length) {
-			boolean empty = true;
-			for(int i=0;i<length&&empty;i++) {
-				if(lettersoup[row][column] != null) {
-					empty = false;
-				}
-				row--;
-				column--;
-			}
-			return empty;
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param row
-		 * @param column
-		 * @param length
-		 * @return
-		 */
-		private boolean verifyNorthEastDiagonal(int row, int column,int length) {
-			boolean empty = true;
-			for(int i=0;i<length&&empty;i++) {
-				if(lettersoup[row][column] != null) {
-					empty = false;
-				}
-				row--;
-				column++;
-			}
-			return empty;
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param row
-		 * @param column
-		 * @param length
-		 * @return
-		 */
-		private boolean verifySouthWestDiagonal(int row, int column,int length) {
-			boolean empty = true;
-			for(int i=0;i<length&&empty;i++){
-				if(lettersoup[row][column] != null) {
-					empty = false;
-				}
-				row++;
-				column--;
-			}
-			return empty;
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param row
-		 * @param column
-		 * @param length
-		 * @return
-		 */
-		private boolean verifySouthEastDiagonal(int row, int column,int length) {
-			boolean empty = true;
-			for(int i=0;i<length&&empty;i++) {
-				if(lettersoup[row][column] != null) {
-					empty = false;
-				}
-				row++;
-				column++;
 			}
 			return empty;
 		}
@@ -515,189 +435,15 @@
 	//_____________________________________________________________________________________________________________________________________
 		/**
 		 * 
-		 * @param word
-		 * @param row
-		 * @param column
-		 * @param length
-		 */
-		private void addWordToNorthWest(Word word,int row, int column, int length){
-			String c;
-			int i = 0;
-			
-			if(column<length || row<length) {
-				word.setColumn(length);
-				word.setRow(length);
-				column = word.getColumn();
-				row = word.getRow();
-			}
-			
-			boolean space = verifyNorthWestDiagonal(row, column, length);
-			int temprow = row;
-			int tempcolumn = column;
-			while(space==false){
-				row = random.nextInt(lettersoup.length-1);
-				column = random.nextInt(lettersoup.length-1);
-				space = verifyNorthWestDiagonal(row, column, length);
-				setSolution(temprow, tempcolumn, row, column);
-				if(column<length || row<length) {
-					word.setRow(length);
-					word.setColumn(length);
-					column = length;
-					row = length;
-					setSolution(temprow, tempcolumn, row, column);
-				}
-			}
-			
-			while(i<=length){
-				c = Character.toString(word.getName().charAt(i));
-				lettersoup[row][column] = c;
-				i++;
-				row--;
-				column--;
-			}
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param word
-		 * @param row
-		 * @param column
-		 * @param length
-		 */
-		private void addWordToNorthEast(Word word, int row, int column, int length){
-			String c;
-			int i = 0;
-			
-			if(((lettersoup.length-1)-column<length)||(row<length)){
-				word.setColumn((lettersoup.length-1)-length);
-				word.setRow(length);
-				column = word.getColumn();
-				row = word.getRow();
-			}
-			
-			boolean space = verifyNorthEastDiagonal(row, column, length);
-			int temprow = row;
-			int tempcolumn = column;
-			while(space==false) {
-				column = random.nextInt(lettersoup.length-1);
-				row = random.nextInt(lettersoup.length-1);
-				space = verifyNorthEastDiagonal(row, column, length);
-				setSolution(temprow, tempcolumn, row, column);
-				if((lettersoup.length-1)-column<length || row<length){
-					word.setColumn((lettersoup.length-1)-length);
-					word.setRow(length);
-					column = word.getColumn();
-					row = word.getRow();
-					setSolution(temprow, tempcolumn, row, column);
-				}
-			}
-			
-			while(i<=length){
-				c = Character.toString(word.getName().charAt(i));
-				lettersoup[row][column] = c;
-				i++;
-				row--;
-				column++;
-			}
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param word
-		 * @param row
-		 * @param column
-		 * @param length
-		 */
-		private void addWordToSouthWest(Word word,int row, int column, int length){
-			String c;
-			int i = 0;
-			
-			if((row+length>(lettersoup.length-1))||(column<length)){
-				word.setRow((lettersoup.length-1)-length);
-				word.setColumn(length);
-				row = word.getRow();
-				column = word.getColumn();
-			}
-			
-			boolean space = verifySouthWestDiagonal(row, column, length);
-			int temprow = row;
-			int tempcolumn = column;
-			while(space==false){
-				row = random.nextInt(lettersoup.length-1);
-				column = random.nextInt(lettersoup.length-1);
-				space = verifySouthWestDiagonal(row, column, length);	
-				setSolution(temprow, tempcolumn, row, column);
-				if((row+length>(lettersoup.length-1))||(column<length)){
-					word.setRow((lettersoup.length-1)-length);
-					word.setColumn(length);
-					row = word.getRow();
-					column = word.getColumn();
-					setSolution(temprow, tempcolumn, row, column);
-				}	
-			}
-			
-			while(i<=length){
-				c = Character.toString(word.getName().charAt(i));
-				lettersoup[row][column] = c;
-				i++;
-				row++;
-				column--;
-			}
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param word
-		 * @param column
-		 * @param row
-		 * @param length
-		 */
-		private void addWordToSouthEast(Word word, int column, int row, int length){
-			String c;
-			int i = 0;
-			
-			if(((lettersoup.length-1)-column<length)||(row+length>(lettersoup.length-1))){
-				word.setColumn((lettersoup.length-1)-length);
-				word.setRow((lettersoup.length-1)-length);
-				row = word.getRow();
-				column = word.getColumn();
-			}
-			
-			boolean space = verifySouthEastDiagonal(row, column, length);
-			int temprow = row;
-			int tempcolumn = column;
-			while(space == false){
-				row = random.nextInt(lettersoup.length-1);
-				column = random.nextInt(lettersoup.length-1);
-				space = verifySouthEastDiagonal(row, column, length);
-				setSolution(temprow, tempcolumn, row, column);
-				if(((lettersoup.length-1)-column<length)||(row+length>(lettersoup.length-1))){
-					word.setColumn((lettersoup.length-1)-length);
-					word.setRow((lettersoup.length-1)-length);
-					row = word.getRow();
-					column = word.getColumn();
-					setSolution(temprow, tempcolumn, row, column);
-				}
-			}
-			
-			while(i<=length){
-				c = Character.toString(word.getName().charAt(i));
-				lettersoup[row][column] = c;
-				i++;
-				row++;
-				column++;
-			}
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
 		 * @param i
 		 * @param j
 		 * @param row
 		 * @param column
 		 */
 		private void setSolution(int i,int j, int row, int column) {
-			for(Word word : solution) {
+			Word word = null;
+			for(int k=0;k<solution.length;k++) {
+				word = solution[k];
 				if(word.getRow()==i && word.getColumn()==j) {
 					word.setRow(row);
 					word.setColumn(column);
@@ -715,7 +461,6 @@
 			System.out.println(word.getName());
 			for(int i=0;i<solution.length&&correct==false;i++) {
 				if(solution[i].getName().equals(word.getName())) {
-					System.out.println("correcta");
 					correct = true;
 				}
 			}
@@ -741,22 +486,7 @@
 		 * @param i
 		 * @return
 		 */
-		public Direction getDirection(int i) {
-			Direction direction = null;
-			for(Word word : solution) {
-				if(word.getRow()==i) {
-					direction = word.getDirection();
-				}
-			}
-			return direction;
-		}
-	//_____________________________________________________________________________________________________________________________________
-		/**
-		 * 
-		 * @param i
-		 * @return
-		 */
-		public int getLength(int i) {
+		public int getLengthFromAPosition(int i) {
 			int length = 0;
 			for(Word word : solution) {
 				if(word.getRow()==i) {
