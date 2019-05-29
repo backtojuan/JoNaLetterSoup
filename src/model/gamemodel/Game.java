@@ -33,6 +33,7 @@
 			private ArrayList<Integer> scores;
 			
 			private PlayedTime root;
+			private Scores first;
 //_________________________________________________________________________________________________________________________________________
 			/**
 			 * <b>Game Constructor</b><br>
@@ -75,6 +76,15 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
+			 * This method returns the first node of the Double linked list of scores<br>
+			 * <b>Pre:</b> the Game exists<br>
+			 * @return the first node 
+			 */
+			public Scores getFirst() {
+				return first;
+			}
+		//_____________________________________________________________________________________________________________________________________
+			/**
 			 * This method returns the difficultylevel asocciated to this game<br>
 			 * <b>Pre:</b> the Game exists<br>
 			 * @return the difficulty level which determinates the hardeness of this game
@@ -104,13 +114,50 @@
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
-			 * This method adds a score to the general list of scores in the game<br>
+			 * This method adds a score to the general linked list of scores in the game<br>
 			 * <b>Pre:</b> the Game exists<br>
-			 * <b>Pos:</b> the requested score was added to the list of scores<br>
+			 * <b>Pos:</b> the requested score was added to the linked list of scores<br>
 			 * @param player the player that it's going to be added
 			 */
 			public void addScore(int score) {
-				scores.add(score);
+				Scores s = new Scores(score);
+				if(first==null) {
+					first = s;
+				}
+				else {
+					addScore(getLast(), s);
+				}
+			}
+		//_____________________________________________________________________________________________________________________________________
+			/**
+			 * This method adds a score to the general linked list of scores in the game<br>
+			 * <b>Pos:</b> the requested score was added to the linked list of scores<br>
+			 * @param player the player that it's going to be added
+			 */
+			private void addScore(Scores current, Scores newScore) {
+				if(current.compareTo(newScore)>0) {
+					current.getPrev().setNext(newScore);
+					newScore.setPrev(current.getPrev());
+					current.setPrev(newScore);
+					newScore.setNext(current);
+				}
+				else if(current.compareTo(newScore)<0) {
+					current.setNext(newScore);
+					newScore.setPrev(current);
+				}
+			}
+		//_____________________________________________________________________________________________________________________________________
+			/**
+			 * This method gets the last element of the double linked list.
+			 * <b>Pos:</b> the last element of the double linked list of the scores is return.
+ 			 * @return the last element of this linked list.
+			 */
+			private Scores getLast() {
+				Scores temp = first;
+				while(temp.getNext()!=null) {
+					temp = temp.getNext();
+				}
+				return temp;
 			}
 		//_____________________________________________________________________________________________________________________________________
 			/**
