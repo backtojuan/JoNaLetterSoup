@@ -1,18 +1,24 @@
 //_________________________________________________________________________________________________________________________________________
 		package gui.lettersoupgui;
+import java.io.IOException;
+
 //_________________________________________________________________________________________________________________________________________	
 		import org.controlsfx.control.Notifications;
 import org.junit.runner.notification.RunListener.ThreadSafe;
 
 import customexception.InvalidInformationException;
 		import gui.gamegui.GameController;
-		import javafx.application.Platform;
+import gui.gamegui.SignUpController;
+import javafx.application.Platform;
 		import javafx.collections.FXCollections;
 		import javafx.event.ActionEvent;
 		import javafx.event.EventHandler;
 		import javafx.fxml.FXML;
-		import javafx.geometry.Pos;
-		import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 		import javafx.scene.control.ComboBox;
 		import javafx.scene.control.Label;
 		import javafx.scene.control.ScrollPane;
@@ -28,7 +34,8 @@ import customexception.InvalidInformationException;
 		import javafx.scene.media.AudioClip;
 		import javafx.scene.paint.Color;
 		import javafx.scene.shape.Circle;
-		import javafx.stage.Stage;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 		import javafx.util.Duration;
 		import model.gamemodel.Difficulty;
 		import model.gamemodel.Game;
@@ -75,7 +82,16 @@ import customexception.InvalidInformationException;
 		    private Label secondsLabel;
 		    @FXML
 		    private Label scoreLabel;  
-		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+		    @FXML
+		    private TextField checkRow;
+		    @FXML
+		    private ComboBox<Direction> directionComboBox;
+		    @FXML
+		    private TextField checkColumn;
+		    @FXML
+		    private Button DrawButton;
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private Stage stage;
 		    private Button lettersoup[][];
 		    private int score;
@@ -83,23 +99,17 @@ import customexception.InvalidInformationException;
 		    private boolean found;
 		    private Game game;
 		    private String foundlist;
-		    //::::::::::::::::::::::::::::::::::::::::::::::::::::
+	    //::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private TimeThread timethread;
 		    private GUIUpdateTimeThread guiupdate;
 		    private Integer minutes;
 		    private Integer seconds;
 		    private LoadingThread loadingthread;
-		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::
 		    private Circle circle1;
 		    private Circle circle2;
 		    private Circle circle3;
-		  //::::::::::::::::::::::::::::::::::::::::::::::::::::
-		    @FXML
-		    private TextField checkRow;
-		    @FXML
-		    private ComboBox<Direction> directionComboBox;
-		    @FXML
-		    private TextField checkColumn;
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::
 //_________________________________________________________________________________________________________________________________________
 		    @FXML
 		    /**
@@ -383,6 +393,7 @@ import customexception.InvalidInformationException;
 			public void disableButton(boolean b) {
 					playButton.setDisable(b);
 					checkButton.setDisable(b);
+					DrawButton.setDisable(b);
 			}
 	//_____________________________________________________________________________________________________________________________________
 		    @FXML
@@ -415,6 +426,22 @@ import customexception.InvalidInformationException;
 		    				int seconds = Integer.parseInt(secondsLabel.getText());
 		    				int playedtime = seconds1 + seconds;
 		    				PlayedTime playedTime = new PlayedTime(playedtime);
+		    				letterssoup.addPlayedTime(playedtime);
+		    				
+		    				letterssoup.saveScores();
+		    				letterssoup.saveTimes();
+		    				
+			    			Notifications.create()
+			    			.title("Annoucement")
+			    			.text("You've Won Our big congrats for you to achieve this level")
+			    			.graphic(new ImageView(new Image("gui/gamegui/images/success.png")))
+			    			.darkStyle()
+			    			.hideCloseButton()
+			    			.hideAfter(Duration.seconds(8))
+			    			.position(Pos.BOTTOM_CENTER)
+			    			.show()
+			    			;
+		    				
 		    			}
 		    		}
 		    	}
@@ -494,5 +521,34 @@ import customexception.InvalidInformationException;
 						}
 					}
 				}
-//_________________________________________________________________________________________________________________________________________
+		//________________________________________________________________________________________________________________________________________
+		    @FXML
+		    void drawNotes(ActionEvent event) {
+				try {
+			    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("notes.fxml"));
+			    	Parent root1 = (Parent) fxmlLoader.load();
+			    	
+			    	NotesController nc = new NotesController();
+			    	stage = new Stage();
+			    	nc.setStage(stage);
+			    	stage.setTitle("NOTES");
+			    	stage.setResizable(false);
+			    	Image image = new Image("gui/gamegui/images/icon.png");
+					stage.getIcons().add(image);
+					stage.initModality(Modality.NONE);
+			    	stage.setScene(new Scene(root1));  
+			    	stage.show();
+				} catch (IOException e) {
+					Notifications.create()
+					.title("Something went wrong...")
+					.text("Cannot launch the new window due to a problem with the files in the project, make sure 'notes.fxml' exists")
+					.graphic(new ImageView(new Image("gui/gamegui/images/error.png")))
+					.darkStyle()
+					.position(Pos.TOP_RIGHT)
+		    		.hideCloseButton()
+	    			.hideAfter(Duration.seconds(8))
+	    			.show();
+				}
+		    }
+//________________________________________________________________________________________________________________________________________________
 }
