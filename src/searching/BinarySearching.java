@@ -3,12 +3,11 @@
 	import java.time.LocalDate;
 //_________________________________________________________________________________________________________________________________________
 	import model.gamemodel.Game;
-	import model.gamemodel.Player;
 //_________________________________________________________________________________________________________________________________________
 	/**
 	 * This class manage the necessary attributes and methods to create methods to search Players with binary methods.
 	 * @author Lina Johanna Salinas Delgado
-	 * @author Juan José Valencia Jaramillo
+	 * @author Juan Josï¿½ Valencia Jaramillo
 	 * @version V_01_MAY-2019
 	 */
 	public class BinarySearching {

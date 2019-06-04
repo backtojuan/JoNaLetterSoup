@@ -7,12 +7,11 @@
 	import javafx.scene.Scene;
 	import javafx.stage.Stage;
 	import javafx.scene.image.Image;
-	import java.io.File;
 //_________________________________________________________________________________________________________________________________________
 	/**
 	 * This class manage the necessary attributes and methods to manage and launch the User Interface.
 	 * @author Lina Johanna Salinas Delgado
-	 * @author Juan José Valencia Jaramillo
+	 * @author Juan Josï¿½ Valencia Jaramillo
 	 * @version V_01_May-2019
 	 */
 	public class Main extends Application{

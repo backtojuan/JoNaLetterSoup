@@ -2,7 +2,6 @@
 	package model.lettersoupmodel;
 //_________________________________________________________________________________________________________________________________________
 	import java.io.BufferedReader;
-	import java.io.FileNotFoundException;
 	import java.io.FileReader;
 	import java.io.IOException;
 	import java.util.ArrayList;
@@ -16,7 +15,7 @@
 		/**
 		 * This class manages the nedeed methods and attributes to create letters soup.
 		 * @author Lina Johanna Salinas Delgado
-		 * @author Juan José Valencia Jaramillo
+		 * @author Juan Josï¿½ Valencia Jaramillo
 		 * @version V_01 May_2019
 		 * 
 		 */
