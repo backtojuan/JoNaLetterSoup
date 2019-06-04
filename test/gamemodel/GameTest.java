@@ -22,7 +22,7 @@
 	/**
 	 * This class manage the necessary attributes and methods to test the Model class "Game".
 	 * @author Lina Johanna Salinas Delgado
-	 * @author Juan José Valencia Jaramillo
+	 * @author Juan Josï¿½ Valencia Jaramillo
 	 * @version V_01_March-2019
 	 */
 	class GameTest {
@@ -124,7 +124,7 @@
 			assertTrue("The players file does not exists",savedPlayers.exists());
 			try {
 				assertTrue("The path of the players file is not the right one", 
-				savedPlayers.getCanonicalPath().equals("C:\\Users\\Usuario\\Documents\\eclipse-workspace\\JoNaLetterSoup\\data\\players.txt"));
+				savedPlayers.getCanonicalPath().equals("D:\\eclipse-workspace\\JoNaLetterSoup\\data\\players.txt"));
 			} catch (IOException e) {
 				fail("The file does not exist");
 			}

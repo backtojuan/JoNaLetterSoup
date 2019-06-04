@@ -33,7 +33,7 @@
 	/**
 	 * This class manage the necessary attributes and methods to manage and launch the sign up gui 
 	 * @author Lina Johanna Salinas Delgado
-	 * @author Juan José Valencia Jaramillo
+	 * @author Juan Josï¿½ Valencia Jaramillo
 	 * @version V_01_MAY-2019
 	 */
 	public class SignUpController {
@@ -111,6 +111,10 @@
 		    			Player player = new Player(name,nickname,password,favcolor,birthday,avatar);
 		    			game.addPlayer(player);
 		    			game.savePlayers();
+		    			
+		    			Stage stage = (Stage) avatarLabel.getScene().getWindow();
+		    			stage.close();
+		    			
 		    			Notifications.create()
 		    			.title("Annoucement")
 		    			.text("You've been succesfully registered. Welcome!!!"
@@ -167,9 +171,14 @@
 			 * @param event the event triggered by the user
 			 */
 		    private void createCircleAvatar(ActionEvent event) { 
-				Circle circle = new Circle(400.0,290.0,50,colorField.getValue());
-		   		paneSurface.getChildren().add(circle);
-		   		avatarLabel.setText(""+Shape.CIRCLE);
+				if(paneSurface.getChildren().isEmpty()) {
+					Circle circle = new Circle(100.0,65.0,50,colorField.getValue());
+					paneSurface.getChildren().add(circle);
+		   			avatarLabel.setText(""+Shape.CIRCLE);
+				}
+				else {
+					paneSurface.getChildren().clear();
+				}
 		    }
 	//_____________________________________________________________________________________________________________________________________
 			@FXML
@@ -178,10 +187,15 @@
 			 * @param event the event triggere by the user
 			 */
 			private void createSquareAvatar(ActionEvent event) {
-				Rectangle square = new Rectangle(250.0,250,75,75);
-				square.setFill(colorField.getValue());
-				paneSurface.getChildren().add(square);
-				avatarLabel.setText(""+Shape.RECTANGLE);
+				if(paneSurface.getChildren().isEmpty()) {
+					Rectangle square = new Rectangle(100.0,25.0,75,75);
+					square.setFill(colorField.getValue());
+					paneSurface.getChildren().add(square);
+					avatarLabel.setText(""+Shape.RECTANGLE);
+				}
+				else {
+					paneSurface.getChildren().clear();
+				}
 			}
 	//_____________________________________________________________________________________________________________________________________
 		    /**

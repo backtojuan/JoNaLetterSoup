@@ -1,5 +1,10 @@
 Juan Jose Valencia,1212,juanjose,0xff6666ff,13/03/2002,RECTANGLE
 Juan Jose Valencia Jaramillo,juancho,juanjose,0xffcce6ff,13/03/2002,RECTANGLE
 Maria Teresa Jaramillo,teresita,teresita77,0xffff80ff,28/07/1977,RECTANGLE
-Lina Salinas,niko,nikochan,0xffccffff,31/05/1999,CIRCLE
-Juan,backtojuan,backtojuan,0x000000ff,13/03/2002,CIRCLE
+Lina Salinas,niko,nikochan,0xffccffff,31/05/1999,RECTANGLE
+Juan,backtojuan,backtojuan,0x000000ff,13/03/2002,RECTANGLE
+juan jose,juanchito,hola1234,0xcc3333ff,13/06/2019,RECTANGLE
+juan jose valencia,juanito,hola2019,0xffcc80ff,13/06/2019,RECTANGLE
+dsajbdsad,sdnsajds,hola1234,0xb31a1aff,05/06/2019,RECTANGLE
+hola,hoñla,hola1234,0xe6804dff,13/06/2019,RECTANGLE
+hola,hola2,hola1234,0x8066ccff,06/06/2019,RECTANGLE

@@ -51,7 +51,7 @@
 		/**
 		 * This class manage the necessary attributes and methods to manage and launch the lettersoup gui 
 		 * @author Lina Johanna Salinas Delgado
-		 * @author Juan José Valencia Jaramillo
+		 * @author Juan Josï¿½ Valencia Jaramillo
 		 * @version V_01_MAY-2019
 		 */
 		public class LetterSoupController {
@@ -301,8 +301,9 @@
 				for (int i = 0; i < lettersoup.length; i++) {
 					for (int j = 0; j < lettersoup[i].length; j++) {
 						lettersoup[i][j] = new Button(String.valueOf(letterssoup.getLetterSoup()[i][j]));
-						lettersoup[i][j].setMaxSize(30.0, 30.0);
+						lettersoup[i][j].setMaxSize(50.0, 50.0);
 						lettersoup[i][j].setStyle("-fx-background-color : SLATEGRAY");
+						lettersoup[i][j].setTextFill(Color.WHITE);
 						gridpane.setAlignment(Pos.CENTER);
 						gridpane.setVgap(5);
 						gridpane.setHgap(5);
@@ -322,8 +323,9 @@
 				for (int i = 0; i < lettersoup.length; i++) {
 					for (int j = 0; j < lettersoup[i].length; j++) {
 						lettersoup[i][j] = new Button(String.valueOf(letterssoup.getLetterSoup()[i][j]));
-						lettersoup[i][j].setMaxSize(30.0, 30.0);
+						lettersoup[i][j].setMaxSize(50.0, 50.0);
 						lettersoup[i][j].setStyle("-fx-background-color : SLATEGRAY");
+						lettersoup[i][j].setTextFill(Color.WHITE);
 						gridpane.setAlignment(Pos.CENTER);
 						gridpane.setVgap(5);
 						gridpane.setHgap(5);
